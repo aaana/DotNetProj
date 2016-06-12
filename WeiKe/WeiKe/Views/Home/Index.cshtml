@@ -1,31 +1,99 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/WeikeLayout.cshtml";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
+  
+<div class="container mainContent">
+    <div class="row">
+        <div class="col-md-2 sidebar-offcanvas" id="sidebar">
+            <div class="list-group">
+                <a href="#" class="list-group-item active hotWeike">热门</a>
+                <a href="#" class="list-group-item playground">广场</a>
+                <a href="#" class="list-group-item myFollow">关注</a>
+                <a href="#" class="list-group-item myStar">我的收藏</a>
+                <a href="#" class="list-group-item myComment">我的评论</a>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+<div class="addWindow">
+    <form class="form-horizontal" enctype="multipart/form-data" method="post" action="insert">
+        <div class="col-sm-offset-11 col-sm-1">
+            <h1 class="closeButton">×</h1>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">标题</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" placeholder="标题">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">科目</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="subject" placeholder="科目">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">描述</label>
+            <div class="col-sm-10">
+                <input type="textarea" class="form-control" id="des" placeholder="描述">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">添加资料</label>
+            <div class="col-sm-10">
+                <button class="btn btn-default uplaodFile_f">选择文件</button>
+                <input type="file" name="file" class="col-sm-offset-2 col-sm-10" id="uploadFile">
+            </div>
+            <div class="col-sm-offset-2 col-sm-10">
+                <img class="imgPreview" id="0">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                <button type="submit" class="btn btn-primary uploadButton">发布</button>
+            </div>
+        </div>
+    </form>
 </div>
+
+<footer class="footerAddcom row">
+    <div class="container">
+        <img class="img-circle addButton col-md-2">
+        <div class="search-form col-md-10">
+            <div id="search-bd" class="search-bd">
+                <ul>
+                    <li id="search-title" class="selected">标题</li>
+                    <li id="search-subject">科目</li>
+                    <li id="search-author">发布人</li>
+                </ul>
+            </div>
+            <div id="search-hd" class="search-hd">
+                <div class="search-bg"></div>
+                <input type="text" class="search-input">
+                <button class="btn-search" value="搜索">搜索</button>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

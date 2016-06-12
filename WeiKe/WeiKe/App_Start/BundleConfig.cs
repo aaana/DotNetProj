@@ -19,6 +19,18 @@ namespace WeiKe
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/weike").Include(
+                      "~/Scripts/weike.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/log").Include(
+                     "~/Scripts/log.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/public").Include(
+                      "~/Scripts/public/classie.js",
+                      "~/Scripts/public/imagesloaded.pkgd.min.js",
+                      "~/Scripts/public/masonry.pkgd.min.js",
+                      "~/Scripts/public/main.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
@@ -26,6 +38,14 @@ namespace WeiKe
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/weike/css").Include(
+          "~/Content/weike.css",
+          "~/Content/public/default.css"));
+
+            bundles.Add(new StyleBundle("~/log/css").Include(
+         "~/Content/log.css",
+         "~/Content/public/default.css"));
         }
     }
 }
