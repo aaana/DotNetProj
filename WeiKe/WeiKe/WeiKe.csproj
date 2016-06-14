@@ -217,6 +217,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\CommentDB.cs" />
     <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\Data.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\FavoriteDB.cs" />
     <Compile Include="Models\IdentityModels.cs" />

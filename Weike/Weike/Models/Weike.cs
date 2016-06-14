@@ -8,7 +8,7 @@ namespace WeiKe.Models
     public class Weike
     {
         private int _id = 0;
-        public int id { get { return _id;} set {  _id = value; }}
+        public int weike_id { get { return _id;} set {  _id = value; }}
         public string title { get; set; }
         public string subject { get; set; }
         public string author { get; set; }
@@ -16,12 +16,13 @@ namespace WeiKe.Models
         public string size { get; set; }
         public string description { get; set; }
         public int star { get; set; }
+        public DateTime postdate { get; set; }
 
         public Weike()
         {
 
         }
-        public Weike(string _title, string _subject, string _author, string _src, string _size, string _description, int _star)
+        public Weike(string _title, string _subject, string _author, string _src, string _size, string _description, int _star,DateTime _postdate)
         {
             title = _title;
             subject = _subject;
@@ -30,11 +31,12 @@ namespace WeiKe.Models
             size = _size;
             description = _description;
             star = _star;
+            postdate = _postdate;
         }
 
-        public Weike(int _id, string _title, string _subject, string _author, string _src, string _size, string _description, int _star)
+        public Weike(int _id, string _title, string _subject, string _author, string _src, string _size, string _description, int _star,DateTime _postdate)
         {
-            id = _id;
+            weike_id = _id;
             title = _title;
             subject = _subject;
             author = _author;
@@ -42,6 +44,7 @@ namespace WeiKe.Models
             size = _size;
             description = _description;
             star = _star;
+            postdate = _postdate;
         }
     }
 

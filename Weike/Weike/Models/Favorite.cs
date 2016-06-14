@@ -9,9 +9,9 @@ namespace WeiKe.Models
     {
         public int user_id { get; set; }
         public int weike_id { get; set; }
-        public string date { get; set; }
+        public DateTime date { get; set; }
 
-        public Favorite(int user_id,int weike_id, string date)
+        public Favorite(int user_id,int weike_id, DateTime date)
         {
             this.user_id = user_id;
             this.weike_id = weike_id;
