@@ -8,15 +8,15 @@ namespace WeiKe.Models
     public class Comment
     {
         private int _id = 0;
-        public int id { get { return _id; }set { id = _id; } }
+        public int comment_id { get { return _id; }set { _id = value; } }
         public int user_id { get; set; }
         public int weike_id { get; set; }
-        public string date { get; set; }
+        public DateTime date { get; set; }
         public string content { get; set; }
 
-        public Comment(int id,int user_id,int weike_id,string date,string content)
+        public Comment(int id,int user_id,int weike_id,DateTime date,string content)
         {
-            this.id = id;
+            this.comment_id = id;
             this.user_id = user_id;
             this.weike_id = weike_id;
             this.date = date;

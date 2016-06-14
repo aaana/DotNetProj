@@ -1,0 +1,6 @@
+数据库如下：
+DBname: weike
+host:localhost
+port:3306
+user:root
+password:

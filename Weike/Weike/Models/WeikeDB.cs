@@ -21,7 +21,7 @@ namespace WeiKe.Models
 
             while (reader.Read())
             {
-                Weike weike = new Weike((string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"]);
+                Weike weike = new Weike((int)reader["weike_id"],(string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"],(DateTime)reader["postdate"]);
                 weikeList.Add(weike);
 
             }
@@ -33,7 +33,7 @@ namespace WeiKe.Models
 
         public static void Insert(Weike weike)
         {
-            string sql = "insert into weike VALUES ("+weike.id+",'" + weike.title + "','" +weike.subject + "','" +weike.author+ "','" +weike.src+ "','"+weike.size+ "','"+weike.description+"',"+weike.star+")";
+            string sql = "insert into weike VALUES ("+weike.weike_id + ",'" + weike.title + "','" +weike.subject + "','" +weike.author+ "','" +weike.src+ "','"+weike.size+ "','"+weike.description+"',"+weike.star + ","+weike.postdate + ")";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -61,7 +61,7 @@ namespace WeiKe.Models
 
             while (reader.Read())
             {
-                Weike weike = new Weike((int)reader["id"], (string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"]);
+                Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"]);
                 weikeList.Add(weike);
 
             }
@@ -91,7 +91,7 @@ namespace WeiKe.Models
 
             while (reader.Read())
             {
-                Weike weike = new Weike((int)reader["id"], (string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"]);
+                Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"]);
                 weikeList.Add(weike);
 
             }
@@ -121,7 +121,7 @@ namespace WeiKe.Models
 
             while (reader.Read())
             {
-                Weike weike = new Weike((int)reader["id"],(string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"]);
+                Weike weike = new Weike((int)reader["weike_id"],(string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"]);
                 weikeList.Add(weike);
 
             }
@@ -131,16 +131,95 @@ namespace WeiKe.Models
 
         }
 
-        public static void DeleteById(int id)
+        public static List<Weike> FindByWeikeId(int weike_id)
         {
-            string sql = "delete from weike where id = @id";
+            List<Weike> weikeList = new List<Weike>();
+            string sql = "select * from weike where weike_id = @id";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = sql;
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@id", weike_id);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"]);
+                weikeList.Add(weike);
+
+            }
+            reader.Close();
+            conn.Close();
+            return weikeList;
+
+        }
+
+        public static void DeleteById(int weike_id)
+        {
+            string sql = "delete from weike where weike_id = @weike_id";
+            MySqlConnection conn = Connection.getMySqlCon();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@weike_id", weike_id);
             cmd.ExecuteNonQuery();
             conn.Close();
+        }
+
+        static public List<Weike> FindWeikeByTime(DateTime time)
+        {
+            List<Weike> weikeList = new List<Weike>();
+            DateTime high = new DateTime(time.Year, time.Month, time.Day + 1);
+            string sql = "SELECT weike.weike_id,weike.title,weike.subject,weike.author,weike.src,weike.size,weike.description,weike.star,weike.postdate FROM weike.weike where postdate >= @low and postdate<@high;";
+            MySqlConnection conn = Connection.getMySqlCon();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@low", time);
+            cmd.Parameters.AddWithValue("@high", high);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"]);
+                weikeList.Add(weike);
+
+            }
+            reader.Close();
+            conn.Close();
+            return weikeList;
+        }
+
+        static public List<Weike> FindWeikeByTime(string author,DateTime time)
+        {
+            List<Weike> weikeList = new List<Weike>();
+            DateTime high = new DateTime(time.Year, time.Month, time.Day + 1);
+            string sql = "SELECT weike.weike_id,weike.title,weike.subject,weike.author,weike.src,weike.size,weike.description,weike.star,weike.postdate FROM weike.weike where postdate >= @low and postdate<@high and author like @author;";
+            MySqlConnection conn = Connection.getMySqlCon();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            string condition = "";
+            for (int i = 0; i < author.Length; i++)
+            {
+                condition = condition + "%" + author[i];
+            }
+            condition = condition + "%";
+            Console.WriteLine(condition);
+            cmd.Parameters.AddWithValue("@author", condition);
+            cmd.Parameters.AddWithValue("@low", time);
+            cmd.Parameters.AddWithValue("@high", high);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (string)reader["author"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"]);
+                weikeList.Add(weike);
+
+            }
+            reader.Close();
+            conn.Close();
+            return weikeList;
         }
 
     }
