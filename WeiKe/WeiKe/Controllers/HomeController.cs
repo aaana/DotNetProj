@@ -44,9 +44,9 @@ namespace WeiKe.Controllers
             //List<Weike> list = WeikeDB.FindByAuthor("杜");
             //Comment comment = new Comment(0, 1, 1, DateTime.Now, "喜欢！");
             //Favorite favorite = new Favorite(1, 1, DateTime.Now);
-            List<CommentData> cdList = CommentDB.FindCommentWeikeByWeikeId(1);
+            List<CommentData> cdList = CommentDB.FindCommentDataByWeikeId(1);
           
-            NestedComment.getAllCommentsByWeikeId(1);
+            //NestedComment.getAllCommentsByWeikeId(1);
             //FavoriteDB.Insert(favorite);
             /*
             list.Add(new Weike { title = "Senseless Suffering", subject = "English", author = "Jeremy Bentham", src = "resource/img/8.jpg", size = "1280x853", description = "The question is not, 'Can they reason ?' nor, 'Can they talk ? ' but rather, 'Can they suffer ? '", star = 0 });

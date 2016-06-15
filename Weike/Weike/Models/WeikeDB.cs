@@ -227,7 +227,7 @@ namespace WeiKe.Models
             return weikeData;
 
         }
-
+        /*
         public static Weike FindWeikeByWeikeId(int weike_id)
         {
             Weike weike = null;
@@ -250,7 +250,7 @@ namespace WeiKe.Models
             return weike;
 
         }
-
+        */
         public static void DeleteById(int weike_id)
         {
             string sql = "delete from weike where weike_id = @weike_id";
