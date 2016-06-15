@@ -73,12 +73,33 @@ namespace WeiKe.Models
 
             if (reader.Read())
             {
-                user = new User((int)reader["id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"));
+                user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"));
             }
             reader.Close();
             conn.Close();
             return user;
         }
+
+        public static User FindById(int user_id)
+        {
+            User user = null;
+            string sql = "select * from user where user_id = @user_id";
+            MySqlConnection conn = Connection.getMySqlCon();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@user_id", user_id);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"));
+            }
+            reader.Close();
+            conn.Close();
+            return user;
+        }
+
 
     }    
 }

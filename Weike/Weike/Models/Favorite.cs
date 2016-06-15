@@ -10,6 +10,8 @@ namespace WeiKe.Models
         public int user_id { get; set; }
         public int weike_id { get; set; }
         public DateTime date { get; set; }
+        //private Boolean _isread = false;
+        //public Boolean isread { get { return _isread; } set { _isread = value; } }
 
         public Favorite(int user_id,int weike_id, DateTime date)
         {
