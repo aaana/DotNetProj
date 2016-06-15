@@ -19,7 +19,7 @@ namespace WeiKe.Models
         static public List<NestedComment> getAllCommentsByWeikeId(int weike_id)
         {
             List<NestedComment> result = new List<NestedComment>();
-            List<CommentData> cdList = CommentDB.FindCommentWeikeByWeikeId(weike_id);
+            List<CommentData> cdList = CommentDB.FindCommentDataByWeikeId(weike_id);
             List<CommentData> rootComments = new List<CommentData>();
         
            

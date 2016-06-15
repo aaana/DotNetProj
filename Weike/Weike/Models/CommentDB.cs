@@ -33,7 +33,7 @@ namespace WeiKe.Models
             conn.Close();
         }
 
-        static public List<CommentData> FindCommentWeikeByUserId(int user_id)
+        static public List<CommentData> FindCommentDataByUserId(int user_id)
         {
             List<CommentData> cdList = new List<CommentData>();
             string sql = "select weike.weike_id ,weike.title,weike.subject,weike.user_id as author_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum, comment.comment_id,comment.user_id as commenter_id,comment.date,comment.content,comment.parent,user1.name as author, user2.name as commenter from weike inner join comment inner join user as user1 inner join user as user2 where comment.weike_id = weike.weike_id and user1.user_id = weike.user_id and user2.user_id = comment.user_id and comment.user_id = @userid order by comment.date desc;";
@@ -57,7 +57,7 @@ namespace WeiKe.Models
             return cdList;
         }
 
-        static public List<CommentData> FindCommentWeikeByWeikeId(int weike_id)
+        static public List<CommentData> FindCommentDataByWeikeId(int weike_id)
         {
             List<CommentData> cdList = new List<CommentData>();
             string sql = "select weike.weike_id ,weike.title,weike.subject,weike.user_id as author_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum, comment.comment_id,comment.user_id as commenter_id,comment.date,comment.content,comment.parent,user1.name as author, user2.name as commenter from weike inner join comment inner join user as user1 inner join user as user2 where comment.weike_id = weike.weike_id and user1.user_id = weike.user_id and user2.user_id = comment.user_id and comment.weike_id = @weikeid order by comment.date desc;";
@@ -82,7 +82,7 @@ namespace WeiKe.Models
         }
 
         
-        static public List<CommentData> FindCommentWeikeByTime(int user_id,DateTime time)
+        static public List<CommentData> FindCommentDataByTime(int user_id,DateTime time)
         {
             List<CommentData> cdList = new List<CommentData>();
             DateTime high = new DateTime(time.Year,time.Month,time.Day+1);

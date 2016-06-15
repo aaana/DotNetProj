@@ -34,30 +34,47 @@ namespace WeiKe.Models
 
         }
 
-        public static void UpdatePassword(string email, string password)
+        public static bool UpdatePassword(int user_id, string password)
         {
-            string sql = "update user set password = @pwd where email = @email";
-            MySqlConnection conn = Connection.getMySqlCon();
-            conn.Open();
-            MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = sql;
-            cmd.Parameters.AddWithValue("@pwd", password);
-            cmd.Parameters.AddWithValue("@email", email);
-            cmd.ExecuteNonQuery();
-            conn.Close();
+            string sql = "update user set password = @pwd where user_id = @userid";
+            try{
+                MySqlConnection conn = Connection.getMySqlCon();
+                conn.Open();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = sql;
+                cmd.Parameters.AddWithValue("@pwd", password);
+                cmd.Parameters.AddWithValue("@userid", user_id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            
         }
 
-        public static void UpdateName(string email, string name)
+        public static bool UpdateName(int user_id, string name)
         {
-            string sql = "update user set name = @name where email = @email";
-            MySqlConnection conn = Connection.getMySqlCon();
-            conn.Open();
-            MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = sql;
-            cmd.Parameters.AddWithValue("@name", name);
-            cmd.Parameters.AddWithValue("@email", email);
-            cmd.ExecuteNonQuery();
-            conn.Close();
+            string sql = "update user set name = @name where user_id = @userid";
+            try
+            {
+                MySqlConnection conn = Connection.getMySqlCon();
+                conn.Open();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = sql;
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@userid", user_id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+           
         }
 
         public static User FindByEmail(string email)
