@@ -22,7 +22,7 @@ namespace WeiKe.Controllers
         public ActionResult Index(string json)
         {
 
-            List<Weike> weikes = WeikeDB.FindBySubject("软工");
+            List<WeikeData> weikes = WeikeDB.FindBySubject("软工");
             /*
             List<Weike> data = new List<Weike>();
             data.Add(new Weike { title = "Senseless Suffering", subject = "English", author = "Jeremy Bentham", src = "resource/img/8.jpg", size = "1280x853", description = "The question is not, 'Can they reason ?' nor, 'Can they talk ? ' but rather, 'Can they suffer ? '", star = 0 });
@@ -44,7 +44,9 @@ namespace WeiKe.Controllers
             //List<Weike> list = WeikeDB.FindByAuthor("杜");
             //Comment comment = new Comment(0, 1, 1, DateTime.Now, "喜欢！");
             //Favorite favorite = new Favorite(1, 1, DateTime.Now);
-            List<CommentData> list = CommentDB.FindCommentWeikeByTime(1,new DateTime(2016,6,8));
+            List<CommentData> cdList = CommentDB.FindCommentWeikeByWeikeId(1);
+          
+            NestedComment.getAllCommentsByWeikeId(1);
             //FavoriteDB.Insert(favorite);
             /*
             list.Add(new Weike { title = "Senseless Suffering", subject = "English", author = "Jeremy Bentham", src = "resource/img/8.jpg", size = "1280x853", description = "The question is not, 'Can they reason ?' nor, 'Can they talk ? ' but rather, 'Can they suffer ? '", star = 0 });
@@ -53,7 +55,7 @@ namespace WeiKe.Controllers
             list.Add(new Weike { title = "Murder of Men", subject = "English", author = "Leonardo Da Vinci", src = "resource/img/11.jpg", size = "1280x1280", description = "The time will come when men such as I will look upon the murder of animals as they now look upon the murder of men. ", star = 44 });
             list.Add(new Weike { title = "Highest Ethics", subject = "Math", author = "Thomas Edison", src = "resource/img/1.jpg", size = "1280x853", description = "Non-violence leads to the highest ethics, which is the goal of all evolution. Until we stop harming all other living beings, we are still savages ", star = 44 });
     */
-            return Json(new { success = true, list });
+            return Json(new { success = true, cdList });
         }
 
         public ActionResult About()

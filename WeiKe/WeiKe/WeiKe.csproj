@@ -220,8 +220,13 @@
     <Compile Include="Models\Data.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\FavoriteDB.cs" />
+    <Compile Include="Models\Follow.cs" />
+    <Compile Include="Models\FollowDB.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NestedComment.cs" />
+    <Compile Include="Models\Notice.cs" />
+    <Compile Include="Models\NoticeDB.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserDB.cs" />
     <Compile Include="Models\WeikeDB.cs" />

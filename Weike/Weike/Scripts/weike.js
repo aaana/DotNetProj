@@ -103,22 +103,24 @@ function pblSupport() {
                 if (success) {
                     var weikes = data.weikes;
                     for (var item in weikes) {
-                        $('.grid').append('<div class="grid__item" data-size=' + weikes[item].size + '>' +
+                        var weike = weikes[item].weike;
+                        var author = weikes[item].author;
+                        $('.grid').append('<div class="grid__item" data-size=' + weike.size + '>' +
                             '<div class="weikeCell"> ' +
-                                '<h3>' + weikes[item].title + '</h3> ' +
-                                '<h6>' + weikes[item].subject + '</h6> ' +
+                                '<h3>' + weike.title + '</h3> ' +
+                                '<h6>' + weike.subject + '</h6> ' +
                                 '<div class="thumbnail"> ' +
-                                '<a href=' + weikes[item].src + ' class="img-wrap"><img src=' + weikes[item].src + '></a> ' +
+                                '<a href=' + weike.src + ' class="img-wrap"><img src=' + weike.src + '></a> ' +
                                 '</div> ' +
                                 '<p><a class="btn" href="#" role="button">star</a></p> ' +
                                 '</div> ' +
                                 '<div class="description description--grid"> ' +
-                                '<h3>' + weikes[item].title + '</h3> ' +
-                                '<p>' + weikes[item].description + ' <em>&mdash; ' + weikes[item].author + '</em></p> ' +
+                                '<h3>' + weike.title + '</h3> ' +
+                                '<p>' + weike.description + ' <em>&mdash; ' + author + '</em></p> ' +
                                 '<div class="details"> ' +
                                 '<ul> ' +
-                                '<li><i class="icon icon-camera"></i><span>' + weikes[item].star + '</span></li> ' +
-                                '<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li> ' +
+                                '<li><i class="icon icon-camera"></i><span>' + weike.star + '</span></li> ' +
+                                '<li><i class="icon icon-focal_length"></i><span>' + weike.commentNum + '</span></li> ' +
                                 '</ul> ' +
                                 '</div> ' +
                             '</div> ' +
@@ -160,12 +162,12 @@ function pblSupport() {
             success: function (data) {
                 var success = data.success;
                 if (success) {
-                    var list = data.list;
+                    var list = data.cdList;
                     for (var item in list) {
-                        $('.grid').append('<div class="grid__item" data-size=' + list[item].weike.size + '>' +
+                         $('.grid').append('<div class="grid__item" data-size=' + list[item].weike.size + '>' +
                         '<div class="weikeCell"> ' +
                         '<h3>' + list[item].weike.title + '</h3> ' +
-                        '<h6>' + list[item].weike.title + '</h6> ' +
+                        '<h6>' + list[item].weike.subject + '</h6> ' +
                         '<div class="thumbnail"> ' +
                         '<a href=' + list[item].weike.src + ' class="img-wrap"><img src=' + list[item].weike.src + '></a> ' +
                         '</div> ' +
@@ -173,11 +175,11 @@ function pblSupport() {
                         '</div> ' +
                         '<div class="description description--grid"> ' +
                         '<h3>' + list[item].weike.title + '</h3> ' +
-                        '<p>' + list[item].weike.description + ' <em>&mdash; ' + list[item].weike.author + '</em></p> ' +
+                        '<p>' + list[item].weike.description + ' <em>&mdash; ' + list[item].author + '</em></p> ' +
                         '<div class="details"> ' +
                         '<ul> ' +
                         '<li><i class="icon icon-camera"></i><span>' + list[item].weike.star + '</span></li> ' +
-                        '<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li> ' +
+                        '<li><i class="icon icon-focal_length"></i><span>' + list[item].weike.commentNum + '</span></li> ' +
                         '</ul> ' +
                         '</div> ' +
                         '</div> ' +
