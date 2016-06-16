@@ -2,7 +2,13 @@
 function pblSupport() {
     var support = { transitions: Modernizr.csstransitions },
     // transition end event name
-        transEndEventNames = { 'WebkitTransition': 'webkitTransitionEnd', 'MozTransition': 'transitionend', 'OTransition': 'oTransitionEnd', 'msTransition': 'MSTransitionEnd', 'transition': 'transitionend' },
+        transEndEventNames = {
+            'WebkitTransition': 'webkitTransitionEnd',
+            'MozTransition': 'transitionend',
+            'OTransition': 'oTransitionEnd',
+            'msTransition': 'MSTransitionEnd',
+            'transition': 'transitionend'
+        },
         transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ],
         onEndTransition = function( el, callback ) {
             var onEndCallbackFn = function( ev ) {
@@ -127,9 +133,9 @@ function pblSupport() {
                 alert("error:" + XMLHttpRequest.status + " " + XMLHttpRequest.readyState + " " + textStatus);
             }
         });
-
-       
     });
+
+
     $('.playground').click(function() {
         $(this).addClass('active').siblings().removeClass('active');
         $('.content').remove();
@@ -157,7 +163,7 @@ function pblSupport() {
                 '<h3>' + data[item].title + '</h3> ' +
                 '<h6>' + data[item].subject + '</h6> ' +
                 '<div class="thumbnail"> ' +
-                '<a href=' + data[item].src + ' class="img-wrap"><img src=' + data[item].src + '></a> ' +
+                '<a class="img-wrap"><img src=' + data[item].src + '></a> ' +
                 '</div> ' +
                 '<p><a class="btn" href="#" role="button">star</a></p> ' +
                 '</div> ' +
@@ -183,6 +189,8 @@ function pblSupport() {
 
      
     });
+
+
     $('.myFollow').click(function() {
         $(this).addClass('active').siblings().removeClass('active');
         $('.content').remove();

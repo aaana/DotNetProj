@@ -1,0 +1,193 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微课</title>
+    @Styles.Render("~/base/css")
+    @Styles.Render("~/auth/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style type="text/css">
+        
+    </style>
+
+</head>
+<body>
+    @Html.Partial("WeikeNavPartial")
+    @{ 
+        var loginFormDisplay = "none";
+        var signupFormDisplay = "none";
+        if (ViewBag.authType == 0)
+        {
+            loginFormDisplay = "block";
+        } else if (ViewBag.authType == 1)
+        {
+            signupFormDisplay = "block";
+        }
+    }
+
+    <div class="container body-content">
+        <form class="form-login" action=""  style="display: @loginFormDisplay">
+            <h2 class="form-login-heading">登陆</h2>
+            <input type="email" id="inputUserEmail" name="inputUserEmail" class="form-control" placeholder="邮箱" required="" autofocus="">
+            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="密码" required="">
+
+            <button id="login_button" class="btn btn-lg btn-primary btn-block" type="submit">登陆</button>
+            <div class="log_trans_sign">
+                <a href="javascript:void(0);" onclick="log_2_sign()">先去注册</a>
+            </div>
+        </form>
+
+        <form class="form-signup" style="display: @signupFormDisplay">
+            <h2 class="form-signup-heading">注册</h2>
+            <div class="form-group">
+                <input type="email" class="form-control" id="inputUserEmail" placeholder="邮箱" required="">
+                <img class="userVerify" src="" />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="inputUserId" placeholder="用户名" required="">
+                <img class="userVerify" src="" />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="inputPassword" placeholder="密码" required="">
+                <img class="userVerify" src="" />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="verifyPassword" placeholder="确认密码" required="">
+                <img class="userVerify" src="" />
+            </div>
+
+
+            <button id="signup_button" class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+            <div class="sign_trans_log">
+                <a href="javascript:void(0);" onclick="sign_2_log()">我要登陆</a>
+            </div>
+        </form>
+    </div>
+
+    @Html.Partial("WeikeFooterPartial")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/public")
+
+    <script>
+        function log_2_sign() {
+            $('.form-login').hide();
+            $('.form-signup').slideDown();
+            //只清空密码栏
+            $('.form-login #inputPassword').val("");
+        }
+
+        function sign_2_log() {
+            $('.form-signup').hide();
+            $('.form-login').slideDown();
+            resetSignup();
+        }
+
+        function resetSignup() {
+            $('.form-signup input[type="radio"]').eq(0).click();
+            $('.form-signup .school-form').val(0);
+            $('.form-signup #inputUserId').val("");
+            $('.form-signup #inputPassword').val("");
+            $('.form-signup .userVerify').attr('src', "");
+        }
+
+
+        function signup() {
+            if (validate_form(1) == ture) {
+                var json = {
+                    email: $('.form-signup .inputUserEmail').val(),
+                    name: $('.form-signup .inputUserName'),
+                    password: $('.form-signup .inputUserPassword').val(),
+                };
+                $.ajax({
+                    type: "post",
+                    url: "",
+                    data: json,
+                    dataType: "json",
+                    success: function (data) {
+
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        }
+        function login() {
+            if (validate_form(0) == ture) {
+                var json = {
+                    email: $('.form-login .inputUserEmail').val(),
+                    password: $('.form-login .inputUserPassword').val()
+                };
+                $.ajax({
+                    type: "post",
+                    url: "",
+                    data: json,
+                    dataType: "json",
+                    success: function (data) {
+
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+
+        }
+
+        function validate_email(input) {
+            var value = input.val();
+            apos = value.indexOf("@");
+            dotpos = value.lastIndexOf(".");
+            if (apos < 1 || dotpos - apos < 2) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function validate_required(input) {
+            if (input.val() == null || input.val() == "") {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function validate_form(type) {
+            var validationTar = [];
+            var validationEmail = null;
+            if (type == 0) {
+                validationTar = [$('.form-login .inputUserEmail')[0], $('.form-login .inputUserPassword')[0]];
+                validationEmail = $('.form-login .inputUserEmail')[0];
+
+            } else if (type == 1) {
+                validationTar = [$('.form-signup .inputUserEmail')[0], $('.form-signup .inputUserName')[0], $('.form-signUp .inputUserPassword')[0], $('.form-signUp .verifyPassword')[0]];
+                validationEmail = $('.form-signup .inputUserEmail');
+            }
+
+            validationTar.foreach(function (input) {
+                if (validate_required(input) == false) {
+                    input.focus();
+                    input.css('border-color', 'red');
+                    return false;
+                }
+            });
+
+            if (validate_email(validationEmail) == false) {
+                validationEmail.focus();
+                validationEmail.css('border-color', 'red');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>

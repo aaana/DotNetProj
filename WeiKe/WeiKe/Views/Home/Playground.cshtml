@@ -1,6 +1,5 @@
 ﻿@{
     Layout = null;
-    ViewBag.Title = "Home Page";
 }
 
 <!DOCTYPE html>
@@ -9,23 +8,52 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>微课-热门</title>
+    <title>微课-广场</title>
     @Styles.Render("~/base/css")
     @Styles.Render("~/weike/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     @Html.Partial("WeikeNavPartial")
     <div class="container body-content">
-        <div class="hotWeike_c content">
-            <div class="jumbotron">
-                <h1>微课</h1>
-                <p>在这里，有老师们精心挑选的资料；</p>
-                <p>在这里，有大家共同进步的快乐。</p>
-            </div>
+        <div class="col-xs-9 hotWeike_c content">
             <div class="js">
                 <div class="grid">
+                    <div class="grid__item" data-size='1280x853'>
+                        <div class="thumbnail weikeCell">
+                            <a href="../resource/img/8.jpg" class="img-wrap"><img src="../resource/img/8.jpg"></a>
+                            <div class="weikeCellDes">
+                                <h3>英语写作小技巧</h3>
+                                <div class="weikeCellVote">
+                                    <h5>English</h5>
+                                    <span></span>
+                                    <span><span class="glyphicon glyphicon-heart"></span>40</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="description description--grid">
+                            <div class="weikeCellDetail">
+                                <h4><em>作者名</em></h4>
+                                <h3>英语写作小技巧</h3>
+                                <h4>英语写作有很多小技巧，有些技巧能使你的文章更有条理，有些能使文章更生动</h4>
+
+                                <div>
+                                    <a><span class="glyphicon glyphicon-heart"></span>40</a>
+                                </div>
+                            </div>
+                            <div class="weikeCellComment">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" placeholder="我来评论">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">评论</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="weikeCellShowComment">
+                                <a>查看评论</a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="grid__item" data-size='1280x853'>
                         <div class="thumbnail weikeCell">
                             <a href="../resource/img/8.jpg" class="img-wrap"><img src="../resource/img/8.jpg"></a>
@@ -52,31 +80,7 @@
                     </div>
                     <div class="grid__item" data-size='1280x853'>
                         <div class="thumbnail weikeCell">
-                            <a href="resource/img/8.jpg" class="img-wrap"><img src="resource/img/8.jpg"></a>
-                            <div class="weikeCellDes">
-                                <h3>英语写作小技巧</h3>
-                                <div class="weikeCellVote">
-                                    <h5>English</h5>
-                                    <span></span>
-                                    <span><span class="glyphicon glyphicon-heart"></span>40</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="description description--grid">
-                            <div class="weikeCellDetail">
-                                <h4><em>作者名</em></h4>
-                                <h3>英语写作小技巧</h3>
-                                <h4>英语写作有很多小技巧，有些技巧能使你的文章更有条理，有些能使文章更生动</h4>
-
-                                <div>
-                                    <a><span class="glyphicon glyphicon-heart"></span>40</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid__item" data-size='1280x853'>
-                        <div class="thumbnail weikeCell">
-                            <a href="resource/img/8.jpg" class="img-wrap"><img src="resource/img/8.jpg"></a>
+                            <a href="../resource/img/8.jpg" class="img-wrap"><img src="../resource/img/8.jpg"></a>
                             <div class="weikeCellDes">
                                 <h3>英语写作小技巧</h3>
                                 <div class="weikeCellVote">
@@ -101,7 +105,7 @@
 
                     <div class="grid__item" data-size='1280x853'>
                         <div class="thumbnail weikeCell">
-                            <a href="resource/img/8.jpg" class="img-wrap"><img src="resource/img/8.jpg"></a>
+                            <a href="../resource/img/8.jpg" class="img-wrap"><img src="../resource/img/8.jpg"></a>
                             <div class="weikeCellDes">
                                 <h3>英语写作小技巧</h3>
                                 <div class="weikeCellVote">
@@ -216,7 +220,26 @@
                 </div>
             </div>
         </div>
+        <div class="col-xs-3">
+            <div id="sidebar" data-spy="affix">
+                <div class="sidebarUserInfo">
+                    <div>
+                        <a href="#"><img src="http://7xq64h.com1.z0.glb.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-27%20%E4%B8%8A%E5%8D%884.45.04.png" class="img-responsive img-circle"></a>
+                    </div>
+                    <a href="#"><span>用户名</span></a>
+                    <div>
+                        <a href="#"><span>8</span><span>关注</span></a>
+                        <a href="#"><span>10</span><span>收藏</span></a>
+                        <a href="#"><span>1</span><span>微课</span></a>
+                    </div>
+                </div>
+                <div class="sidebarPublishBtn">
+                    <button onclick="showPublishView()">发布微课</button>
+                </div>
+            </div>
+        </div>
     </div>
+
     @Html.Partial("WeikeFooterPartial")
 
     @Scripts.Render("~/bundles/jquery")

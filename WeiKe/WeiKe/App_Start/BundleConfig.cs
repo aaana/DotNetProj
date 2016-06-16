@@ -19,11 +19,9 @@ namespace WeiKe
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/weike").Include(
-                      "~/Scripts/weike.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/weike").Include("~/Scripts/weike.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/log").Include(
-                     "~/Scripts/log.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/log").Include("~/Scripts/log.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/public").Include(
                       "~/Scripts/public/classie.js",
@@ -35,17 +33,26 @@ namespace WeiKe
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/base/css").Include(
+                "~/Content/bootstrap/bootstrap.min.css",
+                "~/Content/navBar.css"));
 
             bundles.Add(new StyleBundle("~/weike/css").Include(
-          "~/Content/weike.css",
-          "~/Content/public/default.css"));
+                "~/Content/pbl/default.css",
+                "~/Content/weike.css",
+                "~/Content/sidebar.css",
+                "~/Content/pblItem.css"));
 
-            bundles.Add(new StyleBundle("~/log/css").Include(
-         "~/Content/log.css",
-         "~/Content/public/default.css"));
+            bundles.Add(new StyleBundle("~/publish/css").Include(
+                "~/Content/weike.css",
+                "~/Content/publish.css"));
+
+            bundles.Add(new StyleBundle("~/personalPage/css").Include(
+                "~/Content/weike.css",
+                "~/Content/personalPage.css"));
+
+            bundles.Add(new StyleBundle("~/auth/css").Include(
+                "~/Content/auth.css"));
         }
     }
 }

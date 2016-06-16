@@ -1,0 +1,80 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        var MessageCount1 = 2; // 关注消息
+        var MessageCount2 = 0; // 评论消息
+        var MessageCount3 = 2; // 点赞
+        var MessageCount4 = 1; // 回复
+        var MessageCountAll = MessageCount1 + MessageCount2 + MessageCount3 + MessageCount4;
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    消息
+                    @if (MessageCountAll > 0)
+                    {
+                        <span class="navBarMessageCountAll"></span>
+                    }
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">
+                            有人关注我
+                            @if (MessageCount1 > 0)
+                            {
+                                <span class="navBarMessageCount">@MessageCount1</span>
+                            }
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            有人评论我 @if (MessageCount2 > 0)
+                            {
+                                <span class="navBarMessageCount">@MessageCount2</span>
+                            }
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            有人赞了我 @if (MessageCount3 > 0)
+                            {
+                                <span class="navBarMessageCount">@MessageCount3</span>
+                            }
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            有人回复我 @if (MessageCount4 > 0)
+                            {
+                                <span class="navBarMessageCount">@MessageCount4</span>
+                            }
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="Manage/Index">@User.Identity.GetUserName()</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">个人主页</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">我的关注</a></li>
+                    <li><a href="#">我的收藏</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">注销</a></li>
+                </ul>
+            </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("注册", "Index", "Auth", new {type = 1}, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("登录", "Index", "Auth", new {type = 0}, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
