@@ -144,7 +144,7 @@
 
         function validate_email(input) {
             var value = input.val();
-            apos = value.indexOf("@");
+            apos = value.indexOf("@@");
             dotpos = value.lastIndexOf(".");
             if (apos < 1 || dotpos - apos < 2) {
                 return false;

@@ -199,6 +199,8 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PersonalPageController.cs" />
+    <Compile Include="Controllers\PublishController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -291,6 +293,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Playground.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />
+    <Content Include="Views\Shared\WeikePersonalPageLayout.cshtml" />
+    <Content Include="Views\PersonalPage\PersonalPageWeike.cshtml" />
+    <Content Include="Views\PersonalPage\PersonalPageLikes.cshtml" />
+    <Content Include="Views\PersonalPage\PersonalPageFollows.cshtml" />
+    <Content Include="Views\Publish\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

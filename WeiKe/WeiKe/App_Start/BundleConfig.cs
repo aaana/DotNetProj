@@ -44,11 +44,9 @@ namespace WeiKe
                 "~/Content/pblItem.css"));
 
             bundles.Add(new StyleBundle("~/publish/css").Include(
-                "~/Content/weike.css",
                 "~/Content/publish.css"));
 
             bundles.Add(new StyleBundle("~/personalPage/css").Include(
-                "~/Content/weike.css",
                 "~/Content/personalPage.css"));
 
             bundles.Add(new StyleBundle("~/auth/css").Include(

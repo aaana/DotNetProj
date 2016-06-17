@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微课 - 个人主页</title>
+    @Styles.Render("~/base/css")
+    @Styles.Render("~/personalPage/css")
+
+
+
+</head>
+<body>
+    @Html.Partial("WeikeNavPartial")
+    <div class="container body-content">
+
+        <div class="personalPageHead">
+            <img src="../resource/img/portrait.jpg" class="img-responsive img-circle">
+            <div>
+                <span>用户名</span>
+                <button class="btn btn-primary">关注</button>
+            </div>
+        </div>
+
+        <div>
+            <div class="personalPageSidebar col-md-4">
+                <div class="personalPageInfo">
+                    <span>个人信息</span>
+                    <div>
+                        <span>邮箱</span>
+                        <span>*********@@qq.com</span>
+                    </div>
+                    <div>
+                        <span>描述</span>
+                        <span>我是一个开朗乐观、积极向上的学生</span>
+                    </div>
+                    <div>
+                        <span>标签</span>
+                        <span>标签1 标签2</span>
+                    </div>
+
+                </div>
+                <div class="personalPageHotWeike">
+                    <span>热门微课</span>
+                    <div>
+                        <p>英语写作小技巧3</p>
+                        <p>2016-06-16 英语</p>
+                    </div>
+                    <div>
+                        <p>英语写作小技巧2</p>
+                        <p>2016-06-16 英语</p>
+                    </div>
+                    <div>
+                        <p>英语写作小技巧1</p>
+                        <p>2016-06-16 英语</p>
+                    </div>
+                </div>
+                <div class="personalPageCommonFollow" data-spy="affix" data-offset-top="668">
+                    <span>共同关注</span>
+                    <div>
+                        <div>
+                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                            <span>用户名1</span>
+                        </div>
+                        <div>
+                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                            <span>用户名1</span>
+                        </div>
+                        <div>
+                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                            <span>用户名1</span>
+                        </div>
+                        <div>
+                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                            <span>用户名1</span>
+                        </div>
+                        <div>
+                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                            <span>用户名1</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="personalPageMain col-md-8">
+                @RenderBody()
+            </div>
+        </div>
+        @Html.Partial("WeikeFooterPartial")
+
+    </div>
+</body>
+</html>
