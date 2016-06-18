@@ -42,139 +42,28 @@
                             </div>
                             <div class="description description--grid">
                                 <div class="weikeCellDetail">
-                                    <h4><em>@item.author</em></h4>
+                                    <div class="media" onclick="gotoPersonalPage(100)">
+                                        <div class="media-left">
+                                            <img src="resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(100)">
+                                        </div>
+                                        <div class="media-body">
+                                            <h4><em>@item.author</em></h4>
+                                        </div>
+                                    </div>
                                     <h3>@item.title</h3>
                                     <h4>@item.description</h4>
 
-                                    <div>
-                                        <a><span class="glyphicon glyphicon-heart"></span>@item.star</a>
-                                    </div>
-                                </div>
-                                <div class="weikeCellComment">
-                                    <div class="input-group input-group-sm">
-                                        <input type="text" class="form-control" placeholder="我来评论">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button">评论</button>
-                                        </span>
+                                    <div class="weikeId" id="200">
+                                        <a onclick="likeWeike(this)">点赞 <span>@item.star</span></a>
                                     </div>
                                 </div>
                                 <div class="weikeCellShowComment">
-                                    <a>查看评论</a>
+                                    <a onclick="showComment(this)">查看评论</a>
                                 </div>
                             </div>
                         </div>
                     }
 
-                    <div class="grid__item" data-size='1280x853'>
-                        <div class="thumbnail weikeCell">
-                            <a href="resource/img/8.jpg" class="img-wrap"><img src="resource/img/8.jpg"></a>
-                            <div class="weikeCellDes">
-                                <h3>英语写作小技巧</h3>
-                                <div class="weikeCellVote">
-                                    <h5>English</h5>
-                                    <span></span>
-                                    <span><span class="glyphicon glyphicon-heart"></span>40</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="description description--grid">
-                            <div class="weikeCellDetail">
-                                <h4><em>作者名</em></h4>
-                                <h3>英语写作小技巧</h3>
-                                <h4>英语写作有很多小技巧，有些技巧能使你的文章更有条理，有些能使文章更生动</h4>
-
-                                <div>
-                                    <a><span class="glyphicon glyphicon-heart"></span>40</a>
-                                </div>
-                            </div>
-
-                            <div class="weikeCellComment">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="我来评论">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">评论</button>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <ul class="media-list weikeCellCommentList">
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#">
-                                            <img class="media-object" src="resource/img/8.jpg">
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="media-heading">用户名1</h5>
-                                        <h6>评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h6>
-                                        <div class="weikeCellCommentReply">
-                                            <a>回复</a>
-                                        </div>
-
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <a href="#">
-                                                    <img class="media-object" src="resource/img/8.jpg">
-                                                </a>
-                                            </div>
-                                            <div class="media-body">
-                                                <h5 class="media-heading">用户名1</h5>
-                                                <h6>评论内容评论内容评论内容评论内容</h6>
-                                                <div class="weikeCellCommentReply">
-                                                    <a>回复</a>
-                                                </div>
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        <a href="#">
-                                                            <img class="media-object" src="resource/img/8.jpg">
-                                                        </a>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h5 class="media-heading">用户名1</h5>
-                                                        <h6>评论内容评论内容评论内容评论内容评论内容评论内容</h6>
-                                                        <div class="weikeCellCommentReply">
-                                                            <a>回复</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <a href="#">
-                                                    <img class="media-object" src="resource/img/8.jpg">
-                                                </a>
-                                            </div>
-                                            <div class="media-body">
-                                                <h5 class="media-heading">用户名1</h5>
-                                                <h6>评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容</h6>
-                                                <div class="weikeCellCommentReply">
-                                                    <a>回复</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </li>
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#">
-                                            <img class="media-object" src="resource/img/8.jpg">
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="media-heading">用户名1</h5>
-                                        <h6>评论内容评论内容评论内容评论内容评论内容</h6>
-                                        <div class="weikeCellCommentReply">
-                                            <a>回复</a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
                 <div class="preview">
                     <button class="action action--close"><h1>×</h1></button>
@@ -189,6 +78,15 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/public")
 
-    <script src="~/Scripts/custom/pblItem.js"></script>
+
 </body>
 </html>
+
+<script src="~/Scripts/custom/pblItem.js"></script>
+<script type="text/javascript" src="../Scripts/custom/helper.js"></script>
+<script>
+    var showComment = function (t) {
+        $(t).parent().hide();
+        showCommentDiv(t, $(t).parent());
+    }
+</script>

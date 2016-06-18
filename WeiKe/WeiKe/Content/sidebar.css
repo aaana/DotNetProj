@@ -83,7 +83,8 @@
     color: #888;
 }
 .sidebarUserInfo a > span {
-    transition: 1s;
+    -webkit-transition: .5s;
+    transition: .5s;
 }
 .sidebarUserInfo > a:hover > span, 
 .sidebarUserInfo > div:last-child > a:hover > span {

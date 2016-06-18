@@ -1,4 +1,7 @@
-﻿var showCommentDiv = function (t) {
+﻿var oriShowCommentListBtn = null;
+
+var showCommentDiv = function (t, oriBtn) {
+    oriShowCommentListBtn = oriBtn
 
     var weikeId = $(t).parent().parent().attr('id');
 
@@ -96,6 +99,19 @@ var setCommentDiv = function (commentList, target) {
     commentListDivNode.append('<a onclick="hideCommentListDiv(this)"><span class="glyphicon glyphicon-chevron-up"></span></a>');
 }
 
+var hideCommentListDiv = function (t) {
+    
+    if (oriShowCommentListBtn != null) {
+        $(oriShowCommentListBtn).show();
+        oriShowCommentListBtn = null;
+    } else {
+        
+        var top = document.body.scrollTop - $(t).parent().parent().height();
+        $(document.body).animate({ scrollTop: top }, 300);
+    }
+    $(t).parent().parent().remove();
+}
+
 var initCommentDiv = function (commentList, parentNode) {
     for (var index in commentList) {
         parentNode.append(initCommentTemplate(commentList[index]));
@@ -121,10 +137,6 @@ var initCommentTemplate = function (comment) {
                     '</div>' +
                 '</div>' +
             '</li>'
-}
-
-var hideCommentListDiv = function (t) {
-    $(t).parent().parent().remove();
 }
 
 var makeComment2weike = function (t) {
@@ -217,9 +229,8 @@ var hideComment2comment = function (t) {
     $(t).parents('.weikeCellComment').remove();
 }
 
-
 var likeWeike = function (t) {
-    var weikeId = $(t).parent().parent().attr('id');
+    var weikeId = $(t).parents('.weikeId').attr('id');
 
     $.ajax({
         type: "post",
@@ -243,7 +254,7 @@ var likeWeike = function (t) {
 }
 
 var dislikeWeike = function (t) {
-    var weikeId = $(t).parent().parent().attr('id');
+    var weikeId = $(t).parents('.weikeId').attr('id');
 
     $.ajax({
         type: "post",
