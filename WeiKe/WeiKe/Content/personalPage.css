@@ -102,6 +102,7 @@
     color: #777;
 }
 
+.personalPageHotWeike.affix,
 .personalPageCommonFollow.affix {
     top: 70px;
     width: 360px;
