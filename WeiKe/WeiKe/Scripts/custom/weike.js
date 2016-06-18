@@ -104,30 +104,39 @@ function pblSupport() {
             url:"/home/index",
             data:json,
             dataType:"json",
-            success:function(data){
-                for (var item in data) {
-                    $('.grid').append('<div class="grid__item" data-size=' + data[item].size + '>' +
-                        '<div class="weikeCell"> ' +
-                            '<h3>' + data[item].title + '</h3> ' +
-                            '<h6>' + data[item].subject + '</h6> ' +
-                            '<div class="thumbnail"> ' +
-                            '<a href=' + data[item].src + ' class="img-wrap"><img src=' + data[item].src + '></a> ' +
+            success: function (data) {
+                var success = data.success;
+                if (success) {
+                    var weikes = data.weikes;
+                    for (var item in weikes) {
+                        var weike = weikes[item].weike;
+                        var author = weikes[item].author;
+                        $('.grid').append('<div class="grid__item" data-size=' + weike.size + '>' +
+                            '<div class="weikeCell"> ' +
+                                '<h3>' + weike.title + '</h3> ' +
+                                '<h6>' + weike.subject + '</h6> ' +
+                                '<div class="thumbnail"> ' +
+                                '<a href=' + weike.src + ' class="img-wrap"><img src=' + weike.src + '></a> ' +
+                                '</div> ' +
+                                '<p><a class="btn" href="#" role="button">star</a></p> ' +
+                                '</div> ' +
+                                '<div class="description description--grid"> ' +
+                                '<h3>' + weike.title + '</h3> ' +
+                                '<p>' + weike.description + ' <em>&mdash; ' + author + '</em></p> ' +
+                                '<div class="details"> ' +
+                                '<ul> ' +
+                                '<li><i class="icon icon-camera"></i><span>' + weike.star + '</span></li> ' +
+                                '<li><i class="icon icon-focal_length"></i><span>' + weike.commentNum + '</span></li> ' +
+                                '</ul> ' +
+                                '</div> ' +
                             '</div> ' +
-                            '<p><a class="btn" href="#" role="button">star</a></p> ' +
-                            '</div> ' +
-                            '<div class="description description--grid"> ' +
-                            '<h3>' + data[item].title + '</h3> ' +
-                            '<p>' + data[item].description + ' <em>&mdash; ' + data[item].author + '</em></p> ' +
-                            '<div class="details"> ' +
-                            '<ul> ' +
-                            '<li><i class="icon icon-camera"></i><span>' + data[item].star + '</span></li> ' +
-                            '<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li> ' +
-                            '</ul> ' +
-                            '</div> ' +
-                        '</div> ' +
-                    '</div>');
+                        '</div>');
+                    }
+                    pblSupport();
+                } else {
+
                 }
-                pblSupport();
+               
             },
             error:function(XMLHttpRequest, textStatus, errorThrown) {
                 alert("error:" + XMLHttpRequest.status + " " + XMLHttpRequest.readyState + " " + textStatus);
@@ -149,7 +158,7 @@ function pblSupport() {
         '</div><!-- /preview -->' +
         '</div>' +
         '</div>');
-
+;
         var json = {};
         $.ajax({
             type:"post",
