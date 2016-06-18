@@ -25,7 +25,7 @@ namespace WeiKe.Controllers
             return View();
         }
 
-      [HttpPost]
+        [HttpPost]
         public ActionResult Index(string json)
         {
 

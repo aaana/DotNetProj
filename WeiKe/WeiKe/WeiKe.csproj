@@ -298,6 +298,9 @@
     <Content Include="Views\PersonalPage\PersonalPageLikes.cshtml" />
     <Content Include="Views\PersonalPage\PersonalPageFollows.cshtml" />
     <Content Include="Views\Publish\Index.cshtml" />
+    <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\Signup.cshtml" />
+    <Content Include="Views\Publish\Publish.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

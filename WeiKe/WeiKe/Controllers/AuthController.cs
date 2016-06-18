@@ -14,5 +14,33 @@ namespace WeiKe.Controllers
             ViewBag.authType = type;
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Login(string loginEmail, string loginPassword, string redirectPage)
+        {
+            // login with email and password
+
+
+            return RedirectToAction("Index", redirectPage);
+
+            // show value
+            //ViewBag.to = redirectPage;
+            //ViewBag.email = loginEmail;
+            //ViewBag.pw = loginPassword;
+            //return View();
+        }
+
+        [HttpPost]
+        public ActionResult Signup(string signupEmail, string name, string password, string verifyPassword, string redirectPage)
+        {
+            // sign up
+            return RedirectToAction("Index", redirectPage);
+
+            // show value
+            //ViewBag.to = redirectPage;
+            //ViewBag.email = signupEmail;
+            //ViewBag.pw = password;
+            //return View();
+        }
     }
 }

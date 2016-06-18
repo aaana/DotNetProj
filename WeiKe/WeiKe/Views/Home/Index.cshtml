@@ -26,78 +26,44 @@
             </div>
             <div class="js">
                 <div class="grid">
-                    <div class="grid__item" data-size='1280x853'>
-                        <div class="thumbnail weikeCell">
-                            <a href="../resource/img/8.jpg" class="img-wrap"><img src="../resource/img/8.jpg"></a>
-                            <div class="weikeCellDes">
-                                <h3>英语写作小技巧</h3>
-                                <div class="weikeCellVote">
-                                    <h5>English</h5>
-                                    <span></span>
-                                    <span><span class="glyphicon glyphicon-heart"></span>40</span>
+                    @foreach (var item in ViewBag.data)
+                    {
+                        <div class="grid__item" data-size=@item.size>
+                            <div class="thumbnail weikeCell">
+                                <a href=@item.src class="img-wrap"><img src=@item.src></a>
+                                <div class="weikeCellDes">
+                                    <h3>@item.title</h3>
+                                    <div class="weikeCellVote">
+                                        <h5>@item.subject</h5>
+                                        <span></span>
+                                        <span><span class="glyphicon glyphicon-heart"></span>@item.star</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="description description--grid">
-                            <div class="weikeCellDetail">
-                                <h4><em>作者名</em></h4>
-                                <h3>英语写作小技巧</h3>
-                                <h4>英语写作有很多小技巧，有些技巧能使你的文章更有条理，有些能使文章更生动</h4>
+                            <div class="description description--grid">
+                                <div class="weikeCellDetail">
+                                    <h4><em>@item.author</em></h4>
+                                    <h3>@item.title</h3>
+                                    <h4>@item.description</h4>
 
-                                <div>
-                                    <a><span class="glyphicon glyphicon-heart"></span>40</a>
+                                    <div>
+                                        <a><span class="glyphicon glyphicon-heart"></span>@item.star</a>
+                                    </div>
+                                </div>
+                                <div class="weikeCellComment">
+                                    <div class="input-group input-group-sm">
+                                        <input type="text" class="form-control" placeholder="我来评论">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">评论</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="weikeCellShowComment">
+                                    <a>查看评论</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="grid__item" data-size='1280x853'>
-                        <div class="thumbnail weikeCell">
-                            <a href="resource/img/8.jpg" class="img-wrap"><img src="resource/img/8.jpg"></a>
-                            <div class="weikeCellDes">
-                                <h3>英语写作小技巧</h3>
-                                <div class="weikeCellVote">
-                                    <h5>English</h5>
-                                    <span></span>
-                                    <span><span class="glyphicon glyphicon-heart"></span>40</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="description description--grid">
-                            <div class="weikeCellDetail">
-                                <h4><em>作者名</em></h4>
-                                <h3>英语写作小技巧</h3>
-                                <h4>英语写作有很多小技巧，有些技巧能使你的文章更有条理，有些能使文章更生动</h4>
-
-                                <div>
-                                    <a><span class="glyphicon glyphicon-heart"></span>40</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid__item" data-size='1280x853'>
-                        <div class="thumbnail weikeCell">
-                            <a href="resource/img/8.jpg" class="img-wrap"><img src="resource/img/8.jpg"></a>
-                            <div class="weikeCellDes">
-                                <h3>英语写作小技巧</h3>
-                                <div class="weikeCellVote">
-                                    <h5>English</h5>
-                                    <span></span>
-                                    <span><span class="glyphicon glyphicon-heart"></span>40</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="description description--grid">
-                            <div class="weikeCellDetail">
-                                <h4><em>作者名</em></h4>
-                                <h3>英语写作小技巧</h3>
-                                <h4>英语写作有很多小技巧，有些技巧能使你的文章更有条理，有些能使文章更生动</h4>
-
-                                <div>
-                                    <a><span class="glyphicon glyphicon-heart"></span>40</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    }
 
                     <div class="grid__item" data-size='1280x853'>
                         <div class="thumbnail weikeCell">

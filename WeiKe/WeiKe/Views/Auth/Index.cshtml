@@ -29,41 +29,44 @@
         {
             signupFormDisplay = "block";
         }
+        var redirctPage = ViewBag.redirectPage != null ? ViewBag.redirctPage : "Home";
     }
 
     <div class="container body-content">
-        <form class="form-login" action=""  style="display: @loginFormDisplay">
+        <form class="form-login" action="../Auth/Login" method="post"  style="display: @loginFormDisplay">
             <h2 class="form-login-heading">登陆</h2>
-            <input type="email" id="inputUserEmail" name="inputUserEmail" class="form-control" placeholder="邮箱" required="" autofocus="">
-            <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="密码" required="">
+            <input type="email" name="loginEmail" class="form-control inputUserEmail" placeholder="邮箱" required autofocus>
+            <input type="password" name="loginPassword" class="form-control inputPassword" placeholder="密码" required>
 
-            <button id="login_button" class="btn btn-lg btn-primary btn-block" type="submit">登陆</button>
+            <input type="hidden" name="redirectPage" value=@redirctPage>
+
+            <button id="login_button" class="btn btn-lg btn-primary btn-block">登陆</button>
             <div class="log_trans_sign">
                 <a href="javascript:void(0);" onclick="log_2_sign()">先去注册</a>
             </div>
         </form>
 
-        <form class="form-signup" style="display: @signupFormDisplay">
+        <form class="form-signup" action="../Auth/Signup" method="post"  style="display: @signupFormDisplay">
             <h2 class="form-signup-heading">注册</h2>
             <div class="form-group">
-                <input type="email" class="form-control" id="inputUserEmail" placeholder="邮箱" required="">
+                <input type="email" class="form-control inputUserEmail" name="signupEmail" placeholder="邮箱" required>
                 <img class="userVerify" src="" />
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="inputUserId" placeholder="用户名" required="">
+                <input type="text" class="form-control inputUserId" name="signupName" placeholder="用户名" required>
                 <img class="userVerify" src="" />
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="inputPassword" placeholder="密码" required="">
+                <input type="password" class="form-control inputUserPassword"name="signupPassword" placeholder="密码" required>
                 <img class="userVerify" src="" />
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="verifyPassword" placeholder="确认密码" required="">
+                <input type="password" class="form-control verifyPassword" placeholder="确认密码" required>
                 <img class="userVerify" src="" />
             </div>
+            <input type="hidden" name="redirectPage" value=@redirctPage>
 
-
-            <button id="signup_button" class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+            <button id="signup_button" class="btn btn-lg btn-primary btn-block">注册</button>
             <div class="sign_trans_log">
                 <a href="javascript:void(0);" onclick="sign_2_log()">我要登陆</a>
             </div>
@@ -98,50 +101,21 @@
             $('.form-signup .userVerify').attr('src', "");
         }
 
+        function validate_password() {
+            var password = $('.form-signup .inputUserPassword');
+            var confirm_password = $('.form-signup .verifyPassword');
 
-        function signup() {
-            if (validate_form(1) == ture) {
-                var json = {
-                    email: $('.form-signup .inputUserEmail').val(),
-                    name: $('.form-signup .inputUserName'),
-                    password: $('.form-signup .inputUserPassword').val(),
-                };
-                $.ajax({
-                    type: "post",
-                    url: "",
-                    data: json,
-                    dataType: "json",
-                    success: function (data) {
-
-                    },
-                    error: function () {
-
-                    }
-                });
+            if (password.val() != confirm_password.val()) {
+                confirm_password[0].setCustomValidity("两次密码不同");
+                //confirm_password[0].reportValidity();
+            } else {
+                confirm_password[0].setCustomValidity('');
             }
         }
-        function login() {
-            if (validate_form(0) == ture) {
-                var json = {
-                    email: $('.form-login .inputUserEmail').val(),
-                    password: $('.form-login .inputUserPassword').val()
-                };
-                $.ajax({
-                    type: "post",
-                    url: "",
-                    data: json,
-                    dataType: "json",
-                    success: function (data) {
+        $('.form-signup .inputUserPassword').change(validate_password);
+        $('.form-signup .verifyPassword').keyup(validate_password);
 
-                    },
-                    error: function () {
-
-                    }
-                });
-            }
-
-        }
-
+        // 暂时用不上
         function validate_email(input) {
             var value = input.val();
             apos = value.indexOf("@@");
@@ -187,6 +161,43 @@
                 return false;
             }
             return true;
+        }
+        function signup() {
+            if (validate_form(1) == ture) {
+                var json = {
+                    email: $('.form-signup .inputUserEmail').val(),
+                    name: $('.form-signup .inputUserName'),
+                    password: $('.form-signup .inputUserPassword').val(),
+                };
+                $.ajax({
+                    type: "post",
+                    url: "",
+                    data: json,
+                    dataType: "json",
+                    success: function (data) {
+                    },
+                    error: function () {
+                    }
+                });
+            }
+        }
+        function login() {
+            if (validate_form(0) == ture) {
+                var json = {
+                    email: $('.form-login .inputUserEmail').val(),
+                    password: $('.form-login .inputUserPassword').val()
+                };
+                $.ajax({
+                    type: "post",
+                    url: "",
+                    data: json,
+                    dataType: "json",
+                    success: function (data) {
+                    },
+                    error: function () {
+                    }
+                });
+            }
         }
     </script>
 </body>
