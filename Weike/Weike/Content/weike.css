@@ -1,8 +1,4 @@
-body {
-    padding-top: 60px;
-    background-color: #fff; 
-    font-family: "Arial","Microsoft YaHei","黑体",'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
+
 
 .list-group a {
 	border: none;
@@ -10,20 +6,6 @@ body {
 }
 .list-group a:last-child {
 	border-bottom: none;
-}
-.weikeList > div {
-	
-}
-.weikeCell {
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 5px 15px;
-}
-.weikeCell p {
-	text-align: right;
-}
-.weikeCell .thumbnail {
-	margin: 0;
 }
 .content {
 	color: #888;

@@ -208,6 +208,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    
+    <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\CommentActionController.cs" />
+    <Compile Include="Controllers\FollowActionController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LikeActionController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PersonalPageController.cs" />
+    <Compile Include="Controllers\PublishController.cs" />
+  
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\FavoriteController.cs" />
     <Compile Include="Controllers\FollowController.cs" />
@@ -216,6 +226,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+  
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -241,15 +252,20 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\log.css" />
-    <Content Include="Content\public\default.css" />
+    <Content Include="Content\bootstrap\bootstrap.css" />
+    <Content Include="Content\bootstrap\bootstrap.min.css" />
+    <Content Include="Content\auth.css" />
+    <Content Include="Content\pbl\default.css" />
+    <Content Include="Content\navBar.css" />
+    <Content Include="Content\pblItem.css" />
+    <Content Include="Content\personalPage.css" />
+    <Content Include="Content\publish.css" />
+    <Content Include="Content\sidebar.css" />
     <Content Include="Content\weike.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\bootstrap\Site.css" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -258,6 +274,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\custom\helper.js" />
+    <Content Include="Scripts\custom\pblItem.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -265,7 +283,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\log.js" />
+    <Content Include="Scripts\custom\log.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\public\classie.js" />
     <Content Include="Scripts\public\imagesloaded.pkgd.min.js" />
@@ -274,7 +292,7 @@
     <Content Include="Scripts\public\modernizr-custom.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\weike.js" />
+    <Content Include="Scripts\custom\weike.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -289,7 +307,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -311,10 +328,27 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\WeikeLayout.cshtml" />
+    <Content Include="Views\Shared\WeikeNavBarLoginPartial.cshtml" />
+    <Content Include="Views\Shared\WeiKeFooterPartial.cshtml" />
+    <Content Include="Views\Shared\WeikeNavPartial.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Playground.cshtml" />
+    <Content Include="Views\Auth\Index.cshtml" />
+    <Content Include="Views\Shared\WeikePersonalPageLayout.cshtml" />
+    <Content Include="Views\PersonalPage\PersonalPageWeike.cshtml" />
+    <Content Include="Views\PersonalPage\PersonalPageLikes.cshtml" />
+    <Content Include="Views\PersonalPage\PersonalPageFollows.cshtml" />
+    <Content Include="Views\Publish\Index.cshtml" />
+    <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\Signup.cshtml" />
+    <Content Include="Views\Publish\Publish.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="resource\img\" />
+    <Folder Include="Views\CommentAction\" />
+    <Folder Include="Views\FollowAction\" />
+    <Folder Include="Views\LikeAction\" />
     <Folder Include="Views\Comment\" />
     <Folder Include="Views\Favorite\" />
     <Folder Include="Views\Follow\" />

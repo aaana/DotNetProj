@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    @{ 
+        var str1 = ViewBag.to == null ? "to": "value: " + ViewBag.to;
+        var str2 = ViewBag.email == null ? "to" : "value: " + ViewBag.email;
+        var str3 = ViewBag.pw == null ? "to" : "value: " + ViewBag.pw;
+
+    }
+    <p>@str1 @str2 @str3</p>
+</body>
+</html>

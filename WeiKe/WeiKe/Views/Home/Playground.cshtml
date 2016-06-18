@@ -1,6 +1,5 @@
 ﻿@{
     Layout = null;
-    ViewBag.Title = "Home Page";
 }
 
 <!DOCTYPE html>
@@ -9,28 +8,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>微课-热门</title>
+    <title>微课-广场</title>
     @Styles.Render("~/base/css")
     @Styles.Render("~/weike/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     @Html.Partial("WeikeNavPartial")
     <div class="container body-content">
-        <div class="hotWeike_c content">
-            <div class="jumbotron">
-                <h1>微课</h1>
-                <p>在这里，有老师们精心挑选的资料；</p>
-                <p>在这里，有大家共同进步的快乐。</p>
-            </div>
+        <div class="col-xs-9 hotWeike_c content">
             <div class="js">
                 <div class="grid">
                     @foreach (var item in ViewBag.data)
                     {
                         <div class="grid__item" data-size=@item.size>
                             <div class="thumbnail weikeCell">
-                                <a href=@item.src class="img-wrap"><img src=@item.src></a>
+                                <a href="../@item.src" class="img-wrap"><img src="../@item.src"></a>
                                 <div class="weikeCellDes">
                                     <h3>@item.title</h3>
                                     <div class="weikeCellVote">
@@ -44,7 +37,7 @@
                                 <div class="weikeCellDetail">
                                     <div class="media" onclick="gotoPersonalPage(100)">
                                         <div class="media-left">
-                                            <img src="resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(100)">
+                                            <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(100)">
                                         </div>
                                         <div class="media-body">
                                             <h4><em>@item.author</em></h4>
@@ -71,13 +64,31 @@
                 </div>
             </div>
         </div>
+        <div class="col-xs-3">
+            <div id="sidebar" data-spy="affix">
+                <div class="sidebarUserInfo">
+                    <div>
+                        <a href="../PersonalPage/PersonalPageWeike"><img src="../resource/img/portrait.jpg" class="img-responsive img-circle"></a>
+                    </div>
+                    <a href="../PersonalPage/PersonalPageWeike"><span>@ViewBag.user["name"]</span></a>
+                    <div>
+                        <a href="../PersonalPage/PersonalPageFollows"><span>@ViewBag.user["followCount"]</span><span>关注</span></a>
+                        <a href="../PersonalPage/PersonalPageLikes"><span>@ViewBag.user["likeCount"]</span><span>收藏</span></a>
+                        <a href="../PersonalPage/PersonalPageWeike"><span>@ViewBag.user["weikeCount"]</span><span>微课</span></a>
+                    </div>
+                </div>
+                <div class="sidebarPublishBtn">
+                    <button onclick="window.location.href='../Publish/Publish?from=Home/Playground'">发布微课</button>
+                </div>
+            </div>
+        </div>
     </div>
+
     @Html.Partial("WeikeFooterPartial")
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/public")
-
 
 </body>
 </html>

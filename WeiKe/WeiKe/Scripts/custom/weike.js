@@ -2,7 +2,13 @@
 function pblSupport() {
     var support = { transitions: Modernizr.csstransitions },
     // transition end event name
-        transEndEventNames = { 'WebkitTransition': 'webkitTransitionEnd', 'MozTransition': 'transitionend', 'OTransition': 'oTransitionEnd', 'msTransition': 'MSTransitionEnd', 'transition': 'transitionend' },
+        transEndEventNames = {
+            'WebkitTransition': 'webkitTransitionEnd',
+            'MozTransition': 'transitionend',
+            'OTransition': 'oTransitionEnd',
+            'msTransition': 'MSTransitionEnd',
+            'transition': 'transitionend'
+        },
         transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ],
         onEndTransition = function( el, callback ) {
             var onEndCallbackFn = function( ev ) {
@@ -136,9 +142,9 @@ function pblSupport() {
                 alert("error:" + XMLHttpRequest.status + " " + XMLHttpRequest.readyState + " " + textStatus);
             }
         });
-
-       
     });
+
+
     $('.playground').click(function() {
         $(this).addClass('active').siblings().removeClass('active');
         $('.content').remove();
@@ -160,36 +166,29 @@ function pblSupport() {
             data:json,
             dataType:"json",
             success: function (data) {
-                var success = data.success;
-                if (success) {
-                    var list = data.cdList;
-                    for (var item in list) {
-                         $('.grid').append('<div class="grid__item" data-size=' + list[item].weike.size + '>' +
-                        '<div class="weikeCell"> ' +
-                        '<h3>' + list[item].weike.title + '</h3> ' +
-                        '<h6>' + list[item].weike.subject + '</h6> ' +
-                        '<div class="thumbnail"> ' +
-                        '<a href=' + list[item].weike.src + ' class="img-wrap"><img src=' + list[item].weike.src + '></a> ' +
-                        '</div> ' +
-                        '<p><a class="btn" href="#" role="button">star</a></p> ' +
-                        '</div> ' +
-                        '<div class="description description--grid"> ' +
-                        '<h3>' + list[item].weike.title + '</h3> ' +
-                        '<p>' + list[item].weike.description + ' <em>&mdash; ' + list[item].author + '</em></p> ' +
-                        '<div class="details"> ' +
-                        '<ul> ' +
-                        '<li><i class="icon icon-camera"></i><span>' + list[item].weike.star + '</span></li> ' +
-                        '<li><i class="icon icon-focal_length"></i><span>' + list[item].weike.commentNum + '</span></li> ' +
-                        '</ul> ' +
-                        '</div> ' +
-                        '</div> ' +
-                        '</div>');
-                    }
-                    pblSupport();
-                } else {
-                    alert("error")
-                }
-            
+                for (var item in data) {
+                $('.grid').append('<div class="grid__item" data-size=' + data[item].size + '>' +
+                '<div class="weikeCell"> ' +
+                '<h3>' + data[item].title + '</h3> ' +
+                '<h6>' + data[item].subject + '</h6> ' +
+                '<div class="thumbnail"> ' +
+                '<a class="img-wrap"><img src=' + data[item].src + '></a> ' +
+                '</div> ' +
+                '<p><a class="btn" href="#" role="button">star</a></p> ' +
+                '</div> ' +
+                '<div class="description description--grid"> ' +
+                '<h3>' + data[item].title + '</h3> ' +
+                '<p>' + data[item].description + ' <em>&mdash; ' + data[item].author + '</em></p> ' +
+                '<div class="details"> ' +
+                '<ul> ' +
+                '<li><i class="icon icon-camera"></i><span>' + data[item].star + '</span></li> ' +
+                '<li><i class="icon icon-focal_length"></i><span>22.5mm</span></li> ' +
+                '</ul> ' +
+                '</div> ' +
+                '</div> ' +
+                '</div>');
+            }
+            pblSupport();
                 
             },
             error:function(XMLHttpRequest, textStatus, errorThrown) {
@@ -199,6 +198,8 @@ function pblSupport() {
 
      
     });
+
+
     $('.myFollow').click(function() {
         $(this).addClass('active').siblings().removeClass('active');
         $('.content').remove();
