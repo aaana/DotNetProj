@@ -66,6 +66,7 @@
 
         $('.footerAddcom').animate({ bottom: '+=100px' });
     });
+
 };
 
 pblSupport();

@@ -179,13 +179,13 @@
             <div id="sidebar" data-spy="affix">
                 <div class="sidebarUserInfo">
                     <div>
-                        <a href="#"><img src="../resource/img/portrait.jpg" class="img-responsive img-circle"></a>
+                        <a href="../PersonalPage/PersonalPageWeike"><img src="../resource/img/portrait.jpg" class="img-responsive img-circle"></a>
                     </div>
-                    <a href="#"><span>用户名</span></a>
+                    <a href="../PersonalPage/PersonalPageWeike"><span>@ViewBag.user["name"]</span></a>
                     <div>
-                        <a href="#"><span>8</span><span>关注</span></a>
-                        <a href="#"><span>10</span><span>收藏</span></a>
-                        <a href="#"><span>1</span><span>微课</span></a>
+                        <a href="../PersonalPage/PersonalPageFollows"><span>@ViewBag.user["followCount"]</span><span>关注</span></a>
+                        <a href="../PersonalPage/PersonalPageLikes"><span>@ViewBag.user["likeCount"]</span><span>收藏</span></a>
+                        <a href="../PersonalPage/PersonalPageWeike"><span>@ViewBag.user["weikeCount"]</span><span>微课</span></a>
                     </div>
                 </div>
                 <div class="sidebarPublishBtn">
