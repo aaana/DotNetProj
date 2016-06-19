@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WeiKe.Models;
 
 namespace WeiKe.Controllers
 {
@@ -15,14 +16,14 @@ namespace WeiKe.Controllers
         }
 
         [HttpPost]
-        public ActionResult getCommentList(string weikeId)
+        public ActionResult getCommentList(int weikeId)
         {
             // get comment list
-
-            string commentList = "abc";
-            return Json(commentList);
+            List<NestedComment> data = NestedComment.getAllCommentsByWeikeId(weikeId);
+            ViewBag.data = data;
+            return Json(new { comments = data});
         }
-
+         
         [HttpPost]
         public ActionResult makeComment(string commentTargetId, string content)
         {

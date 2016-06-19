@@ -3,18 +3,21 @@
 var showCommentDiv = function (t, oriBtn) {
     oriShowCommentListBtn = oriBtn
 
-    var weikeId = $(t).parent().parent().attr('id');
-
+    //var weikeId = $(t).parent().parent().attr('id');
+    var weikeId = 1;
     $.ajax({
         type: "post",
         url: "../CommentAction/getCommentList",
-        data: weikeId,
+        data: {
+            "weikeId":weikeId
+        },
         dataType: "json",
         success: function (data) {
             console.log("get comment success");
+            var commentList = data.comments;
             // for example
             // required info
-            var commentList = [
+            /*var commentList = [
                 {
                     'id': 101,
                     'user': {
@@ -68,7 +71,7 @@ var showCommentDiv = function (t, oriBtn) {
                     'commentList': []
                 }
 
-            ];
+            ];*/
             setCommentDiv(commentList, $(t));
 
         },
@@ -112,32 +115,34 @@ var hideCommentListDiv = function (t) {
     $(t).parent().parent().remove();
 }
 
-var initCommentDiv = function (commentList, parentNode) {
-    for (var index in commentList) {
-        parentNode.append(initCommentTemplate(commentList[index]));
-
-        if (commentList[index].commentList.length > 0) {
-            initCommentDiv(commentList[index].commentList, parentNode.children('#' + commentList[index].id + ':last-child').children('.media-body'));
-        }
-    }
-}
-
-var initCommentTemplate = function (comment) {
-    return '<li class="media" id="' + comment.id + '">' +
+var initCommentTemplate = function (ncomment) {
+    return '<li class="media" id="' + ncomment.commentData.comment.user_id + '">' +
                 '<div class="media-left">' +
                 '<a href="#">' +
-                    '<img class="media-object" src="' + comment.user.imgSrc + '">' +
+                    '<img class="media-object" src="' + 'resource/img/portrait.jpg' + '">' +
                 '</a>' +
                 '</div>' +
                 '<div class="media-body">' +
-                    '<h5 class="media-heading">' + comment.user.name + ' <small>' + comment.time + '</small></h5>' +
-                    '<h6>' + comment.content + '</h6>' +
+                    '<h5 class="media-heading">' + ncomment.commentData.author + ' <small>' + ncomment.commentData.comment.date + '</small></h5>' +
+                    '<h6>' + ncomment.commentData.comment.content + '</h6>' +
                     '<div class="weikeCellCommentReply">' +
                         '<a onclick="showCommentInput(this)">回复</a>' +
                     '</div>' +
                 '</div>' +
             '</li>'
 }
+
+var initCommentDiv = function (commentList, parentNode) {
+    for (var index in commentList) {
+        parentNode.append(initCommentTemplate(commentList[index]));
+
+        if (commentList[index].nestedComments.length > 0) {
+            initCommentDiv(commentList[index].nestedComments, parentNode.children('#' + commentList[index].commentData.comment.user_id + ':last-child').children('.media-body'));
+        }
+    }
+}
+
+
 
 var makeComment2weike = function (t) {
     var content = $(t).parent().prev().val();
@@ -240,12 +245,18 @@ var likeWeike = function (t) {
         },
         dataType: "json",
         success: function (data) {
-            console.log(data);
-            var count = parseInt($(t).children('span').text()) + 1;
-            $(t).children('span').text(parseInt($(t).children('span').text()) + 1);
-            $(t).html("已赞 <span>" + count + "</span>");
-            $(t).css('color', 'white');
-            $(t).attr('onclick', 'dislikeWeike(this)');
+            if (data.success) {
+                console.log(data);
+                var count = parseInt($(t).children('span').text()) + 1;
+                $(t).children('span').text(parseInt($(t).children('span').text()) + 1);
+                $(t).html("已赞 <span>" + count + "</span>");
+                $(t).css('color', 'white');
+                $(t).attr('onclick', 'dislikeWeike(this)');
+            } else {
+                alert("请先登录！");
+                location: "../Auth/Index/0"
+            }
+           
         },
         error: function () {
 

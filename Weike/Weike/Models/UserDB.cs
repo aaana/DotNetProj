@@ -8,7 +8,7 @@ namespace WeiKe.Models
 {
     public class UserDB
     {
-        //0 -> 信息不完整 1-> 成功 -1 -> 已存在
+        //0 -> 信息不完整 >=1-> 成功 -1 -> 已存在
         public static int Insert(int id, string email, string name, string password)
         {
             int result = 0;
@@ -17,12 +17,22 @@ namespace WeiKe.Models
                 if (FindByEmail(email) == null)
                 {
                    
-                    string sql = "insert into user VALUES (" + id + ",'" + email + "','" + name + "','" + password + ")";
+                    string sql = "insert into user VALUES (" + id + ",'" + email + "','" + name + "','" + password + "'," + 0 + "," + 0+ "," + 0 + ")";
                     MySqlConnection conn = Connection.getMySqlCon();
                     conn.Open();
                     MySqlCommand cmd = conn.CreateCommand();
                     cmd.CommandText = sql;
-                    result =  cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                    sql = "select * from user where email = @email";
+                    cmd.CommandText = sql;
+                    cmd.Parameters.AddWithValue("@email", email);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        User user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"),(int)reader["followNum"],(int)reader["favoriteNum"],(int)reader["postNum"]);
+                        result = user.id;
+                    }
+                    reader.Close();
                     conn.Close();
                 }
                 else
@@ -90,7 +100,7 @@ namespace WeiKe.Models
 
             if (reader.Read())
             {
-                user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"));
+                user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"), (int)reader["followNum"], (int)reader["favoriteNum"], (int)reader["postNum"]);
             }
             reader.Close();
             conn.Close();
@@ -110,7 +120,7 @@ namespace WeiKe.Models
 
             if (reader.Read())
             {
-                user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"));
+                user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"), (int)reader["followNum"], (int)reader["favoriteNum"], (int)reader["postNum"]);
             }
             reader.Close();
             conn.Close();

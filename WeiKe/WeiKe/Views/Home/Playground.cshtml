@@ -21,15 +21,15 @@
                 <div class="grid">
                     @foreach (var item in ViewBag.data)
                     {
-                        <div class="grid__item" data-size=@item.size>
+                        <div class="grid__item" data-size=@item.weike.size>
                             <div class="thumbnail weikeCell">
-                                <a href="../@item.src" class="img-wrap"><img src="../@item.src"></a>
+                                <a href="../@item.weike.src" class="img-wrap"><img src="../@item.weike.src"></a>
                                 <div class="weikeCellDes">
-                                    <h3>@item.title</h3>
+                                    <h3>@item.weike.title</h3>
                                     <div class="weikeCellVote">
-                                        <h5>@item.subject</h5>
+                                        <h5>@item.weike.subject</h5>
                                         <span></span>
-                                        <span><span class="glyphicon glyphicon-heart"></span>@item.star</span>
+                                        <span><span class="glyphicon glyphicon-heart"></span>@item.weike.star</span>
                                     </div>
                                 </div>
                             </div>
@@ -43,11 +43,11 @@
                                             <h4><em>@item.author</em></h4>
                                         </div>
                                     </div>
-                                    <h3>@item.title</h3>
-                                    <h4>@item.description</h4>
+                                    <h3>@item.weike.title</h3>
+                                    <h4>@item.weike.description</h4>
 
-                                    <div class="weikeId" id="200">
-                                        <a onclick="likeWeike(this)">点赞 <span>@item.star</span></a>
+                                    <div class="weikeId" id="@item.weike.weike_id">
+                                        <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
                                     </div>
                                 </div>
                                 <div class="weikeCellShowComment">
@@ -70,11 +70,11 @@
                     <div>
                         <a href="../PersonalPage/PersonalPageWeike"><img src="../resource/img/portrait.jpg" class="img-responsive img-circle"></a>
                     </div>
-                    <a href="../PersonalPage/PersonalPageWeike"><span>@ViewBag.user["name"]</span></a>
+                    <a href="../PersonalPage/PersonalPageWeike"><span>@ViewBag.user.name</span></a>
                     <div>
-                        <a href="../PersonalPage/PersonalPageFollows"><span>@ViewBag.user["followCount"]</span><span>关注</span></a>
-                        <a href="../PersonalPage/PersonalPageLikes"><span>@ViewBag.user["likeCount"]</span><span>收藏</span></a>
-                        <a href="../PersonalPage/PersonalPageWeike"><span>@ViewBag.user["weikeCount"]</span><span>微课</span></a>
+                        <a href="../PersonalPage/PersonalPageFollows"><span>@ViewBag.user.followNum</span><span>关注</span></a>
+                        <a href="../PersonalPage/PersonalPageLikes"><span>@ViewBag.user.favoriteNum</span><span>收藏</span></a>
+                        <a href="../PersonalPage/PersonalPageWeike"><span>@ViewBag.user.postNum</span><span>微课</span></a>
                     </div>
                 </div>
                 <div class="sidebarPublishBtn">

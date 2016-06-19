@@ -14,7 +14,16 @@
     @Scripts.Render("~/bundles/modernizr")
     <style type="text/css">
         
-    </style>
+    </style> 
+
+    <script>
+        var status = @ViewBag.status;
+        if(status==-1){
+            alert("邮箱未注册，请先注册！");
+        }else if(alert==0){
+            alert("密码错误，请重新登陆！");
+        }
+    </script>
 
 </head>
 <body>

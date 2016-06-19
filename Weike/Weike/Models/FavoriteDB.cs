@@ -17,6 +17,10 @@ namespace WeiKe.Models
             MySqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
+            sql = "update weike set star = star+1 where weike_id = @weike_id";
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@weike_id", favorite.weike_id);
+            cmd.ExecuteNonQuery();
             conn.Close();
         }
 
@@ -29,6 +33,10 @@ namespace WeiKe.Models
             cmd.CommandText = sql;
             cmd.Parameters.AddWithValue("@userid", user_id);
             cmd.Parameters.AddWithValue("@weikeid", weike_id);
+            cmd.ExecuteNonQuery();
+            sql = "update weike set star = star-1 where weike_id = @weike_id";
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@weike_id", weike_id);
             cmd.ExecuteNonQuery();
             conn.Close();
         }
@@ -47,7 +55,7 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"],(DateTime)reader["postdate"], (int)reader["commentNum"]);
-                FavoriteData fd = new FavoriteData( weike, (string)reader["name"],(DateTime)reader["fdate"]);
+                FavoriteData fd = new FavoriteData( weike, (string)reader["name"],(DateTime)reader["date"]);
                 fdList.Add(fd);
 
             }

@@ -7,8 +7,8 @@ namespace WeiKe.Models
 {
     public class NestedComment
     {
-        CommentData commentData;
-        List<NestedComment> nestedComments = new List<NestedComment>();
+        public CommentData commentData { get; set; }
+        public List<NestedComment> nestedComments { get; set; }
 
         public NestedComment(CommentData commentData, List<NestedComment> nestedComments)
         {
@@ -43,7 +43,7 @@ namespace WeiKe.Models
         static private List<NestedComment> getNestedComments(List<CommentData> cdList, int comment_id)
         {
             Boolean isLast = true;
-            List<NestedComment> nestedComments = null;
+            List<NestedComment> nestedComments = new List<NestedComment>();
             foreach(CommentData cd in cdList)
             {
                 if (cd.comment.parent == comment_id)

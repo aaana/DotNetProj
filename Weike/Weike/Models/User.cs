@@ -12,14 +12,19 @@ namespace WeiKe.Models
         public string email { get; set; }
         public string name { get; set; }
         public string password { get; set; }
+        public int followNum { get; set; }
+        public int favoriteNum { get; set; }
+        public int postNum { get; set; }
 
-
-        public User(int id, string email, string name, string password)
+        public User(int id, string email, string name, string password,int followNum,int favoriteNum,int postNum)
         {
             this.id = id;
             this.email = email;
             this.name = name;
             this.password = password;
+            this.followNum = followNum;
+            this.favoriteNum = favoriteNum;
+            this.postNum = postNum;
         }
     }
 
