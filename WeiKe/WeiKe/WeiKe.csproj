@@ -208,6 +208,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CommentActionController.cs" />
     <Compile Include="Controllers\FollowActionController.cs" />
@@ -216,12 +217,16 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonalPageController.cs" />
     <Compile Include="Controllers\PublishController.cs" />
+  
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\FavoriteController.cs" />
     <Compile Include="Controllers\FollowController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+  
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -342,11 +347,11 @@
     <Folder Include="App_Data\" />
     <Folder Include="resource\img\" />
     <Folder Include="Views\CommentAction\" />
+    <Folder Include="Views\FollowAction\" />
+    <Folder Include="Views\LikeAction\" />
     <Folder Include="Views\Comment\" />
     <Folder Include="Views\Favorite\" />
-    <Folder Include="Views\FollowAction\" />
     <Folder Include="Views\Follow\" />
-    <Folder Include="Views\LikeAction\" />
     <Folder Include="Views\Login\" />
     <Folder Include="Views\Search\" />
     <Folder Include="Views\User\" />
