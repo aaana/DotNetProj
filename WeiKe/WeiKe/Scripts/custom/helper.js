@@ -116,14 +116,14 @@ var hideCommentListDiv = function (t) {
 }
 
 var initCommentTemplate = function (ncomment) {
-    return '<li class="media" id="' + ncomment.commentData.comment.user_id + '">' +
+    return '<li class="media" id="' + ncomment.commentData.comment.comment_id + '">' +
                 '<div class="media-left">' +
                 '<a href="#">' +
                     '<img class="media-object" src="' + 'resource/img/portrait.jpg' + '">' +
                 '</a>' +
                 '</div>' +
                 '<div class="media-body">' +
-                    '<h5 class="media-heading">' + ncomment.commentData.author + ' <small>' + ncomment.commentData.comment.date + '</small></h5>' +
+                    '<h5 class="media-heading">' + ncomment.commentData.commenter + ' <small>' + ncomment.commentData.comment.date + '</small></h5>' +
                     '<h6>' + ncomment.commentData.comment.content + '</h6>' +
                     '<div class="weikeCellCommentReply">' +
                         '<a onclick="showCommentInput(this)">回复</a>' +
@@ -137,7 +137,7 @@ var initCommentDiv = function (commentList, parentNode) {
         parentNode.append(initCommentTemplate(commentList[index]));
 
         if (commentList[index].nestedComments.length > 0) {
-            initCommentDiv(commentList[index].nestedComments, parentNode.children('#' + commentList[index].commentData.comment.user_id + ':last-child').children('.media-body'));
+            initCommentDiv(commentList[index].nestedComments, parentNode.children('#' + commentList[index].commentData.comment.comment_id + ':last-child').children('.media-body'));
         }
     }
 }
@@ -146,28 +146,45 @@ var initCommentDiv = function (commentList, parentNode) {
 
 var makeComment2weike = function (t) {
     var content = $(t).parent().prev().val();
-    var commentTargetId = "0";
+    var commentTargetId = 0;
+    var weikeId = 1;
     var info = {
         "commentTargetId": commentTargetId,
-        "content": content
+        "content": content,
+        "weikeId": weikeId
     };
     var success = function (data) {
-        console.log(data);
-        var time = new Date();
-        var data = {
-            'comment': {
-                'id': data,
-                'user': {
-                    'name': '用户名3',
-                    'imgSrc': '../resource/img/8.jpg'
-                },
-                'time': time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes(),
-                'content': content,
-                'commentList': []
+        if (data.success == -1) {
+            alert("不能对自己回复！");
+        } else if (data.success == 0) {
+            alert("请先登录！");
+            location = "../Auth?type=0";
+        } else {
+            console.log(data);
+            var time = new Date();
+            var commentInfo = {
+                'comment': {
+                    'commentData':{
+                        'comment':{
+                            comment_id:data.commentId,
+                            date:data.now,
+                            content:content
+                        },
+                        'commenter':data.username
+                    },
+                   // 'user': {
+                   //     'name': data.username,
+                   //     'imgSrc': '../resource/img/8.jpg'
+                   // },
+                   // 'time': time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes(),
+                   // 'content': content,
+                    'commentList': []
+                }
             }
         }
+     
 
-        var comment = data.comment;
+        var comment = info.comment;
         $(t).parent().prev().val('');
         $(t).parents('.weikeCellComment').next().children('a').before(initCommentTemplate(comment));
     }
@@ -201,27 +218,44 @@ var showCommentInput = function (t) {
 var makeComment2comment = function (t) {
     var commentTargetId = $($(t).parents('.media')[0]).attr('id');
     var content = $(t).parent().prev().val();
+    var weikeId = 1;
     var info = {
         "commentTargetId": commentTargetId,
-        "content": content
+        "content": content,
+        "weikeId":weikeId
     };
     var success = function (data) {
-        console.log(data);
-        var time = new Date();
-        var data = {
-            'comment': {
-                'id': data,
-                'user': {
-                    'name': '用户名3',
-                    'imgSrc': '../resource/img/8.jpg'
-                },
-                'time': time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes(),
-                'content': content,
-                'commentList': []
+        if (data.success == -1) {
+            alert("不能对自己回复！");
+        } else if (data.success == 0) {
+            alert("请先登录！");
+            location = "../Auth?type=0";
+        } else {
+            console.log(data);
+            var time = new Date();
+            var commentInfo = {
+                'comment': {
+                    'commentData': {
+                        'comment': {
+                            comment_id: data.commentId,
+                            date: data.now,
+                            content: content
+                        },
+                        'commenter': data.username
+                    },
+                    // 'user': {
+                    //     'name': data.username,
+                    //     'imgSrc': '../resource/img/8.jpg'
+                    // },
+                    // 'time': time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes(),
+                    // 'content': content,
+                    'commentList': []
+                }
             }
         }
 
-        var comment = data.comment;
+
+        var comment = commentInfo.comment;
         $(t).parent().prev().val('');
         $($(t).parents('.media-body')[0]).append(initCommentTemplate(comment));
         hideComment2comment(t);

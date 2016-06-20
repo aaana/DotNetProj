@@ -8,8 +8,9 @@ namespace WeiKe.Models
 {
     public class CommentDB
     {
-        public static void Insert(Comment comment)
+        public static int Insert(Comment comment)
         {
+            int result = 0;
             //string sql = "insert into comment VALUES (" + comment.comment_id + "," + comment.user_id + "," + comment.weike_id + ",'" + comment.date + "','" + comment.content + "',"+comment.isread+ ")";string sql = "insert into comment VALUES (" + comment.comment_id + "," + comment.user_id + "," + comment.weike_id + ",'" + comment.date + "','" + comment.content + "',"+comment.isread+ ")";
             string sql = "insert into comment VALUES (" + comment.comment_id + "," + comment.user_id + "," + comment.weike_id + ",'" + comment.date + "','" + comment.content + "',"+comment.parent+ ")";
             MySqlConnection conn = Connection.getMySqlCon();
@@ -17,7 +18,25 @@ namespace WeiKe.Models
             MySqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
+            sql = "update weike set commentNum = commentNum+1 where weike_id = @weike_id";
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@weike_id", comment.weike_id);
+            cmd.ExecuteNonQuery();
+            sql = "update user set commentNum = commentNum+1 where user_id = @user_id";
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@user_id", comment.user_id);
+            cmd.ExecuteNonQuery();
+            sql = "select comment_id from comment order by comment_id DESC limit 1";
+            cmd.CommandText = sql;
+            MySqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                result = (int)reader[0];
+            }
+            reader.Close();
             conn.Close();
+            conn.Close();
+            return result;
 
         }
 
@@ -31,6 +50,25 @@ namespace WeiKe.Models
             cmd.Parameters.AddWithValue("@id", comment_id);
             cmd.ExecuteNonQuery();
             conn.Close();
+        }
+
+        public static Comment FindCommentById(int comment_id)
+        {
+            Comment comment = null;
+            string sql = "select * from comment where comment_id = @id";
+            MySqlConnection conn = Connection.getMySqlCon();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@id", comment_id);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                comment = new Comment((int)reader["comment_id"], (int)reader["user_id"], (int)reader["weike_id"], (DateTime)reader["date"], reader.GetString("content"));
+            }
+            reader.Close();
+            conn.Close();
+            return comment;
         }
 
         static public List<CommentData> FindCommentDataByUserId(int user_id)
@@ -60,7 +98,7 @@ namespace WeiKe.Models
         static public List<CommentData> FindCommentDataByWeikeId(int weike_id)
         {
             List<CommentData> cdList = new List<CommentData>();
-            string sql = "select weike.weike_id ,weike.title,weike.subject,weike.user_id as author_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum, comment.comment_id,comment.user_id as commenter_id,comment.date,comment.content,comment.parent,user1.name as author, user2.name as commenter from weike inner join comment inner join user as user1 inner join user as user2 where comment.weike_id = weike.weike_id and user1.user_id = weike.user_id and user2.user_id = comment.user_id and comment.weike_id = @weikeid order by comment.date desc;";
+            string sql = "select weike.weike_id ,weike.title,weike.subject,weike.user_id as author_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum, comment.comment_id,comment.user_id as commenter_id,comment.date,comment.content,comment.parent,user1.name as author, user2.name as commenter from weike inner join comment inner join user as user1 inner join user as user2 where comment.weike_id = weike.weike_id and user1.user_id = weike.user_id and user2.user_id = comment.user_id and comment.weike_id = @weikeid;";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();

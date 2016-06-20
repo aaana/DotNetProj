@@ -216,7 +216,7 @@ namespace WeiKe.Models
             cmd.Parameters.AddWithValue("@id", weike_id);
             MySqlDataReader reader = cmd.ExecuteReader();
 
-            while (reader.Read())
+            if (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
                 WeikeData wd = new WeikeData(weike, reader.GetString("name"));
@@ -225,6 +225,29 @@ namespace WeiKe.Models
             reader.Close();
             conn.Close();
             return weikeData;
+
+        }
+
+        public static List<WeikeData> FindByUserId(int user_id)
+        {
+            List<WeikeData> wdList = new List<WeikeData>();
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike natural join user where user_id = @id";
+            MySqlConnection conn = Connection.getMySqlCon();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@id", user_id);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                wdList.Add(wd);
+            }
+            reader.Close();
+            conn.Close();
+            return wdList;
 
         }
         /*

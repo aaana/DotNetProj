@@ -61,7 +61,7 @@
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="Manage/Index">@(((User)Session["user"]).name)</a>
                 <ul class="dropdown-menu">
-                    <li><a href="..PersonalPage/PersonalPageWeike">个人主页</a></li>
+                    <li><a href="../PersonalPage/PersonalPageWeike?userId=@(((User)Session["user"]).id)">个人主页</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="../PersonalPage/PersonalPageLikes">我的关注</a></li>
                     <li><a href="../PersonalPage/PersonalPageFollows">我的收藏</a></li>

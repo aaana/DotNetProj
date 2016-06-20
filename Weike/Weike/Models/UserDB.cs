@@ -29,7 +29,7 @@ namespace WeiKe.Models
                     MySqlDataReader reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
-                        User user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"),(int)reader["followNum"],(int)reader["favoriteNum"],(int)reader["postNum"]);
+                        User user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"),(int)reader["followNum"],(int)reader["favoriteNum"],(int)reader["postNum"], reader.GetString("des"), reader.GetString("tag"));
                         result = user.id;
                     }
                     reader.Close();
@@ -100,7 +100,7 @@ namespace WeiKe.Models
 
             if (reader.Read())
             {
-                user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"), (int)reader["followNum"], (int)reader["favoriteNum"], (int)reader["postNum"]);
+                user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"), (int)reader["followNum"], (int)reader["favoriteNum"], (int)reader["postNum"], reader.GetString("des"), reader.GetString("tag"));
             }
             reader.Close();
             conn.Close();
@@ -120,7 +120,7 @@ namespace WeiKe.Models
 
             if (reader.Read())
             {
-                user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"), (int)reader["followNum"], (int)reader["favoriteNum"], (int)reader["postNum"]);
+                user = new User((int)reader["user_id"], reader.GetString("email"), reader.GetString("name"), reader.GetString("password"), (int)reader["followNum"], (int)reader["favoriteNum"], (int)reader["postNum"], reader.GetString("des"), reader.GetString("tag"));
             }
             reader.Close();
             conn.Close();
