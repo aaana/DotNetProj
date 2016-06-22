@@ -211,6 +211,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CommentActionController.cs" />
+    <Compile Include="Controllers\MyFileController.cs" />
     <Compile Include="Controllers\FollowActionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LikeActionController.cs" />
@@ -234,6 +235,8 @@
     <Compile Include="Models\Data.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\FavoriteDB.cs" />
+    <Compile Include="Models\MyFile.cs" />
+    <Compile Include="Models\MyFileDB.cs" />
     <Compile Include="Models\Follow.cs" />
     <Compile Include="Models\FollowDB.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -339,6 +342,8 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\Signup.cshtml" />
     <Content Include="Views\Publish\Publish.cshtml" />
+    <Content Include="Views\MyFile\Index.cshtml" />
+    <Content Include="Views\MyFile\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
