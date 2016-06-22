@@ -39,13 +39,13 @@ namespace WeiKe.Controllers
                     {
                         return Json(new { success = -1 });
                     }
-                    Notice notice = new Notice(0, user_id,parent_userId,weikeId,"reply",false);
+                    Notice notice = new Notice(0, user_id,parent_userId,weikeId,"reply",false,DateTime.Now);
                     NoticeDB.Insert(notice);
                 }
                 else
                 {
                     int userId = WeikeDB.FindByWeikeId(weikeId).weike.user_id;
-                    Notice notice = new Notice(0, user_id, userId, weikeId, "comment", false);
+                    Notice notice = new Notice(0, user_id, userId, weikeId, "comment", false,DateTime.Now);
                     NoticeDB.Insert(notice);
                 }
                 DateTime now = DateTime.Now;
