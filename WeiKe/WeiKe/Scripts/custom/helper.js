@@ -94,7 +94,7 @@ var initCommentDiv = function (commentList, parentNode) {
 var makeComment2weike = function (t) {
     var content = $(t).parent().prev().val();
     var commentTargetId = 0;
-    var weikeId = 1;
+    var weikeId = $(t).parents('.personalPageContentItemComment').prev().attr('id');
     var info = {
         "commentTargetId": commentTargetId,
         "content": content,
@@ -165,7 +165,7 @@ var showCommentInput = function (t) {
 var makeComment2comment = function (t) {
     var commentTargetId = $($(t).parents('.media')[0]).attr('id');
     var content = $(t).parent().prev().val();
-    var weikeId = 1;
+    var weikeId = $(t).parents('.personalPageContentItemComment').prev().attr('id');
     var info = {
         "commentTargetId": commentTargetId,
         "content": content,

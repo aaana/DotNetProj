@@ -61,5 +61,23 @@ namespace WeiKe.Controllers
             // id of the new comment
            
         }
+
+        [HttpPost]
+        public ActionResult WeikeDetailWithComment(int weikeId)
+        {
+            WeikeData weikeDetail = WeikeDB.FindByWeikeId(weikeId);
+            List<NestedComment> comments = NestedComment.getAllCommentsByWeikeId(weikeId);
+            User user = (User)Session["user"];
+            List<FavoriteData> FavoriteWeikeList = FavoriteDB.FindFavoriteWeikeByUserId(user.id);
+            bool hasFavorited = false;
+            foreach (FavoriteData fw in FavoriteWeikeList)
+            {
+                if (weikeId == fw.weike.weike_id)
+                {
+                    hasFavorited = true;
+                }
+            }
+            return Json(new { weikeData = weikeDetail, comments = comments, hasFavorited = hasFavorited });
+        }
     }
 }

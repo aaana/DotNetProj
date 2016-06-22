@@ -1,0 +1,314 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微课-消息</title>
+    @Styles.Render("~/base/css")
+    @Styles.Render("~/weike/css")
+    @Styles.Render("~/message/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @Html.Partial("WeikeNavPartial")
+    <div class="container body-content">
+        <div class="col-xs-9 hotWeike_c content">
+            @{ 
+                string class1 = "", class2 = "", class3 = "", class4 = "", class5 = "";
+                string class21 = "", class22 = "", class23 = "", class24 = "", class25 = "";
+                string type = ViewBag.type;
+                switch (type)
+                {
+                    case "1": class1 = "active"; class21 = "active in"; break;
+                    case "2": class2 = "active"; class22 = "active in"; break;
+                    case "3": class3 = "active"; class23 = "active in"; break;
+                    case "4": class4 = "active"; class24 = "active in"; break;
+                    case "5": class5 = "active"; class25 = "active in"; break;
+                }
+             }
+            <ul class="nav nav-tabs tabNav">
+                <li class=@class1><a data-toggle="tab" href="#favoriteMessageList">关注消息</a></li>
+                <li class=@class2><a data-toggle="tab" href="#commentMessageList">评论消息</a></li>
+                <li class=@class3><a data-toggle="tab" href="#upMessageList">点赞消息</a></li>
+                <li class=@class4><a data-toggle="tab" href="#replyMessageList">回复消息</a></li>
+                <li class=@class5><a data-toggle="tab" href="#reviewMessageList">微课审核信息</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="personalPageContentItem messageList tab-pane fade @class21" id="favoriteMessageList">
+                        @if (ViewBag.followNotice.Count + ViewBag.unfollowNotice.Count == 0)
+                        {
+                            <p>没有未读的关注消息</p>
+                        }
+                        @foreach (var item in ViewBag.followNotice)
+                        {
+                        <div class="media"  id=@item.notice.notice_id  onclick="gotoPersonalPage(@item.notice.sender_id)">
+                            <div class="media-left">
+                                <img src="../resource/img/portrait.jpg" class="img-circle">
+                            </div>
+                            <div class="media-body">
+                                <div>
+                                    <div>
+                                        <p><b>@item.name</b> <small>2016-06-20</small></p>
+                                        <p>他关注了你</p>
+                                    </div>
+                                    <div></div>
+                                    <div>
+                                        <button class="btn btn-primary" onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                        @foreach (var item in ViewBag.unfollowNotice)
+                        {
+                            <div class="media"  onclick="gotoPersonalPage(@item.notice.sender_id)">
+                                <div class="media-left">
+                                    <img src="../resource/img/portrait.jpg" class="img-circle">
+                                </div>
+                                <div class="media-body">
+                                    <div>
+                                        <div>
+                                            <p><b>@item.name</b> <small>2016-06-20</small></p>
+                                            <p>他取注了你</p>
+                                        </div>
+                                        <div></div>
+                                        <div  id=@item.notice.notice_id>
+                                            <button class="btn btn-primary" onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                <div class="personalPageContentItem messageList tab-pane fade @class22" id="commentMessageList">
+                @if (ViewBag.commentNotice.Count == 0)
+                {
+                    <p>没有未读的评论消息</p>
+                }
+                @foreach (var item in ViewBag.commentNotice)
+                {
+                    <div class="media"   id=@item.notice.weike_id  onclick="showModal(this)">
+                        <div class="media-left" id=@item.notice.notice_id>
+                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                        </div>
+                        <div class="media-body">
+                            <div onclick="showModal(this)">
+                                <div>
+                                    <span><b>@item.name</b> <small>2016-06-20</small></span>
+                                    <p>他评论了你的微课：<span>@item.title</span></p>
+                                </div>
+                                <div></div>
+                                <div>
+                                    <button class="btn btn-primary" id=@item.notice.weike_id onclick="showModal(this)">查看详情</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+                <div class="personalPageContentItem messageList tab-pane fade @class23" id="upMessageList">
+                @if (ViewBag.likeNotice.Count + ViewBag.unlikeNotice.Count == 0)
+                {
+                    <p>没有未读的点赞消息</p>
+                }
+                @foreach (var item in ViewBag.likeNotice)
+                {
+                    <div class="media"  id=@item.notice.weike_id  onclick="gotoPersonalPage(@item.notice.sender_id)">
+                        <div class="media-left"  id=@item.notice.notice_id>
+                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                        </div>
+                        <div class="media-body">
+                            <div>
+                                <div>
+                                    <p><b>@item.name</b> <small>2016-06-20</small></p>
+                                    <p>他赞了你的微课：<span>@item.title</span></p>
+                                </div>
+                                <div></div>
+                                <div>
+                                    <button class="btn btn-primary" id=@item.notice.weike_id  onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    @foreach (var item in ViewBag.unlikeNotice)
+                {
+                        <div class="media" id=@item.notice.notice_id   onclick="gotoPersonalPage(@item.notice.sender_id)">
+                            <div class="media-left">
+                                <img src="http://img0.pconline.com.cn/pconline/1408/11/5254676_1407293-2_thumb.jpg" class=" img-circle">
+                            </div>
+                            <div class="media-body"  id=@item.notice.weike_id>
+                                <div>
+                                    <div>
+                                        <p><b>@item.name</b> <small>2016-06-20</small></p>
+                                        <p>他赞了你的微课：<span>@item.title</span></p>
+                                    </div>
+                                    <div></div>
+                                    <div>
+                                        <button class="btn btn-primary"  onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="personalPageContentItem messageList tab-pane fade @class24" id="replyMessageList">
+                @if (ViewBag.replyNotice.Count == 0)
+                {
+                    <p>没有未读的回复消息</p>
+                }
+                @foreach (var item in ViewBag.replyNotice)
+                {
+                    <div class="media" id=@item.notice.weike_id  onclick="showModal(this)">
+                        <div class="media-left"  id=@item.notice.weike_id>
+                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                        </div>
+                        <div class="media-body">
+                            <div>
+                                <div>
+                                    <span><b>@item.name</b> <small>2016-06-20</small></span>
+                                    <p>他评论了你的微课：<span>@item.title</span></p>
+                                </div>
+                                <div></div>
+                                <div>
+                                    <button class="btn btn-primary" id=@item.notice.weike_id onclick="showModal(this)">查看详情</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+                <div class="personalPageContentItem messageList tab-pane fade @class25" id="reviewMessageList">
+                    <div class="media">
+                        <div class="media-body">
+                            <div onclick="showModal(this)">
+                                <div>
+                                    <span>2016-06-20</span>
+                                    <p>管理员审核通过了你的微课：<span>英语写作小技巧</span></p>
+                                </div>
+                                <div></div>
+                                <div>
+                                    <button class="btn btn-primary" onclick="showModal(this)">查看详情</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-body">
+                            <div onclick="showModal(this)">
+                                <div>
+                                    <span>2016-06-20</span>
+                                    <p>管理员审核通过了你的微课：<span>英语写作小技巧</span></p>
+                                </div>
+                                <div></div>
+                                <div>
+                                    <button class="btn btn-primary" onclick="showModal(this)">查看详情</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-body">
+                            <div onclick="showModal(this)">
+                                <div>
+                                    <span>2016-06-20</span>
+                                    <p>管理员审核通过了你的微课：<span>英语写作小技巧</span></p>
+                                </div>
+                                <div></div>
+                                <div>
+                                    <button class="btn btn-primary" onclick="showModal(this)">查看详情</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div id="sidebar" data-spy="affix">
+                @if (ViewBag.user == null)
+                {
+                    <div class="sidebarPublishBtn">
+                        <button onclick="window.location.href='../Auth/Index?type=0'">登陆后可发布微课</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="sidebarUserInfo">
+                        <div>
+                            <a href="../PersonalPage/PersonalPageWeike"><img src="../resource/img/portrait.jpg" class="img-responsive img-circle"></a>
+                        </div>
+                        <a href="../PersonalPage/PersonalPageWeike/@ViewBag.user.id"><span>@ViewBag.user.name</span></a>
+                        <div>
+                            <a href="../PersonalPage/PersonalPageFollows/@ViewBag.user.id"><span>@ViewBag.user.followNum</span><span>关注</span></a>
+                            <a href="../PersonalPage/PersonalPageLikes/@ViewBag.user.id"><span>@ViewBag.user.favoriteNum</span><span>收藏</span></a>
+                            <a href="../PersonalPage/PersonalPageWeike/@ViewBag.user.id"><span>@ViewBag.user.postNum</span><span>微课</span></a>
+                        </div>
+                    </div>
+                    <div class="sidebarPublishBtn">
+                        <button onclick="window.location.href='../Publish/Publish?from=Home/Playground'">发布微课</button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">微课详情</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="weikeDetail weikeId">
+                            <div>
+                                <div>
+                                    <h3 class="weikeTitle"></h3>
+                                    <p class="weikeDateAndSubject"></p>
+                                </div>
+                                <div class="media">
+                                    <div class="media-body">
+                                        <span><b class="weikeAuthorName"></b></span>
+                                    </div>
+                                    <div class="media-right">
+                                        <img src="../resource/img/portrait.jpg" class="weikeAuthorImg img-circle">
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="weikeDescription"></p>
+                            <div class="thumbnail">
+                                <img class="weikeImg" src="resource/img/8.jpg">
+                            </div>
+                            <div class="modalWeikeItemBotmBar">
+                                <a onclick="showCommentDiv(this)">评论 <span class="weikeCommentCount"></span></a>
+                                <span>|</span>
+                                <a><span>点赞</span> <span class="weikeLikeCount"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭详情</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div>
+
+    @Html.Partial("WeikeFooterPartial")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/public")
+
+</body>
+</html>
+
+<script type="text/javascript" src="../Scripts/custom/messageHelper.js"></script>
