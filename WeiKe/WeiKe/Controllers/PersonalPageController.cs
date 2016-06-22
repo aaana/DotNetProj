@@ -18,7 +18,10 @@ namespace WeiKe.Controllers
         public ActionResult PersonalPageWeike(int userId)
         {
             User user = (User)Session["user"];
-            if(user == null)
+            List<FollowData> cuFdList = FollowDB.FindAllFollowings(userId);
+            List<FollowData> fdList = new List<FollowData>();
+            List<User> commonFollowList = new List<User>();
+            if (user == null)
             {
                 ViewBag.isCurrentUser = false;
                 ViewBag.hasFollow = false;
@@ -30,9 +33,9 @@ namespace WeiKe.Controllers
             }
             else
             {
-                List<FollowData> fdList = FollowDB.FindAllFollowings(user.id);
+                fdList = FollowDB.FindAllFollowings(user.id);
                 ViewBag.hasFollow = false;
-                foreach(FollowData fd in fdList)
+                foreach (FollowData fd in fdList)
                 {
                     if (fd.follow.following_id == userId)
                     {
@@ -41,7 +44,20 @@ namespace WeiKe.Controllers
                     }
                 }
                 ViewBag.isCurrentUser = false;
+
+                foreach (FollowData fd in fdList)
+                {
+                    foreach (FollowData cufd in cuFdList)
+                    {
+                        if (fd.follow.following_id == cufd.follow.following_id)
+                        {
+                            commonFollowList.Add(UserDB.FindById(cufd.follow.following_id));
+                        }
+                    }
+                }
             }
+            ViewBag.commonFollowList = commonFollowList;
+
             User infoUser = UserDB.FindById(userId);
             Dictionary<string, string> personalInfo = new Dictionary<string, string>()
             {
@@ -65,8 +81,6 @@ namespace WeiKe.Controllers
                 {"hasFollow", "ture"},
                 {"isCurrentUser", "false" }
             };
-            Dictionary<string, string>[] commonFollowList = { follow3, follow3, follow3, follow3, follow3 };
-            ViewBag.commonFollowList = commonFollowList;
 
             List<WeikeData> wdList = WeikeDB.FindByUserId(userId);
 
@@ -79,7 +93,9 @@ namespace WeiKe.Controllers
         public ActionResult PersonalPageLikes(int userId)
         {
             User user = (User)Session["user"];
-            
+            List<FollowData> cuFdList = FollowDB.FindAllFollowings(userId);
+            List<FollowData> fdList = new List<FollowData>();
+            List<User> commonFollowList = new List<User>();
             if (user == null)
             {
                 ViewBag.isCurrentUser = false;
@@ -92,9 +108,7 @@ namespace WeiKe.Controllers
             }
             else
             {
-                List<FollowData> fdList = FollowDB.FindAllFollowings(user.id);
-                List<FollowData> myFdList = FollowDB.FindAllFollowings(userId);
-                
+                fdList = FollowDB.FindAllFollowings(user.id);
                 ViewBag.hasFollow = false;
                 foreach (FollowData fd in fdList)
                 {
@@ -105,7 +119,19 @@ namespace WeiKe.Controllers
                     }
                 }
                 ViewBag.isCurrentUser = false;
+
+                foreach (FollowData fd in fdList)
+                {
+                    foreach (FollowData cufd in cuFdList)
+                    {
+                        if (fd.follow.following_id == cufd.follow.following_id)
+                        {
+                            commonFollowList.Add(UserDB.FindById(cufd.follow.following_id));
+                        }
+                    }
+                }
             }
+            ViewBag.commonFollowList = commonFollowList;
 
             User infoUser = UserDB.FindById(userId);
             Dictionary<string, string> personalInfo = new Dictionary<string, string>()
@@ -140,77 +166,77 @@ namespace WeiKe.Controllers
                 {"hasFollow", "ture"},
                 {"isCurrentUser", "false" }
             };
-            Dictionary<string, string>[] commonFollowList = { follow3, follow3, follow3, follow3, follow3 };
-            ViewBag.commonFollowList = commonFollowList;
+
             ViewBag.active = "PersonalPage/PersonalPageLikes?userId=" + userId;
 
             return View();
         }
 
-        public ActionResult PersonalPageFollows(string userId)
+        public ActionResult PersonalPageFollows(int userId)
         {
-            if (userId == null || userId == "102")
+            User user = (User)Session["user"];
+            List<FollowData> cuFdList = FollowDB.FindAllFollowings(userId);
+            List<FollowData> fdList = new List<FollowData>();
+            List<User> commonFollowList = new List<User>();
+            Dictionary<FollowData, bool> followList = new Dictionary<FollowData, bool>();
+            if (user == null)
+            {
+                ViewBag.isCurrentUser = false;
+                ViewBag.hasFollow = false;
+            }
+            else if (userId == user.id)
             {
                 ViewBag.isCurrentUser = true;
                 ViewBag.hasFollow = false;
             }
-            else if (userId == "100")
-            {
-                ViewBag.isCurrentUser = false;
-                ViewBag.hasFollow = true;
-            }
             else
             {
-                ViewBag.isCurrentUser = false;
+                fdList = FollowDB.FindAllFollowings(user.id);
                 ViewBag.hasFollow = false;
-            }
+                foreach (FollowData fd in fdList)
+                {
+                    if (fd.follow.following_id == userId)
+                    {
+                        ViewBag.hasFollow = true;
+                        break;
+                    }
+                }
+                ViewBag.isCurrentUser = false;
 
+                bool hasFollow = false;
+                foreach (FollowData cufd in cuFdList)
+                {
+                    hasFollow = false;
+                    foreach (FollowData fd in fdList)
+                    {
+                        if (fd.follow.following_id == cufd.follow.following_id)
+                        {
+                            hasFollow = true;
+                            commonFollowList.Add(UserDB.FindById(cufd.follow.following_id));
+                        }
+                    }
+                    followList.Add(cufd, hasFollow);
+                }
+             }
+            ViewBag.commonFollowList = commonFollowList;
+            ViewBag.followList = followList;
+
+            User infoUser = UserDB.FindById(userId);
             Dictionary<string, string> personalInfo = new Dictionary<string, string>()
             {
-                { "id", userId},
-                { "name", userId+ViewBag.isCurrentUser},
+                { "id", userId+""},
+                { "name", infoUser.name},
                 { "portraitSrc", "../resource/img/portrait.jpg"},
-                { "email", "*********@qq.com"},
-                { "des", "我是一个开朗乐观、积极向上的学生"},
-                { "tag", "标签1 标签2"},
-                { "followCount",  "5"},
-                { "likeCount", "12"},
-                { "weikeCount", "10"}
+                { "email",infoUser.email},
+                { "des", infoUser.des},
+                { "tag", infoUser.tag},
+                { "followCount",  infoUser.followNum+""},
+                { "likeCount", infoUser.favoriteNum+""},
+                { "weikeCount", infoUser.postNum+""}
             };
             ViewBag.personalInfo = personalInfo;
-            Dictionary<string, string> follow1 = new Dictionary<string, string>()
-            {
-                {"id", "101"},
-                {"name", "用户名101"},
-                {"imgSrc", "../resource/img/portrait.jpg"},
-                {"email", "*********@qq.com false"},
-                {"hasFollow", "false"},
-                {"isCurrentUser", "false" }
-            };
-            Dictionary<string, string> follow2 = new Dictionary<string, string>()
-            {
-                {"id", "102"},
-                {"name", "用户名102"},
-                {"imgSrc", "../resource/img/portrait.jpg"},
-                {"email", "*********@qq.com"},
-                {"hasFollow", "false"},
-                {"isCurrentUser", "true" }
-            };
-            Dictionary<string, string> follow3 = new Dictionary<string, string>()
-            {
-                {"id", "100"},
-                {"name", "用户名100"},
-                {"imgSrc", "../resource/img/portrait.jpg"},
-                {"email", "*********@qq.com true"},
-                {"hasFollow", "true"},
-                {"isCurrentUser", "false" }
-            };
-            Dictionary<string, string>[] commonFollowList = {follow3, follow3, follow3, follow3, follow3};
-            ViewBag.commonFollowList = commonFollowList;
-            Dictionary<string, string>[] followList = {follow1, follow2, follow3, follow1, follow1, follow1, follow3, follow3, follow1 };
-            ViewBag.followList = followList;
-            ViewBag.active = "PersonalPage/PersonalPageFollows?userId=" + userId;
 
+            ViewBag.active = "PersonalPage/PersonalPageFollows?userId=" + userId;
             return View();
         }
     }

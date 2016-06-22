@@ -54,12 +54,14 @@ namespace WeiKe.Models
         //如果type为"following"即关注的人，则name为关注人的名字；如果type为"follower"即粉丝，则name为粉丝名
         public string name { get; set; }
         public string type { get; set; }
+        public string email { get; set; }
 
-        public FollowData(Follow follow,string name,string type)
+        public FollowData(Follow follow,string name,string type,string email)
         {
             this.follow = follow;
             this.name = name;
             this.type = type;
+            this.email = email;
         }
     }
 

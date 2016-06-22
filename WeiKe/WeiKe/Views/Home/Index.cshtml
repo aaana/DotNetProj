@@ -32,13 +32,18 @@
                 <div class="grid">
                     @foreach (var item in ViewBag.data)
                     {
+                        DateTime dt = item.weike.postdate;
+                        string dtYear = dt.Year.ToString();
+                        string dtMonth = dt.Month.ToString();
+                        string  dtDay = dt.Day.ToString();
+                        string dtstr = dtYear + '/' + dtMonth + '/' + dtDay;
                         <div class="grid__item" data-size=@item.weike.size>
                             <div class="thumbnail weikeCell"  id="@item.weike.weike_id">
                                 <a href="../@item.weike.src" class="img-wrap"><img src="../@item.weike.src"></a>
                                 <div class="weikeCellDes">
                                     <h3>@item.weike.title</h3>
                                     <div class="weikeCellVote">
-                                        <h5>@item.weike.subject  <small>@item.weike.postdate</small></h5>
+                                        <h5>@item.weike.subject  <small>@dtstr</small></h5>
                                         <span></span>
                                         <span><span class="glyphicon glyphicon-heart"></span>@item.weike.star</span>
                                     </div>
@@ -46,15 +51,15 @@
                             </div>
                             <div class="description description--grid">
                                 <div class="weikeCellDetail">
-                                    <div class="media" onclick="gotoPersonalPage(@item.weike.weike_id)">
+                                    <div class="media" onclick="gotoPersonalPage(@item.weike.user_id)">
                                         <div class="media-left">
-                                            <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.weike_id)">
+                                            <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.user_id)">
                                         </div>
                                         <div class="media-body">
                                             <h4><em>@item.author</em></h4>
                                         </div>
                                     </div>
-                                    <h3>@item.weike.title  <small>@item.weike.postdate</small></h3>
+                                    <h3>@item.weike.title  <small>@dtstr</small></h3>
                                     <h4>@item.weike.description</h4>
 
                                     <div class="weikeId" id="@item.weike.weike_id">
@@ -110,19 +115,4 @@
         $(t).parent().hide();
         showCommentDiv(t, $(t).parent());
     }
-
-   
-    var setFavoriteWeike = function () {
-
-        var list = @Html.Raw(Json.Encode(ViewBag.favoriteWeikes));
-
-        $('.weikeCell').each(function() {
-            var weikeId = parseInt($(this).attr('id'));
-            // set favorited weike
-            if ($.inArray(weikeId, list) > -1) {
-
-            }
-        })
-    };
-        setFavoriteWeike();
 </script>

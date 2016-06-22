@@ -62,10 +62,7 @@ var initCommentTemplate = function (ncomment) {
     Y = date.getFullYear() + '-';
     M = ( date.getMonth() + 1 < 10 ? '0' + ( date.getMonth() + 1) : date.getMonth() + 1) + '-';
     D = date.getDate() + ' ';
-    h = date.getHours() + ':';
-    m = date.getMinutes() + ':';
-    s = date.getSeconds();
-    var rDate = ( Y + M + D + h + m + s );
+    var rDate = ( Y + M + D );
     return '<li class="media" id="' + ncomment.commentData.comment.comment_id + '">' +
                 '<div class="media-left">' +
                 '<a href="#">' +

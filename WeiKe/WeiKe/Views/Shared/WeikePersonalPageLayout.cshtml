@@ -76,17 +76,21 @@
                         <p>2016-06-16 英语</p>
                     </div>
                 </div>
-                @if (!ViewBag.isCurrentUser)
+                @if ( !ViewBag.isCurrentUser && ViewBag.commonFollowList !=null)
                 {
                     <div class="personalPageCommonFollow" data-spy="affix" data-offset-top="668">
                         <span>共同关注</span>
                         <div>
-                            @foreach (var follow in ViewBag.commonFollowList)
+                            @foreach (var user in ViewBag.commonFollowList)
                             {
-                                <div id=@follow["id"]>
-                                    <img src=@follow["imgSrc"] class="img-circle">
-                                    <span>@follow["name"]</span>
+                                <div id=@user.id  onclick="gotoPersonalPage(@user.id)">
+                                    <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@user.id)">
+                                    <span>@user.name</span>
                                 </div>
+                            }
+                            @if (ViewBag.commonFollowList.Count == 0)
+                            {
+                                <span>你们没有共同关注</span>
                             }
                         </div>
                     </div>
@@ -99,8 +103,9 @@
                 @RenderBody()
             </div>
         </div>
-        @Html.Partial("WeikeFooterPartial")
+
 
     </div>
+    @Html.Partial("WeikeFooterPartial")
 </body>
 </html>

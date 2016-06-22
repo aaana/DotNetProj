@@ -24,13 +24,18 @@
                 <div class="grid">
                     @foreach (var item in ViewBag.data)
                     {
+                        DateTime dt = item.weike.postdate;
+                        string dtYear = dt.Year.ToString();
+                        string dtMonth = dt.Month.ToString();
+                        string dtDay = dt.Day.ToString();
+                        string dtstr = dtYear + '/' + dtMonth + '/' + dtDay;
                         <div class="grid__item" data-size=@item.weike.size>
                             <div class="thumbnail weikeCell"   id="@item.weike.weike_id">
                                 <a href="../@item.weike.src" class="img-wrap"><img src="../@item.weike.src"></a>
                                 <div class="weikeCellDes">
                                     <h3>@item.weike.title</h3>
                                     <div class="weikeCellVote">
-                                        <h5>@item.weike.subject</h5>
+                                        <h5>@item.weike.subject  <small>@dtstr</small></h5>
                                         <span></span>
                                         <span><span class="glyphicon glyphicon-heart"></span>@item.weike.star</span>
                                     </div>
@@ -38,19 +43,35 @@
                             </div>
                             <div class="description description--grid">
                                 <div class="weikeCellDetail">
-                                    <div class="media" onclick="gotoPersonalPage(@item.weike.weike_id)">
+                                    <div class="media" onclick="gotoPersonalPage(@item.weike.user_id)">
                                         <div class="media-left">
-                                            <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.weike_id)">
+                                            <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.user_id)">
                                         </div>
                                         <div class="media-body">
                                             <h4><em>@item.author</em></h4>
                                         </div>
                                     </div>
-                                    <h3>@item.weike.title</h3>
+                                    <h3>@item.weike.title <small>@dtstr</small></h3>
                                     <h4>@item.weike.description</h4>
 
                                     <div class="weikeId" id="@item.weike.weike_id">
-                                        <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
+                                        @if (ViewBag.favoriteWeikes.Count != 0)
+                                        {
+                                            int weike_id = item.weike.weike_id;
+                                            List<int> weikeFList = ViewBag.favoriteWeikes;
+                                            if (weikeFList.Contains(weike_id))
+                                            {
+                                                <a onclick="dislikeWeike(this)">已赞 <span>@item.weike.star</span></a>
+                                            }
+                                            else
+                                            {
+                                                <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
+                                        }
                                     </div>
                                 </div>
                                 <div class="weikeCellShowComment"  id="@item.weike.weike_id">

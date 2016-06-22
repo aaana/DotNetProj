@@ -181,6 +181,13 @@
     overflow: hidden;
 }
 
+.personalPageContentItem > p {
+    margin: 0 30px 15px;
+}
+.personalPageContentItem.followList > p {
+    margin-top: 15px;
+}
+
 .personalPageContentItem > .media > .media-left {
     padding-left: 16px;
 }
