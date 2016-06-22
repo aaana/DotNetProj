@@ -16,8 +16,9 @@ namespace WeiKe.Models
         public int weike_id { get { return _weike_id; } set { _weike_id = value; } }
         public string type { get; set; }
         public Boolean isread { get; set; }
+        public DateTime noticetime { get; set; }
 
-        public Notice(int notice_id,int sender_id,int receiver_id,int weike_id,string type,Boolean isread)
+        public Notice(int notice_id,int sender_id,int receiver_id,int weike_id,string type,Boolean isread,DateTime noticetime)
         {
             this.notice_id = notice_id;
             this.sender_id = sender_id;
@@ -25,6 +26,7 @@ namespace WeiKe.Models
             this.weike_id = weike_id;
             this.type = type;
             this.isread = isread;
+            this.noticetime = noticetime;
         }
     }
 }
