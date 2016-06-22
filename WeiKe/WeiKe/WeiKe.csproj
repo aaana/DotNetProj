@@ -344,12 +344,9 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\Signup.cshtml" />
     <Content Include="Views\Publish\Publish.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\MyFile\Index.cshtml" />
     <Content Include="Views\MyFile\Upload.cshtml" />
-=======
     <Content Include="Views\Message\Index.cshtml" />
->>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
