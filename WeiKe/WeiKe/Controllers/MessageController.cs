@@ -10,8 +10,23 @@ namespace WeiKe.Controllers
     public class MessageController : Controller
     {
         // GET: Message
-        public ActionResult Index()
+        public ActionResult Index(int type)
         {
+            ViewBag.type = type.ToString();
+            ViewBag.active = "Message/Index?type=" + type.ToString();
+            if (Session["user"] != null)
+            {
+                User user = (User)Session["user"];
+                ViewBag.user = user;
+
+                ViewBag.followNotice = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "follow");
+                ViewBag.unfollowNotice = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "unfollow");
+                ViewBag.likeNotice = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "like");
+                ViewBag.unlikeNotice =  NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "dislike");
+                ViewBag.commentNotice = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "comment");
+                ViewBag.replyNotice = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "reply");
+            }
+
             return View();
         }
 

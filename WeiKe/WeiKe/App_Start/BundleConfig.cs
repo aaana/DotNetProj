@@ -49,6 +49,9 @@ namespace WeiKe
             bundles.Add(new StyleBundle("~/personalPage/css").Include(
                 "~/Content/personalPage.css"));
 
+            bundles.Add(new StyleBundle("~/message/css").Include(
+                "~/Content/message.css"));
+
             bundles.Add(new StyleBundle("~/auth/css").Include(
                 "~/Content/auth.css"));
         }

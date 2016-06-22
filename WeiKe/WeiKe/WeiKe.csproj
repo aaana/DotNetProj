@@ -252,6 +252,7 @@
     <Content Include="Content\bootstrap\bootstrap.css" />
     <Content Include="Content\bootstrap\bootstrap.min.css" />
     <Content Include="Content\auth.css" />
+    <Content Include="Content\message.css" />
     <Content Include="Content\pbl\default.css" />
     <Content Include="Content\navBar.css" />
     <Content Include="Content\pblItem.css" />
@@ -272,6 +273,7 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\custom\helper.js" />
+    <Content Include="Scripts\custom\messageHelper.js" />
     <Content Include="Scripts\custom\pblItem.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -339,6 +341,7 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Auth\Signup.cshtml" />
     <Content Include="Views\Publish\Publish.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -350,7 +353,7 @@
     <Folder Include="Views\Follow\" />
     <Folder Include="Views\LikeAction\" />
     <Folder Include="Views\Login\" />
-    <Folder Include="Views\Message\" />
+    <Folder Include="Views\NewFolder1\" />
     <Folder Include="Views\Search\" />
     <Folder Include="Views\User\" />
   </ItemGroup>

@@ -94,6 +94,9 @@
 .sidebarPublishBtn {
     margin-top: 20px;
 }
+#sidebar > .sidebarPublishBtn:first-child {
+    margin-top: 0;
+}
 
 #sidebar .sidebarPublishBtn button {
     width: 100%;

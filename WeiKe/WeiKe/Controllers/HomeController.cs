@@ -103,5 +103,13 @@ namespace WeiKe.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public ActionResult WeikeDetail(int weikeId)
+        {
+            // get comment list
+            WeikeData data = WeikeDB.FindByWeikeId(weikeId);
+            return Json(new { weikeData = data });
+        }
     }
 }
