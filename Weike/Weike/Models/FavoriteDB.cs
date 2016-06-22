@@ -42,6 +42,10 @@ namespace WeiKe.Models
             cmd.CommandText = sql;
             cmd.Parameters.AddWithValue("@weike_id", weike_id);
             cmd.ExecuteNonQuery();
+            sql = "update user set favoriteNum = favoriteNum-1 where user_id = @user_id";
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@user_id", user_id);
+            cmd.ExecuteNonQuery();
             conn.Close();
         }
 
