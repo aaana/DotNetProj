@@ -17,7 +17,10 @@
 
 </head>
 <body>
-    @Html.Partial("WeikeNavPartial")
+    @{
+        ViewBag.active = "Home/Index";
+    }
+    @Html.Partial("WeikeNavPartial", new { active = "hotPage" })
     <div class="container body-content">
         <div class="hotWeike_c content">
             <div class="jumbotron">
@@ -30,12 +33,12 @@
                     @foreach (var item in ViewBag.data)
                     {
                         <div class="grid__item" data-size=@item.weike.size>
-                            <div class="thumbnail weikeCell">
-                                <a href=@item.weike.src class="img-wrap"><img src=@item.weike.src></a>
+                            <div class="thumbnail weikeCell"  id="@item.weike.weike_id">
+                                <a href="../@item.weike.src" class="img-wrap"><img src="../@item.weike.src"></a>
                                 <div class="weikeCellDes">
                                     <h3>@item.weike.title</h3>
                                     <div class="weikeCellVote">
-                                        <h5>@item.weike.subject</h5>
+                                        <h5>@item.weike.subject  <small>@item.weike.postdate</small></h5>
                                         <span></span>
                                         <span><span class="glyphicon glyphicon-heart"></span>@item.weike.star</span>
                                     </div>
@@ -43,22 +46,39 @@
                             </div>
                             <div class="description description--grid">
                                 <div class="weikeCellDetail">
-                                    <div class="media" onclick="gotoPersonalPage(100)">
+                                    <div class="media" onclick="gotoPersonalPage(@item.weike.weike_id)">
                                         <div class="media-left">
-                                            <img src="resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(100)">
+                                            <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.weike_id)">
                                         </div>
                                         <div class="media-body">
                                             <h4><em>@item.author</em></h4>
                                         </div>
                                     </div>
-                                    <h3>@item.weike.title</h3>
+                                    <h3>@item.weike.title  <small>@item.weike.postdate</small></h3>
                                     <h4>@item.weike.description</h4>
 
                                     <div class="weikeId" id="@item.weike.weike_id">
-                                        <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
+                                        @if (ViewBag.favoriteWeikes.Count != 0)
+                                        {
+                                            int weike_id = item.weike.weike_id;
+                                            List<int> weikeFList = ViewBag.favoriteWeikes;
+                                            if ( weikeFList.Contains( weike_id) )
+                                            {
+                                                <a onclick="dislikeWeike(this)">已赞 <span>@item.weike.star</span></a>
+                                            }
+                                            else
+                                            {
+                                                <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
+                                        }
+
                                     </div>
                                 </div>
-                                <div class="weikeCellShowComment">
+                                <div class="weikeCellShowComment"  id="@item.weike.weike_id">
                                     <a onclick="showComment(this)">查看评论</a>
                                 </div>
                             </div>
@@ -90,4 +110,19 @@
         $(t).parent().hide();
         showCommentDiv(t, $(t).parent());
     }
+
+   
+    var setFavoriteWeike = function () {
+
+        var list = @Html.Raw(Json.Encode(ViewBag.favoriteWeikes));
+
+        $('.weikeCell').each(function() {
+            var weikeId = parseInt($(this).attr('id'));
+            // set favorited weike
+            if ($.inArray(weikeId, list) > -1) {
+
+            }
+        })
+    };
+        setFavoriteWeike();
 </script>

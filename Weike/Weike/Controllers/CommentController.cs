@@ -14,7 +14,7 @@ namespace WeiKe.Controllers
         public ActionResult NestedComments(int weike_id)
         {
             List<NestedComment> ncList = NestedComment.getAllCommentsByWeikeId(weike_id);
-            return Json(new{ success = true,ncList});
+            return Json(new{ success = true, ncList});
         }
 
         [HttpPost]
@@ -34,9 +34,9 @@ namespace WeiKe.Controllers
         }
 
         [HttpPost]
-        public ActionResult Comment(int user_id,int weike_id,string content,int parent)
+        public ActionResult Comment(int user_id, int weike_id, string content, int parent)
         {
-            Comment comment = new Comment(0,user_id,weike_id,DateTime.Now,content);
+            Comment comment = new Comment(0, user_id, weike_id, DateTime.Now, content);
             CommentDB.Insert(comment);
             return Json(true);
         }

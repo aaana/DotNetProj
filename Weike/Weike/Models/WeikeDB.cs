@@ -213,7 +213,7 @@ namespace WeiKe.Models
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = sql;
-            cmd.Parameters.AddWithValue("@id", weike_id);
+            cmd.Parameters.AddWithValue("@weike_id", weike_id);
             MySqlDataReader reader = cmd.ExecuteReader();
 
             if (reader.Read())

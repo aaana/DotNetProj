@@ -7,8 +7,8 @@
     @if (ViewBag.isCurrentUser)
     {
         <li class="active">微课 @ViewBag.personalInfo["weikeCount"]</li>
-        <li><a href="../PersonalPage/PersonalPageLikes">赞过的微课 @ViewBag.personalInfo["likeCount"]</a></li>
-        <li><a href="../PersonalPage/PersonalPageFollows">关注的人 @ViewBag.personalInfo["followCount"]</a></li>
+        <li><a href="../PersonalPage/PersonalPageLikes?userId=@ViewBag.personalInfo["id"]">赞过的微课 @ViewBag.personalInfo["likeCount"]</a></li>
+        <li><a href="../PersonalPage/PersonalPageFollows?userId=@ViewBag.personalInfo["id"]">关注的人 @ViewBag.personalInfo["followCount"]</a></li>
     }
     else
     {
@@ -33,15 +33,13 @@
     </ol>
 
 <div class="personalPageContent">
-    @{ 
-        var id = 100;
-    }
+
     @foreach (var item in ViewBag.weikeData)
     {
         <div class="personalPageContentItem weikeId" id="@item.weike.weike_id">
             <div class="media">
                 <div class="media-left">
-                    <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@id)">
+                    <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.user_id)">
                 </div>
                 <div class="media-body">
                     <p><b>@item.author</b></p>
@@ -53,14 +51,12 @@
                     </div>
                 </div>
             </div>
-            <div class="personalPageContentItemBotmBar">
+            <div class="personalPageContentItemBotmBar"  id="@item.weike.weike_id">
                 <a onclick="showCommentDiv(this)">评论 <span>@item.weike.commentNum</span></a>
                 <span>|</span>
                 <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
             </div>
         </div>
-
-        id = id + 1;
     }
 
 </div>

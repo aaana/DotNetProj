@@ -10,10 +10,11 @@ namespace WeiKe.Controllers
     public class AuthController : Controller
     {
         // GET: Auth
-        public ActionResult Index(int type,int status=1)
+        public ActionResult Index(int type, string redirectPage, int status=1)
         {
             ViewBag.authType = type;
             ViewBag.status = status;
+            ViewBag.redirectPage = redirectPage;
             return View();
         }
 
@@ -47,19 +48,13 @@ namespace WeiKe.Controllers
                 }
             }
             
-
-            // show value
-            //ViewBag.to = redirectPage;
-            //ViewBag.email = loginEmail;
-            //ViewBag.pw = loginPassword;
-            //return View();
         }
 
         [HttpPost]
         public ActionResult Signup(string signupEmail, string signupName, string signupPassword, string verifyPassword, string redirectPage)
         {
             // sign up
-            int userId = UserDB.Insert(0, signupEmail, signupName, signupPassword);
+            int userId = UserDB.Insert(0, signupEmail, signupName, signupPassword,"暂无简介","暂无标签");
             if (userId >= 1)
             {
                 ViewBag.userId = userId;
@@ -70,13 +65,6 @@ namespace WeiKe.Controllers
                 return View();
             }
             
-            
-
-            // show value
-            //ViewBag.to = redirectPage;
-            //ViewBag.email = signupEmail;
-            //ViewBag.pw = password;
-            //return View();
         }
     }
 }

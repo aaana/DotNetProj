@@ -14,6 +14,9 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @{ 
+        ViewBag.active = "Home/Playground";
+    }
     @Html.Partial("WeikeNavPartial")
     <div class="container body-content">
         <div class="col-xs-9 hotWeike_c content">
@@ -22,7 +25,7 @@
                     @foreach (var item in ViewBag.data)
                     {
                         <div class="grid__item" data-size=@item.weike.size>
-                            <div class="thumbnail weikeCell">
+                            <div class="thumbnail weikeCell"   id="@item.weike.weike_id">
                                 <a href="../@item.weike.src" class="img-wrap"><img src="../@item.weike.src"></a>
                                 <div class="weikeCellDes">
                                     <h3>@item.weike.title</h3>
@@ -35,9 +38,9 @@
                             </div>
                             <div class="description description--grid">
                                 <div class="weikeCellDetail">
-                                    <div class="media" onclick="gotoPersonalPage(100)">
+                                    <div class="media" onclick="gotoPersonalPage(@item.weike.weike_id)">
                                         <div class="media-left">
-                                            <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(100)">
+                                            <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.weike_id)">
                                         </div>
                                         <div class="media-body">
                                             <h4><em>@item.author</em></h4>
@@ -50,7 +53,7 @@
                                         <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
                                     </div>
                                 </div>
-                                <div class="weikeCellShowComment">
+                                <div class="weikeCellShowComment"  id="@item.weike.weike_id">
                                     <a onclick="showComment(this)">查看评论</a>
                                 </div>
                             </div>
@@ -66,20 +69,29 @@
         </div>
         <div class="col-xs-3">
             <div id="sidebar" data-spy="affix">
-                <div class="sidebarUserInfo">
-                    <div>
-                        <a href="../PersonalPage/PersonalPageWeike"><img src="../resource/img/portrait.jpg" class="img-responsive img-circle"></a>
+                @if (ViewBag.user == null)
+                {
+                    <div class="sidebarPublishBtn">
+                        <button onclick="window.location.href='../Auth/Index?type=0'">登陆后可发布微课</button>
                     </div>
-                    <a href="../PersonalPage/PersonalPageWeike"><span>@ViewBag.user.name</span></a>
-                    <div>
-                        <a href="../PersonalPage/PersonalPageFollows"><span>@ViewBag.user.followNum</span><span>关注</span></a>
-                        <a href="../PersonalPage/PersonalPageLikes"><span>@ViewBag.user.favoriteNum</span><span>收藏</span></a>
-                        <a href="../PersonalPage/PersonalPageWeike"><span>@ViewBag.user.postNum</span><span>微课</span></a>
+                }
+                else
+                {
+                    <div class="sidebarUserInfo">
+                        <div>
+                            <a href="../PersonalPage/PersonalPageWeike"><img src="../resource/img/portrait.jpg" class="img-responsive img-circle"></a>
+                        </div>
+                        <a href="../PersonalPage/PersonalPageWeike/@ViewBag.user.id"><span>@ViewBag.user.name</span></a>
+                        <div>
+                            <a href="../PersonalPage/PersonalPageFollows/@ViewBag.user.id"><span>@ViewBag.user.followNum</span><span>关注</span></a>
+                            <a href="../PersonalPage/PersonalPageLikes/@ViewBag.user.id"><span>@ViewBag.user.favoriteNum</span><span>收藏</span></a>
+                            <a href="../PersonalPage/PersonalPageWeike/@ViewBag.user.id"><span>@ViewBag.user.postNum</span><span>微课</span></a>
+                        </div>
                     </div>
-                </div>
-                <div class="sidebarPublishBtn">
-                    <button onclick="window.location.href='../Publish/Publish?from=Home/Playground'">发布微课</button>
-                </div>
+                    <div class="sidebarPublishBtn">
+                        <button onclick="window.location.href='../Publish/Publish?from=Home/Playground'">发布微课</button>
+                    </div>
+                }
             </div>
         </div>
     </div>

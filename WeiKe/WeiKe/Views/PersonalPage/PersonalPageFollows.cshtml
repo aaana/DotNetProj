@@ -3,11 +3,11 @@
     Layout = "~/Views/Shared/WeikePersonalPageLayout.cshtml";
 }
 
-<ol class="breadcrumb personalPageNav" data-spy="affix" data-offset-top="230">
+<ol class="breadcrumb personalPageNav" data-spy="affix" data-offset-top="230"  id=@ViewBag.personalInfo["id"]>
     @if (ViewBag.isCurrentUser)
     {
-        <li><a href="../PersonalPage/PersonalPageWeike">微课 @ViewBag.personalInfo["weikeCount"]</a></li>
-        <li><a href="../PersonalPage/PersonalPageLikes">赞过的微课 @ViewBag.personalInfo["weikeCount"]</a></li>
+        <li><a href="../PersonalPage/PersonalPageWeike?userId=@ViewBag.personalInfo["id"]">微课 @ViewBag.personalInfo["weikeCount"]</a></li>
+        <li><a href="../PersonalPage/PersonalPageLikes?userId=@ViewBag.personalInfo["id"]">赞过的微课 @ViewBag.personalInfo["weikeCount"]</a></li>
         <li class="active">关注的人 @ViewBag.personalInfo["weikeCount"]</li>
     }
     else
@@ -33,25 +33,27 @@
 </ol>
 
 <div class="personalPageContent">
-
+    @{
+        var id = 100;
+    }
     <div class="personalPageContentItem followList">
-        @foreach (var follow in ViewBag.followList)
+        @foreach (var item in ViewBag.favoriteWeikeData)
         {
-            <div class="media"  onclick="gotoPersonalPage(@follow["id"])">
+            <div class="media"  onclick="gotoPersonalPage(@item.weike.weike_id)">
                 <div class="media-left">
-                    <img src=@follow["imgSrc"] class="img-circle"  onclick="gotoPersonalPage(@follow["id"])">
+                    <img src="../resource/img/portrait.jpg" class="img-circle"  onclick="gotoPersonalPage(@item.weike.user_id)">
                 </div>
                 <div class="media-body">
                     <div>
                         <div>
-                            <span><b>@follow["name"]</b></span>
-                            <span>@follow["email"]</span>
+                            <span><b>@item.weike.weike_id</b></span>
+                            <span>@item.weike.weike_id</span>
                         </div>
                         <div></div>
-                        @if (follow["isCurrentUser"] == "false")
+                        @if (item.weike.weike_id == "false")
                         {
-                            <div id=@follow["id"]>
-                                @if (follow["hasFollow"] == "true")
+                            <div id=@item.weike.weike_id>
+                                @if (item.weike.weike_id == "true")
                                 {
                                     <button class="btn btn-primary" onclick="unfollow(this)">已关注</button>
                                 }

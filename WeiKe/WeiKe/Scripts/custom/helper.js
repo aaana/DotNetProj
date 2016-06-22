@@ -3,8 +3,7 @@
 var showCommentDiv = function (t, oriBtn) {
     oriShowCommentListBtn = oriBtn
 
-    //var weikeId = $(t).parent().parent().attr('id');
-    var weikeId = 1;
+    var weikeId = $(t).parent().attr('id');
     $.ajax({
         type: "post",
         url: "../CommentAction/getCommentList",
@@ -15,65 +14,8 @@ var showCommentDiv = function (t, oriBtn) {
         success: function (data) {
             console.log("get comment success");
             var commentList = data.comments;
-            // for example
-            // required info
-            /*var commentList = [
-                {
-                    'id': 101,
-                    'user': {
-                        'name': '用户名1',
-                        'imgSrc': '../resource/img/8.jpg'
-                    },
-                    'time': '2016-6-17 13:50',
-                    'content': '评论内容评论内容评论内容评论内容评论内容评论内容评论内容',
-                    'commentList': [
-                        {
-                            'id': 102,
-                            'user': {
-                                'name': '用户名2',
-                                'imgSrc': '../resource/img/8.jpg'
-                            },
-                            'time': '2016-6-17 13:50',
-                            'content': '评论内容评论内容评论内容评论内容评论内容评论内容评论内容',
-                            'commentList': [
-                                {
-                                    'id': 103,
-                                    'user': {
-                                        'name': '用户名3',
-                                        'imgSrc': '../resource/img/8.jpg'
-                                    },
-                                    'time': '2016-6-17 13:50',
-                                    'content': '评论内容评论内容评论内容评论内容评论内容评论内容评论内容',
-                                    'commentList': []
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    'id': 102,
-                    'user': {
-                        'name': '用户名2',
-                        'imgSrc': '../resource/img/8.jpg'
-                    },
-                    'time': '2016-6-17 13:50',
-                    'content': '评论内容评论内容评论内容评论内容评论内容评论内容评论内容',
-                    'commentList': []
-                },
-                {
-                    'id': 103,
-                    'user': {
-                        'name': '用户名3',
-                        'imgSrc': '../resource/img/8.jpg'
-                    },
-                    'time': '2016-6-17 13:50',
-                    'content': '评论内容评论内容评论内容评论内容评论内容评论内容评论内容',
-                    'commentList': []
-                }
 
-            ];*/
             setCommentDiv(commentList, $(t));
-
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert("error:" + XMLHttpRequest.status + " " + XMLHttpRequest.readyState + " " + textStatus);
@@ -116,14 +58,22 @@ var hideCommentListDiv = function (t) {
 }
 
 var initCommentTemplate = function (ncomment) {
+    var date = new Date( parseInt(ncomment.commentData.comment.date.substr( 6 ) ) );
+    Y = date.getFullYear() + '-';
+    M = ( date.getMonth() + 1 < 10 ? '0' + ( date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    D = date.getDate() + ' ';
+    h = date.getHours() + ':';
+    m = date.getMinutes() + ':';
+    s = date.getSeconds();
+    var rDate = ( Y + M + D + h + m + s );
     return '<li class="media" id="' + ncomment.commentData.comment.comment_id + '">' +
                 '<div class="media-left">' +
                 '<a href="#">' +
-                    '<img class="media-object" src="' + 'resource/img/portrait.jpg' + '">' +
+                    '<img class="media-object" src="' + '../resource/img/portrait.jpg' + '">' +
                 '</a>' +
                 '</div>' +
                 '<div class="media-body">' +
-                    '<h5 class="media-heading">' + ncomment.commentData.commenter + ' <small>' + ncomment.commentData.comment.date + '</small></h5>' +
+                    '<h5 class="media-heading">' + ncomment.commentData.commenter + ' <small>' + rDate + '</small></h5>' +
                     '<h6>' + ncomment.commentData.comment.content + '</h6>' +
                     '<div class="weikeCellCommentReply">' +
                         '<a onclick="showCommentInput(this)">回复</a>' +
@@ -284,6 +234,14 @@ var likeWeike = function (t) {
                 var count = parseInt($(t).children('span').text()) + 1;
                 $(t).children('span').text(parseInt($(t).children('span').text()) + 1);
                 $(t).html("已赞 <span>" + count + "</span>");
+                $('.weikeCellVote  > span:last-child').each(function () {
+                    if ($(this).parents('.weikeCell').attr('id') == weikeId) {
+                        $(this).html('<span class="glyphicon glyphicon-heart"></span>' + count);
+                        $(this).parents('.grid__item').children('.description').children('.weikeCellDetail').children('.weikeId')
+                            .children('a').html('已赞  <span>' + count + '</span>');
+
+                    }
+                })
                 $(t).css('color', 'white');
                 $(t).attr('onclick', 'dislikeWeike(this)');
             } else {
@@ -313,6 +271,13 @@ var dislikeWeike = function (t) {
 
             var count = parseInt($(t).children('span').text()) - 1;
             $(t).html("点赞 <span>" + count + "</span>");
+            $('.weikeCellVote  > span:last-child').each(function () {
+                if ($(this).parents('.weikeCell').attr('id') == weikeId) {
+                    $(this).html('<span class="glyphicon glyphicon-heart"></span>' + count);
+                    $(this).parents('.grid__item').children('.description').children('.weikeCellDetail').children('.weikeId')
+                        .children('a').html('点赞  <span>' + count + '</span>');
+                }
+            })
             $(t).css('color', '#cccccc');
             $(t).attr('onclick', 'likeWeike(this)');
         },
@@ -326,9 +291,9 @@ var follow = function (t) {
     var userId = $(t).parent().attr('id');
     $.ajax({
         type: "post",
-        url: "../FollowAction/follow",
+        url: "../FollowAction/Follow",
         data: {
-            "userId": userId
+            "following_id": userId
         },
         dataType: "json",
         success: function (data) {
@@ -353,9 +318,9 @@ var unfollow = function (t) {
 
     $.ajax({
         type: "post",
-        url: "../FollowAction/follow",
+        url: "../FollowAction/UnFollow",
         data: {
-            "userId": userId
+            "following_id": userId
         },
         dataType: "json",
         success: function (data) {

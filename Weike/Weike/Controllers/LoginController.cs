@@ -9,12 +9,12 @@ namespace WeiKe.Controllers
 {
     public class LoginController : Controller
     {
-        [HttpPost]
-        public ActionResult Register(string email,string name,string password)
+        /*  [HttpPost]
+      public ActionResult Register(string email,string name,string password)
         {
             int result = UserDB.Insert(0, email, name, password);
             return Json(result);
-        }
+        }*/
 
         //user_id==0 表示登陆失败
         [HttpPost]

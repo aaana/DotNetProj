@@ -10,11 +10,19 @@ namespace WeiKe.Controllers
     public class FollowController : Controller
     {
         [HttpPost]
-        public ActionResult Follow(int user_id,int following_id)
+        public ActionResult Follow(int following_id)
         {
-            Follow follow = new Follow(user_id, following_id, DateTime.Now);
-            FollowDB.Insert(follow);
-            return Json(true);
+            if ((User)Session["user"] != null)
+            {
+                int user_id = ((User)Session["user"]).id;
+                Follow follow = new Follow(user_id, following_id, DateTime.Now);
+                FollowDB.Insert(follow);
+                return Json(new { success = 1 });
+            }
+            else
+            {
+                return Json(new { success = 0 });
+            }
         }
 
         [HttpPost]

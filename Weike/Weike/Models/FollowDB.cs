@@ -12,7 +12,7 @@ namespace WeiKe.Models
         static public void Insert(Follow follow)
         {
             //string sql = "insert into favorite VALUES (" + favorite.user_id + "," + favorite.weike_id + ",'" + favorite.date + "',"+ favorite.isread+ ")";
-            string sql = "insert into favorite VALUES (" + follow.user_id + "," + follow.following_id + ",'" + follow.followDate + "')";
+            string sql = "insert into follow VALUES (" + follow.user_id + "," + follow.following_id + ",'" + follow.followDate + "')";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();

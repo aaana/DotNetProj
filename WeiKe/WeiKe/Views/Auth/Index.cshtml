@@ -15,16 +15,16 @@
     <style type="text/css">
         
     </style> 
-
+    
     <script>
-        var status = @ViewBag.status;
-        if(status==-1){
-            alert("邮箱未注册，请先注册！");
-        }else if(alert==0){
-            alert("密码错误，请重新登陆！");
-        }
+       // var status = @ViewBag.status;
+       // if(status==-1){
+       //     alert("邮箱未注册，请先注册！");
+       // }else if(alert==0){
+       //    alert("密码错误，请重新登陆！");
+       // }
     </script>
-
+   
 </head>
 <body>
     @Html.Partial("WeikeNavPartial")
@@ -38,16 +38,23 @@
         {
             signupFormDisplay = "block";
         }
-        var redirctPage = ViewBag.redirectPage != null ? ViewBag.redirctPage : "Home";
+        var redirctPage = ViewBag.redirectPage != null ? ViewBag.redirectPage : "Home";
     }
 
     <div class="container body-content">
         <form class="form-login" action="../Auth/Login" method="post"  style="display: @loginFormDisplay">
+            @if (ViewBag.status == 0)
+            {
+                <div class="alert alert-warning">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>提示：</strong>密码错误，请重新登陆
+                </div>
+            }
             <h2 class="form-login-heading">登陆</h2>
             <input type="email" name="loginEmail" class="form-control inputUserEmail" placeholder="邮箱" required autofocus>
             <input type="password" name="loginPassword" class="form-control inputPassword" placeholder="密码" required>
 
-            <input type="hidden" name="redirectPage" value=@redirctPage>
+            <input type="hidden" name="redirectPage" value="@redirctPage">
 
             <button id="login_button" class="btn btn-lg btn-primary btn-block">登陆</button>
             <div class="log_trans_sign">
@@ -56,6 +63,13 @@
         </form>
 
         <form class="form-signup" action="../Auth/Signup" method="post"  style="display: @signupFormDisplay">
+            @if (ViewBag.status == -1)
+            {
+                <div class="alert alert-warning">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>提示：</strong>邮箱未注册，请先注册
+                </div>
+            }
             <h2 class="form-signup-heading">注册</h2>
             <div class="form-group">
                 <input type="email" class="form-control inputUserEmail" name="signupEmail" placeholder="邮箱" required>
@@ -73,11 +87,11 @@
                 <input type="password" class="form-control verifyPassword" placeholder="确认密码" required>
                 <img class="userVerify" src="" />
             </div>
-            <input type="hidden" name="redirectPage" value=@redirctPage>
+            <input type="hidden" name="redirectPage" value="@redirctPage">
 
             <button id="signup_button" class="btn btn-lg btn-primary btn-block">注册</button>
             <div class="sign_trans_log">
-                <a href="javascript:void(0);" onclick="sign_2_log()">我要登陆</a>
+                <a href="javascript:void(0);" onclick="sign_2_log()">我要登陆  @redirctPage</a>
             </div>
         </form>
     </div>

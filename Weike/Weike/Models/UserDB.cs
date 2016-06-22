@@ -9,7 +9,7 @@ namespace WeiKe.Models
     public class UserDB
     {
         //0 -> 信息不完整 >=1-> 成功 -1 -> 已存在
-        public static int Insert(int id, string email, string name, string password)
+        public static int Insert(int id, string email, string name, string password,string des,string tag)
         {
             int result = 0;
             if (email.Length != 0 && name.Length != 0 && password.Length != 0)
@@ -17,7 +17,7 @@ namespace WeiKe.Models
                 if (FindByEmail(email) == null)
                 {
                    
-                    string sql = "insert into user VALUES (" + id + ",'" + email + "','" + name + "','" + password + "'," + 0 + "," + 0+ "," + 0 + ")";
+                    string sql = "insert into user VALUES (" + id + ",'" + email + "','" + name + "','" + password + "'," + 0 + "," + 0+ "," + 0 +",'"+des+"','"+tag+ "')";
                     MySqlConnection conn = Connection.getMySqlCon();
                     conn.Open();
                     MySqlCommand cmd = conn.CreateCommand();

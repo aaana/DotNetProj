@@ -16,7 +16,7 @@ namespace WeiKe.Controllers
         public ActionResult Index()
         {
             ViewBag.message = true;
-            List<WeikeData> weikes = WeikeDB.GetAllWeikeOrderByDate();
+            List<WeikeData> weikes = WeikeDB.GetAllWeikeOrderByStar();
             ViewBag.data = weikes;
             List<int> favoriteWeikeId = new List<int>();
             if (Session["user"] != null)

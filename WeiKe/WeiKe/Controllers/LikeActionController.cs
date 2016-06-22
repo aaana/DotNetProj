@@ -14,6 +14,7 @@ namespace WeiKe.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Like(int weikeId)
         {
@@ -27,7 +28,7 @@ namespace WeiKe.Controllers
             }
             else
             {
-                return Json(new { success = false });
+                return Json(new { success = false, message = "用户尚未登录" });
             }
                        
         }
@@ -45,7 +46,7 @@ namespace WeiKe.Controllers
             }
             else
             {
-                return Json(new { success = false });
+                return Json(new { success = false, message = "用户尚未登录" });
             }
         }
     }
