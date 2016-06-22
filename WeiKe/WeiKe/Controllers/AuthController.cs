@@ -58,7 +58,7 @@ namespace WeiKe.Controllers
         public ActionResult Signup(string signupEmail, string signupName, string signupPassword, string verifyPassword, string redirectPage)
         {
             // sign up
-            int userId = UserDB.Insert(0, signupEmail, signupName, signupPassword,"暂无简介","暂无标签");
+            int userId = UserDB.Insert(0, signupEmail, signupName, signupPassword,"暂无简介","暂无标签", "../resource/img/portrait.jpg");
             if (userId >= 1)
             {
                 ViewBag.userId = userId;

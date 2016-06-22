@@ -30,9 +30,13 @@ namespace WeiKe.Controllers
                 if (!Request.Files[upload].HasFile()) continue;
                 string mimetype = Request.Files[upload].ContentType;
                 string path = AppDomain.CurrentDomain.BaseDirectory + "uploads/";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
                 string filename = Path.GetFileName(Request.Files[upload].FileName);
                 Request.Files[upload].SaveAs(Path.Combine(path, filename));
-                MyFileDB.Insert(new MyFile(0, filename, mimetype, path));
+                MyFileDB.Insert(new MyFile(0, filename, mimetype,filename));
             }
             return View();
         }

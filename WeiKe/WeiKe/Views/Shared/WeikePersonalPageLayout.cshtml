@@ -16,12 +16,17 @@
     <div class="container body-content">
 
         <div class="personalPageHead">
-            <img src="../resource/img/portrait.jpg" class="img-responsive img-circle">
+            <img src="@ViewBag.personalInfo["portraitSrc"]" class="img-responsive img-circle">
             <div id=@ViewBag.personalInfo["id"]>
                 <span>@ViewBag.personalInfo["name"]</span>
                 @if (ViewBag.isCurrentUser)
                 {
-                    <button class="btn btn-primary">更换头像</button>
+                    <form action="../User/UploadAvatar" method="post" enctype="multipart/form-data">
+                        <input type="file" name="FileUpload1" value="更换头像"/><br />
+                        <input type="submit" name="Submit" id="Submit" value="Upload" />
+                        <input type="submit" value="更换头像"/>
+                    </form>
+                    
                 }
                 else if (ViewBag.hasFollow)
                 {

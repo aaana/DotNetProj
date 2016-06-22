@@ -17,6 +17,8 @@ namespace WeiKe.Models
         public int postNum { get; set; }
         public string des { get; set; }
         public string tag { get; set; }
+        private string _avatar = "../resource/img/portrait.jpg";
+        public string avatar { get { return _avatar; } set { _avatar = value; } }
 
         public User(int id, string email, string name, string password,int followNum,int favoriteNum,int postNum,string des,string tag)
         {
@@ -29,6 +31,20 @@ namespace WeiKe.Models
             this.postNum = postNum;
             this.des = des;
             this.tag = tag;
+        }
+
+        public User(int id, string email, string name, string password, int followNum, int favoriteNum, int postNum, string des, string tag,string avatar)
+        {
+            this.id = id;
+            this.email = email;
+            this.name = name;
+            this.password = password;
+            this.followNum = followNum;
+            this.favoriteNum = favoriteNum;
+            this.postNum = postNum;
+            this.des = des;
+            this.tag = tag;
+            this.avatar = avatar;
         }
     }
 
