@@ -11,6 +11,7 @@
     <title>微课-广场</title>
     @Styles.Render("~/base/css")
     @Styles.Render("~/weike/css")
+    @Styles.Render("~/playground/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -20,6 +21,25 @@
     @Html.Partial("WeikeNavPartial")
     <div class="container body-content">
         <div class="col-xs-9 hotWeike_c content">
+            <form class="playgroundSearchDiv" action="" method="POST">
+                <h3>搜索</h3>
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 标题 <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">标题</a></li>
+                            <li><a href="#">作者</a></li>
+                            <li><a href="#">内容</a></li>
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control" placeholder="搜索">
+                    <span class="input-group-btn">
+                        <button class="btn" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                </div>
+
+            </form>
+            <h5>当前搜索：</h5>
             <div class="js">
                 <div class="grid">
                     @foreach (var item in ViewBag.data)

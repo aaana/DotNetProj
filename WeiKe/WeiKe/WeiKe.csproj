@@ -257,6 +257,7 @@
     <Content Include="Content\navBar.css" />
     <Content Include="Content\pblItem.css" />
     <Content Include="Content\personalPage.css" />
+    <Content Include="Content\playground.css" />
     <Content Include="Content\publish.css" />
     <Content Include="Content\sidebar.css" />
     <Content Include="Content\weike.css" />
@@ -275,6 +276,7 @@
     <Content Include="Scripts\custom\helper.js" />
     <Content Include="Scripts\custom\messageHelper.js" />
     <Content Include="Scripts\custom\pblItem.js" />
+    <Content Include="Scripts\custom\personalPageHelper.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

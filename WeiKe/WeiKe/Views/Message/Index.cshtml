@@ -49,7 +49,7 @@
                         <div class="media"  id=@item.notice.notice_id  onclick="gotoPersonalPage(@item.notice.sender_id)">
                             <div class="media-left">
                                 <img src="../resource/img/portrait.jpg" class="img-circle">
-                            </div>
+                            </div> 
                             <div class="media-body">
                                 <div>
                                     <div>
@@ -58,7 +58,15 @@
                                     </div>
                                     <div></div>
                                     <div>
-                                        <button class="btn btn-primary" onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                        @if (item.notice.isread)
+                                        {
+                                            <button class="btn" onclick="gotoPersonalPage(@item.notice.sender_id)">消息已读</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-primary" onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                        }
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +74,7 @@
                         }
                         @foreach (var item in ViewBag.unfollowNotice)
                         {
-                            <div class="media"  onclick="gotoPersonalPage(@item.notice.sender_id)">
+                            <div class="media" id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">
                                 <div class="media-left">
                                     <img src="../resource/img/portrait.jpg" class="img-circle">
                                 </div>
@@ -77,8 +85,15 @@
                                             <p>他取注了你</p>
                                         </div>
                                         <div></div>
-                                        <div  id=@item.notice.notice_id>
-                                            <button class="btn btn-primary" onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                        <div>
+                                            @if (item.notice.isread)
+                                            {
+                                                <button class="btn"  id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">消息已读</button>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-primary"  id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +119,14 @@
                                 </div>
                                 <div></div>
                                 <div>
-                                    <button class="btn btn-primary" id=@item.notice.weike_id onclick="showModal(this)">查看详情</button>
+                                    @if (item.notice.isread)
+                                    {
+                                        <button class="btn" id=@item.notice.weike_id onclick="showModal(this)">消息已读</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-primary" id=@item.notice.weike_id onclick="showModal(this)">查看详情</button>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -130,14 +152,22 @@
                                 </div>
                                 <div></div>
                                 <div>
-                                    <button class="btn btn-primary" id=@item.notice.weike_id  onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                    @if (item.notice.isread)
+                                    {
+                                        <button class="btn" id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">消息已读</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-primary" id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                    }
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                     }
                     @foreach (var item in ViewBag.unlikeNotice)
-                {
+                    {
                         <div class="media" id=@item.notice.notice_id   onclick="gotoPersonalPage(@item.notice.sender_id)">
                             <div class="media-left">
                                 <img src="http://img0.pconline.com.cn/pconline/1408/11/5254676_1407293-2_thumb.jpg" class=" img-circle">
@@ -146,11 +176,18 @@
                                 <div>
                                     <div>
                                         <p><b>@item.name</b> <small>2016-06-20</small></p>
-                                        <p>他赞了你的微课：<span>@item.title</span></p>
+                                        <p>他取赞了你的微课：<span>@item.title</span></p>
                                     </div>
                                     <div></div>
                                     <div>
-                                        <button class="btn btn-primary"  onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                        @if (item.notice.isread)
+                                        {
+                                            <button class="btn" id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">消息已读</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-primary" id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +213,14 @@
                                 </div>
                                 <div></div>
                                 <div>
-                                    <button class="btn btn-primary" id=@item.notice.weike_id onclick="showModal(this)">查看详情</button>
+                                    @if (item.notice.isread)
+                                    {
+                                        <button class="btn" id=@item.notice.weike_id onclick="showModal(this)">消息已读</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-primary" id=@item.notice.weike_id onclick="showModal(this)">查看详情</button>
+                                    }
                                 </div>
                             </div>
                         </div>

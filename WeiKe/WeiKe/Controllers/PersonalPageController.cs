@@ -78,20 +78,25 @@ namespace WeiKe.Controllers
                 { "weikeCount", infoUser.postNum+""}
             };
             ViewBag.personalInfo = personalInfo;
-            Dictionary<string, string> follow3 = new Dictionary<string, string>()
-            {
-                {"id", "100"},
-                {"name", "用户名"},
-                {"imgSrc", "../resource/img/portrait.jpg"},
-                {"email", "*********@qq.com"},
-                {"hasFollow", "ture"},
-                {"isCurrentUser", "false" }
-            };
 
             List<WeikeData> wdList = WeikeDB.FindByUserId(userId);
-
-           ViewBag.weikeData = wdList;
-           ViewBag.active = "PersonalPage/PersonalPageWeike?userId=" + userId;
+            Dictionary<WeikeData, bool> weikeData = new Dictionary<WeikeData, bool>();
+            List<FavoriteData> FavoriteWeikeList = FavoriteDB.FindFavoriteWeikeByUserId(user.id);
+            bool hasFavorited = false;
+            foreach(WeikeData weike in wdList)
+            {
+                hasFavorited = false;
+                foreach (FavoriteData fw in FavoriteWeikeList)
+                {
+                    if (weike.weike.weike_id == fw.weike.weike_id)
+                    {
+                        hasFavorited = true;
+                    }
+                }
+                weikeData.Add(weike, hasFavorited);
+            }
+            ViewBag.weikeData = weikeData;
+            ViewBag.active = "PersonalPage/PersonalPageWeike?userId=" + userId;
 
             return View();
         }

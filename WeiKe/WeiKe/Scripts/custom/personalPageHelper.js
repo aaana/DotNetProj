@@ -8,7 +8,7 @@ var showCommentDiv = function (t, oriBtn) {
         type: "post",
         url: "../CommentAction/getCommentList",
         data: {
-            "weikeId":weikeId
+            "weikeId": weikeId
         },
         dataType: "json",
         success: function (data) {
@@ -45,12 +45,12 @@ var setCommentDiv = function (commentList, target) {
 }
 
 var hideCommentListDiv = function (t) {
-    
+
     if (oriShowCommentListBtn != null) {
         $(oriShowCommentListBtn).show();
         oriShowCommentListBtn = null;
     } else {
-        
+
         var top = document.body.scrollTop - $(t).parent().parent().height();
         $(document.body).animate({ scrollTop: top }, 300);
     }
@@ -58,11 +58,11 @@ var hideCommentListDiv = function (t) {
 }
 
 var initCommentTemplate = function (ncomment) {
-    var date = new Date( parseInt(ncomment.commentData.comment.date.substr( 6 ) ) );
+    var date = new Date(parseInt(ncomment.commentData.comment.date.substr(6)));
     Y = date.getFullYear() + '-';
-    M = ( date.getMonth() + 1 < 10 ? '0' + ( date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
     D = date.getDate() + ' ';
-    var rDate = ( Y + M + D );
+    var rDate = (Y + M + D);
     return '<li class="media" id="' + ncomment.commentData.comment.comment_id + '">' +
                 '<div class="media-left">' +
                 '<a href="#">' +
@@ -89,12 +89,10 @@ var initCommentDiv = function (commentList, parentNode) {
     }
 }
 
-
-
 var makeComment2weike = function (t) {
     var content = $(t).parent().prev().val();
     var commentTargetId = 0;
-    var weikeId = $(t).parents('.personalPageContentItemComment').prev().attr('id');
+    var weikeId = $(t).parents('.personalPageContentItem.weikeId').attr('id');
     var info = {
         "commentTargetId": commentTargetId,
         "content": content,
@@ -111,29 +109,21 @@ var makeComment2weike = function (t) {
             var time = new Date();
             var commentInfo = {
                 'comment': {
-                    'commentData':{
-                        'comment':{
-                            comment_id:data.commentId,
-                            date:data.now,
-                            content:content
+                    'commentData': {
+                        'comment': {
+                            comment_id: data.commentId,
+                            date: data.time,
+                            content: content
                         },
-                        'commenter':data.username
+                        'commenter': data.username
                     },
-                   // 'user': {
-                   //     'name': data.username,
-                   //     'imgSrc': '../resource/img/8.jpg'
-                   // },
-                   // 'time': time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes(),
-                   // 'content': content,
                     'commentList': []
                 }
-            }
+            };
+            var comment = commentInfo.comment;
+            $(t).parent().prev().val('');
+            $(t).parents('.weikeCellComment').next().children('a').before(initCommentTemplate(comment));
         }
-     
-
-        var comment = info.comment;
-        $(t).parent().prev().val('');
-        $(t).parents('.weikeCellComment').next().children('a').before(initCommentTemplate(comment));
     }
 
     sendComment2Controller(info, success, function (error) { console.log(error) });
@@ -165,11 +155,11 @@ var showCommentInput = function (t) {
 var makeComment2comment = function (t) {
     var commentTargetId = $($(t).parents('.media')[0]).attr('id');
     var content = $(t).parent().prev().val();
-    var weikeId = $(t).parents('.personalPageContentItemComment').prev().attr('id');
+    var weikeId = $(t).parents('.personalPageContentItem.weikeId').attr('id');
     var info = {
         "commentTargetId": commentTargetId,
         "content": content,
-        "weikeId":weikeId
+        "weikeId": weikeId
     };
     var success = function (data) {
         if (data.success == -1) {
@@ -185,27 +175,19 @@ var makeComment2comment = function (t) {
                     'commentData': {
                         'comment': {
                             comment_id: data.commentId,
-                            date: data.now,
+                            date: data.time,
                             content: content
                         },
                         'commenter': data.username
                     },
-                    // 'user': {
-                    //     'name': data.username,
-                    //     'imgSrc': '../resource/img/8.jpg'
-                    // },
-                    // 'time': time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes(),
-                    // 'content': content,
                     'commentList': []
                 }
-            }
+            };
+            var comment = commentInfo.comment;
+            $(t).parent().prev().val('');
+            $($(t).parents('.media-body')[0]).append(initCommentTemplate(comment));
+            hideComment2comment(t);
         }
-
-
-        var comment = commentInfo.comment;
-        $(t).parent().prev().val('');
-        $($(t).parents('.media-body')[0]).append(initCommentTemplate(comment));
-        hideComment2comment(t);
     }
     sendComment2Controller(info, success, function (error) { console.log(error) });
 }
@@ -216,7 +198,7 @@ var hideComment2comment = function (t) {
 }
 
 var likeWeike = function (t) {
-    var weikeId = $(t).parents('.weikeId').attr('id');
+    var weikeId = $(t).parents('.personalPageContentItem.weikeId').attr('id');
 
     $.ajax({
         type: "post",
@@ -245,7 +227,7 @@ var likeWeike = function (t) {
                 alert("请先登录！");
                 location: "../Auth/Index/0"
             }
-           
+
         },
         error: function () {
 
@@ -254,7 +236,7 @@ var likeWeike = function (t) {
 }
 
 var dislikeWeike = function (t) {
-    var weikeId = $(t).parents('.weikeId').attr('id');
+    var weikeId = $(t).parents('.personalPageContentItem.weikeId').attr('id');
 
     $.ajax({
         type: "post",

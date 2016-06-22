@@ -1,9 +1,14 @@
 ﻿var gotoPersonalPage = function (userId) {
+    var notice_id = $(this).attr('id');
+    // setRead(this, notice_id);
+
     var url = "../PersonalPage/PersonalPageWeike?userId=" + userId;
     window.location.href = url;
 }
 
-var showModal = function (t) {
+var showModal = function (t)
+{
+    var noticeId = $(t).children('.media-left').attr('id');
     var weikeId = $(t).attr('id');
     console.log(weikeId);
 
@@ -19,23 +24,64 @@ var showModal = function (t) {
 
             setWeikeDetail(data.weikeData, data.hasFavorited);
             setCommentDiv(data.comments);
-            setRead(t);
+            setRead(t, noticeId);
+        },
+        error: function () {
+        }
+    });
+};
+
+var setRead = function (t, notice_id) {
+    $('#myModal').modal('show');
+
+    $.ajax({
+        type: "post",
+        url: "../MessageAction/ReadNotice",
+        data: {
+            "notice_id": notice_id
+        },
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+
+            if ($(t).hasClass('btn-primary')) {
+                $(t).text('已读');
+                $(t).removeClass('btn-primary');
+            }
+            if ($(t).children().children('button').hasClass('btn-primary')) {
+                $(t).children().children('button').text('已读');
+                $(t).children().children('button').removeClass('btn-primary');
+            }
         },
         error: function () {
         }
     });
 }
 
-var setRead = function (t) {
-    $('#myModal').modal('show');
-    if ($(t).hasClass('btn-primary')) {
-        $(t).text('已读');
-        $(t).removeClass('btn-primary');
+var setWeikeDetail = function (weikeDetail, hasFavorited) {
+    var date = new Date(parseInt(weikeDetail.weike.postdate.substr(6)));
+    Y = date.getFullYear() + '-';
+    M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    D = date.getDate() + ' ';
+    var rDate = (Y + M + D);
+    $('#myModal .weikeId').attr('id', weikeDetail.weike.weike_id);
+    $('#myModal .weikeTitle').text(weikeDetail.weike.title);
+    $('#myModal .weikeDateAndSubject').text(rDate + ' ' + weikeDetail.weike.subject);
+    $('#myModal .weikeAuthorName').text(weikeDetail.author);
+    $('#myModal .weikeDescription').text(weikeDetail.weike.description);
+    $('#myModal .weikeImg')[0].src = "../" + weikeDetail.weike.src;
+    $('#myModal .weikeCommentCount').text(weikeDetail.weike.commentNum);
+    $('#myModal .weikeLikeCount').text(weikeDetail.weike.star);
+    if (hasFavorited) {
+        $('#myModal .weikeLikeCount').prev().text("已赞");
+        $('#myModal .weikeLikeCount').parent().css('color', 'white');
+        $('#myModal .weikeLikeCount').parent().attr('onclick', 'dislikeWeike(this)');
+    } else {
+        $('#myModal .weikeLikeCount').prev().text("点赞");
+        $('#myModal .weikeLikeCount').parent().css('color', '#ccc');
+        $('#myModal .weikeLikeCount').parent().attr('onclick', 'likeWeike(this)');
     }
-    if ($(t).children().children('button').hasClass('btn-primary')) {
-        $(t).children().children('button').text('已读');
-        $(t).children().children('button').removeClass('btn-primary');
-    }
+
 }
 
 var setCommentDiv = function(commentList) {
@@ -58,150 +104,100 @@ var setCommentDiv = function(commentList) {
     initCommentDiv(commentList, commentListDivNode);
 }
 
-var setWeikeDetail = function (weikeDetail, hasFavorited) {
-    var date = new Date(parseInt(weikeDetail.weike.postdate.substr(6)));
+var hideCommentListDiv = function (t) {
+
+    if (oriShowCommentListBtn != null) {
+        $(oriShowCommentListBtn).show();
+        oriShowCommentListBtn = null;
+    } else {
+
+        var top = document.body.scrollTop - $(t).parent().parent().height();
+        $(document.body).animate({ scrollTop: top }, 300);
+    }
+    $(t).parent().parent().remove();
+}
+
+var initCommentTemplate = function (ncomment) {
+    var date = new Date(parseInt(ncomment.commentData.comment.date.substr(6)));
     Y = date.getFullYear() + '-';
     M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
     D = date.getDate() + ' ';
     var rDate = (Y + M + D);
-    $('#myModal .weikeId').attr('id', weikeDetail.weike.weike_id);
-    $('#myModal .weikeTitle').text(weikeDetail.weike.title);
-    $('#myModal .weikeDateAndSubject').text(rDate + ' ' + weikeDetail.weike.subject);
-    $('#myModal .weikeAuthorName').text(weikeDetail.author);
-    $('#myModal .weikeDescription').text(weikeDetail.weike.description);
-    $('#myModal .weikeImg')[0].src = "../" +weikeDetail.weike.src;
-    $('#myModal .weikeCommentCount').text(weikeDetail.weike.commentNum);
-    $('#myModal .weikeLikeCount').text(weikeDetail.weike.star);
-    if (hasFavorited) {
-        $('#myModal .weikeLikeCount').prev().text("点赞");
-        $('#myModal .weikeLikeCount').parent().css('color', '#ccc');
-        $('#myModal .weikeLikeCount').parent().attr('onclick', 'dislikeWeike(this)');
-    } else {
-        $('#myModal .weikeLikeCount').prev().text("已赞");
-        $('#myModal .weikeLikeCount').parent().css('color', 'white');
-        $('#myModal .weikeLikeCount').parent().attr('onclick', 'likeWeike(this)');
-    }
-
+    return '<li class="media" id="' + ncomment.commentData.comment.comment_id + '">' +
+                '<div class="media-left">' +
+                '<a href="#">' +
+                    '<img class="media-object" src="' + '../resource/img/portrait.jpg' + '">' +
+                '</a>' +
+                '</div>' +
+                '<div class="media-body">' +
+                    '<h5 class="media-heading">' + ncomment.commentData.commenter + ' <small>' + rDate + '</small></h5>' +
+                    '<h6>' + ncomment.commentData.comment.content + '</h6>' +
+                    '<div class="weikeCellCommentReply">' +
+                        '<a onclick="showCommentInput(this)">回复</a>' +
+                    '</div>' +
+                '</div>' +
+            '</li>'
 }
 
 var initCommentDiv = function (commentList, parentNode) {
     for (var index in commentList) {
         parentNode.append(initCommentTemplate(commentList[index]));
 
-        if (commentList[index].commentList.length > 0) {
-            initCommentDiv(commentList[index].commentList, parentNode.children('#' + commentList[index].id + ':last-child').children('.media-body'));
+        if (commentList[index].nestedComments.length > 0) {
+            initCommentDiv(commentList[index].nestedComments, parentNode.children('#' + commentList[index].commentData.comment.comment_id + ':last-child').children('.media-body'));
         }
-        console.log(index + ' ' + commentList[index].user.name + ' ' + commentList[index].commentList.length);
     }
-}
-
-var initCommentTemplate = function (comment) {
-    return '<li class="media" id="' + comment.id + '">' +
-                '<div class="media-left">' +
-                '<a href="#">' +
-                    '<img class="media-object" src="' + comment.user.imgSrc + '">' +
-                '</a>' +
-                '</div>' +
-                '<div class="media-body">' +
-                    '<h5 class="media-heading">' + comment.user.name + ' <small>' + comment.time + '</small></h5>' +
-                    '<h6>' + comment.content + '</h6>' +
-                    '<div class="weikeCellCommentReply">' +
-                        '<a onclick="showCommentInput(this)">回复</a>' +
-                    '</div>' +
-                '</div>' +
-            '</li>';
-}
-
-var likeWeike = function (t) {
-    var weikeId = $(t).parents('.weikeId').attr('id');
-
-    $.ajax({
-        type: "post",
-        url: "../LikeAction/Like",
-        data: {
-            "weikeId": weikeId
-        },
-        dataType: "json",
-        success: function (data) {
-            if (data.success) {
-                console.log(data);
-                var count = parseInt($(t).children('span').text()) + 1;
-                $(t).children('span').text(parseInt($(t).children('span').text()) + 1);
-                $(t).html("<span>已赞</span> <span>" + count + "</span>");
-
-                $(t).css('color', 'white');
-                $(t).attr('onclick', 'dislikeWeike(this)');
-            } else {
-                alert("请先登录！");
-                location: "../Auth/Index/0"
-            }
-
-        },
-        error: function () {
-            console.log('error');
-        }
-    });
-}
-
-var dislikeWeike = function (t) {
-    var weikeId = $(t).parents('.weikeId').attr('id');
-
-    $.ajax({
-        type: "post",
-        url: "../LikeAction/Dislike",
-        data: {
-            "weikeId": weikeId
-        },
-        dataType: "json",
-        success: function (data) {
-            console.log(data);
-
-            var count = parseInt($(t).children('span').text()) - 1;
-            $(t).html("点赞 <span>" + count + "</span>");
-            $('.weikeCellVote  > span:last-child').each(function () {
-                if ($(this).parents('.weikeCell').attr('id') == weikeId) {
-                    $(this).html('<span class="glyphicon glyphicon-heart"></span>' + count);
-                    $(this).parents('.grid__item').children('.description').children('.weikeCellDetail').children('.weikeId')
-                        .children('a').html('<span>点赞</span>  <span>' + count + '</span>');
-                }
-            })
-            $(t).css('color', '#cccccc');
-            $(t).attr('onclick', 'likeWeike(this)');
-        },
-        error: function () {
-            console.log("error");
-        }
-    });
-}
-
-var hideCommentListDiv = function (t) {
-    $(t).parent().parent().remove();
 }
 
 var makeComment2weike = function (t) {
-
     var content = $(t).parent().prev().val();
-
-    // post comment
-    // if success, return the new comment
-    var time = new Date();
-    var data = {
-        'comment': {
-            'id': 103,
-            'user': {
-                'name': '用户名3',
-                'imgSrc': 'resource/img/8.jpg'
-            },
-            'time': time.getFullYear() + '-' + (time.getMonth() + 1) + '-' + time.getDate() + ' ' + time.getHours() + ':' + time.getMinutes(),
-            'content': content,
-            'commentList': []
+    var commentTargetId = 0;
+    var weikeId = $(t).parents('.weikeDetail.weikeId').attr('id');
+    var info = {
+        "commentTargetId": commentTargetId,
+        "content": content,
+        "weikeId": weikeId
+    };
+    var success = function (data) {
+        if (data.success == -1) {
+            alert("不能对自己回复！");
+        } else if (data.success == 0) {
+            alert("请先登录！");
+            location = "../Auth?type=0";
+        } else {
+            console.log(data);
+            var time = new Date();
+            var commentInfo = {
+                'comment': {
+                    'commentData': {
+                        'comment': {
+                            comment_id: data.commentId,
+                            date: data.time,
+                            content: content
+                        },
+                        'commenter': data.username
+                    },
+                    'commentList': []
+                }
+            };
+            var comment = commentInfo.comment;
+            $(t).parent().prev().val('');
+            $(t).parents('.weikeCellComment').next().append(initCommentTemplate(comment));
         }
     }
 
-    var comment = data.comment;
-    $(t).parent().prev().val('');
-    $(t).parents('.weikeCellComment').next().append(initCommentTemplate(comment));
+    sendComment2Controller(info, success, function (error) { console.log(error) });
+}
 
+var sendComment2Controller = function (data, success, error) {
+    $.ajax({
+        type: "post",
+        url: "../CommentAction/makeComment",
+        data: data,
+        dataType: "json",
+        success: success,
+        error: error
+    });
 }
 
 var showCommentInput = function (t) {
@@ -213,39 +209,105 @@ var showCommentInput = function (t) {
                 '<button class="btn btn-default" type="button" onclick="hideComment2comment(this)">取消</button>' +
             '</span>' +
         '</div>');
+    $(t).parent().hide();
 }
 
 var makeComment2comment = function (t) {
-    var commentId = $($(t).parents('.media')[0]).attr('id');
+    var commentTargetId = $($(t).parents('.media')[0]).attr('id');
     var content = $(t).parent().prev().val();
-
-
-    // post comment
-    // if success, return the new comment
-    var time = new Date();
-    var data = {
-        'comment': {
-            'id': 103,
-            'user': {
-                'name': '用户名3',
-                'imgSrc': 'resource/img/8.jpg'
-            },
-            'time': time.getYear() + '-' + time.getMonth() + '-' + time.getDay() + ' ' + time.getHours() + ':' + time.getMinutes(),
-            'content': content,
-            'commentList': []
+    var weikeId = $(t).parents('.weikeDetail.weikeId').attr('id');
+    var info = {
+        "commentTargetId": commentTargetId,
+        "content": content,
+        "weikeId": weikeId
+    };
+    var success = function (data) {
+        if (data.success == -1) {
+            alert("不能对自己回复！");
+        } else if (data.success == 0) {
+            alert("请先登录！");
+            location = "../Auth?type=0";
+        } else {
+            console.log(data);
+            var time = new Date();
+            var commentInfo = {
+                'comment': {
+                    'commentData': {
+                        'comment': {
+                            comment_id: data.commentId,
+                            date: data.time,
+                            content: content
+                        },
+                        'commenter': data.username
+                    },
+                    'commentList': []
+                }
+            };
+            var comment = commentInfo.comment;
+            $(t).parent().prev().val('');
+            $($(t).parents('.media-body')[0]).append(initCommentTemplate(comment));
+            hideComment2comment(t);
         }
     }
-
-    var comment = data.comment;
-    $(t).parent().prev().val('');
-    $($(t).parents('.media-body')[0]).append(initCommentTemplate(comment));
-    hideComment2comment(t);
-
+    sendComment2Controller(info, success, function (error) { console.log(error) });
 }
 
 var hideComment2comment = function (t) {
+    $(t).parents('.weikeCellComment').prev().show();
     $(t).parents('.weikeCellComment').remove();
+}
 
+var likeWeike = function (t) {
+    var weikeId = $(t).parents('.weikeDetail.weikeId').attr('id');
+
+    $.ajax({
+        type: "post",
+        url: "../LikeAction/Like",
+        data: {
+            "weikeId": weikeId
+        },
+        dataType: "json",
+        success: function (data) {
+            if (data.success) {
+                console.log(data);
+                var count = parseInt($('.weikeLikeCount').text()) + 1;
+                $(t).html("<span>已赞</span> <span>" + count + "</span>");
+
+                $(t).css('color', 'white');
+                $(t).attr('onclick', 'dislikeWeike(this)');
+            } else {
+                alert("请先登录！");
+                location: "../Auth/Index/0"
+            }
+
+        },
+        error: function () {
+
+        }
+    });
+}
+
+var dislikeWeike = function (t) {
+    var weikeId = $(t).parents('.weikeDetail.weikeId').attr('id');
+
+    $.ajax({
+        type: "post",
+        url: "../LikeAction/Dislike",
+        data: {
+            "weikeId": weikeId
+        },
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            var count = parseInt($('.weikeLikeCount').text()) - 1;
+            $(t).html("<span>点赞<span> <span>" + count + "</span>");
+            $(t).css('color', '#cccccc');
+            $(t).attr('onclick', 'likeWeike(this)');
+        },
+        error: function () {
+
+        }
+    });
 }
 
 

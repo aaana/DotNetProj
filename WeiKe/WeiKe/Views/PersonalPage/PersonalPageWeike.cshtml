@@ -42,25 +42,33 @@
 
     @foreach (var item in ViewBag.weikeData)
     {
-        <div class="personalPageContentItem weikeId" id="@item.weike.weike_id">
+        <div class="personalPageContentItem weikeId" id="@item.Key.weike.weike_id">
             <div class="media">
                 <div class="media-left">
-                    <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.user_id)">
+                    <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.Key.weike.user_id)">
                 </div>
                 <div class="media-body">
-                    <p><b>@item.author</b></p>
-                    <p>@item.weike.postdate @item.weike.subject</p>
-                    <h3>@item.weike.title</h3>
-                    <p>@item.weike.description</p>
+                    <p><b>@item.Key.author</b></p>
+                    <p>@item.Key.weike.postdate @item.Key.weike.subject</p>
+                    <h3>@item.Key.weike.title</h3>
+                    <p>@item.Key.weike.description</p>
                     <div class="thumbnail">
-                        <img src="../@item.weike.src">
+                        <img src="../@item.Key.weike.src">
                     </div>
                 </div>
             </div>
-            <div class="personalPageContentItemBotmBar"  id="@item.weike.weike_id">
-                <a onclick="showCommentDiv(this)">评论 <span>@item.weike.commentNum</span></a>
+            <div class="personalPageContentItemBotmBar"  id="@item.Key.weike.weike_id">
+                <a onclick="showCommentDiv(this)">评论 <span>@item.Key.weike.commentNum</span></a>
                 <span>|</span>
-                <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
+                @if (item.Value)
+                {
+                    <a onclick="dislikeWeike(this)">已赞 <span>@item.Key.weike.star</span></a>
+                }
+                else
+                {
+                    <a onclick="likeWeike(this)">点赞 <span>@item.Key.weike.star</span></a>
+                }
+
             </div>
         </div>
     }
@@ -70,4 +78,4 @@
 
 <script type="text/javascript" src="../Scripts/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="../Scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="../Scripts/custom/helper.js"></script>
+<script type="text/javascript" src="../Scripts/custom/personalPageHelper.js"></script>

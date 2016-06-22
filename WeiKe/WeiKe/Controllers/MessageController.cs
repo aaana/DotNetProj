@@ -30,6 +30,13 @@ namespace WeiKe.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult ReadNotice(int notice_id)
+        {
+            NoticeDB.UpdateIsread(notice_id, true);
+            return Json(new { success = 1 });
+        }
+
         /*
         [HttpPost]
         public ActionResult message(int userId)
