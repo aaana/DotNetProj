@@ -219,7 +219,7 @@ namespace WeiKe.Models
             if (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                weikeData = new WeikeData(weike, reader.GetString("name"));
 
             }
             reader.Close();

@@ -26,21 +26,28 @@ namespace WeiKe.Controllers
                 ViewBag.isCurrentUser = false;
                 ViewBag.hasFollow = false;
             }
-            else if (userId == user.id)
-            {
-                ViewBag.isCurrentUser = true;
-                ViewBag.hasFollow = false;
-            }
             else
             {
-                fdList = FollowDB.FindAllFollowings(user.id);
-                ViewBag.hasFollow = false;
-                foreach (FollowData fd in fdList)
+                ViewBag.followNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "follow").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "unfollow").Count;
+                ViewBag.likeNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "like").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "dislike").Count;
+                ViewBag.commentNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "comment").Count;
+                ViewBag.replyNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "reply").Count;
+                if (userId == user.id)
                 {
-                    if (fd.follow.following_id == userId)
+                    ViewBag.isCurrentUser = true;
+                    ViewBag.hasFollow = false;
+                }
+                else
+                {
+                    fdList = FollowDB.FindAllFollowings(user.id);
+                    ViewBag.hasFollow = false;
+                    foreach (FollowData fd in fdList)
                     {
-                        ViewBag.hasFollow = true;
-                        break;
+                        if (fd.follow.following_id == userId)
+                        {
+                            ViewBag.hasFollow = true;
+                            break;
+                        }
                     }
                 }
                 ViewBag.isCurrentUser = false;
@@ -56,8 +63,7 @@ namespace WeiKe.Controllers
                     }
                 }
             }
-            ViewBag.commonFollowList = commonFollowList;
-
+            ViewBag.commonFollowList = commonFollowList;            
             User infoUser = UserDB.FindById(userId);
             Dictionary<string, string> personalInfo = new Dictionary<string, string>()
             {

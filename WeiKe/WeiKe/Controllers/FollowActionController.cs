@@ -25,6 +25,8 @@ namespace WeiKe.Controllers
                 int user_id = ((User)Session["user"]).id;
                 Follow follow = new Follow(user_id, following_id, DateTime.Now);
                 FollowDB.Insert(follow);
+                Notice notice = new Notice(0, user_id, following_id, 0, "follow", false);
+                NoticeDB.Insert(notice);
                 return Json(new { success = 1 });
             }
             else
@@ -42,6 +44,8 @@ namespace WeiKe.Controllers
             {
                 int user_id = ((User)Session["user"]).id;
                 FollowDB.Delete(user_id, following_id);
+                Notice notice = new Notice(0, user_id, following_id, 0, "unfollow", false);
+                NoticeDB.Insert(notice);
                 return Json(new { success = 1 });
             }
             else

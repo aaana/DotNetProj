@@ -339,4 +339,22 @@ var unfollow = function (t) {
 var gotoPersonalPage = function (userId) {
     var url = "../PersonalPage/PersonalPageWeike?userId=" + userId;
     window.location.href = url;
-} 
+}
+
+/*
+var viewMessage = function (userId) {
+    $.ajax({
+        type: "post",
+        url: "../Message/message",
+        data: {
+            "userId": userId
+        },
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+        },
+        error: function () {
+
+        }
+    })
+}*/
