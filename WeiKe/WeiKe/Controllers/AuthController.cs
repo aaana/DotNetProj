@@ -36,7 +36,11 @@ namespace WeiKe.Controllers
                 {
                     Session["user"] = user;
                     //ViewBag.loginSuccess = 1;
-                   // ViewBag.user = user;
+                    // ViewBag.user = user;
+                    ViewBag.followNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "follow").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "unfollow").Count;
+                    ViewBag.likeNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "like").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "dislike").Count;
+                    ViewBag.commentNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "comment").Count;
+                    ViewBag.replyNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "reply").Count;
                     return RedirectToAction("Index", redirectPage);
 
                 }

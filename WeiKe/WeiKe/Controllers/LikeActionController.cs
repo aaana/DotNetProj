@@ -24,6 +24,9 @@ namespace WeiKe.Controllers
                 int user_id = ((User)Session["user"]).id;
                 Favorite favorite = new Favorite(user_id, weikeId, DateTime.Now);
                 FavoriteDB.Insert(favorite);
+                WeikeData wd =WeikeDB.FindByWeikeId(weikeId);
+                Notice notice = new Notice(0, user_id, wd.weike.user_id, weikeId, "like", false);
+                NoticeDB.Insert(notice);
                 return Json(new { success=true });
             }
             else
@@ -42,6 +45,9 @@ namespace WeiKe.Controllers
             {
                 int user_id = ((User)Session["user"]).id;
                 FavoriteDB.Delete(user_id, weikeId);
+                WeikeData wd = WeikeDB.FindByWeikeId(weikeId);
+                Notice notice = new Notice(0, user_id, wd.weike.user_id, weikeId, "dislike", false);
+                NoticeDB.Insert(notice);
                 return Json(new { success = true });
             }
             else

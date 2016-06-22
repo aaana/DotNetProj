@@ -5,10 +5,10 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-        var MessageCount1 = 2; // 关注消息
-        var MessageCount2 = 0; // 评论消息
-        var MessageCount3 = 2; // 点赞
-        var MessageCount4 = 1; // 回复
+        var MessageCount1 = ViewBag.followNoticeNum==null?0 : ViewBag.followNoticeNum; // 关注消息
+        var MessageCount2 = ViewBag.likeNoticeNum==null?0: ViewBag.commentNoticeNum; // 评论消息
+        var MessageCount3 = ViewBag.commentNoticeNum==null?0: ViewBag.likeNoticeNum; // 点赞
+        var MessageCount4 = ViewBag.replyNoticeNum==null?0: ViewBag.replyNoticeNum; // 回复
         var MessageCountAll = MessageCount1 + MessageCount2 + MessageCount3 + MessageCount4;
 
         <ul class="nav navbar-nav navbar-right">

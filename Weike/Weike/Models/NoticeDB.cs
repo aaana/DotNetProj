@@ -10,8 +10,18 @@ namespace WeiKe.Models
     {
         static public void Insert(Notice notice)
         {
+            string sql;
+            if (notice.weike_id == 0)
+            {
+                sql = "insert into notice VALUES (" + notice.notice_id + "," + notice.sender_id + "," + notice.receiver_id + "," + null + ",'" + notice.type + "'," + notice.isread + ")";
+
+            }
+            else
+            {
+                sql = "insert into notice VALUES (" + notice.notice_id + "," + notice.sender_id + "," + notice.receiver_id + "," + notice.weike_id + ",'" + notice.type + "'," + notice.isread + ")";
+
+            }
             //string sql = "insert into favorite VALUES (" + favorite.user_id + "," + favorite.weike_id + ",'" + favorite.date + "',"+ favorite.isread+ ")";
-            string sql = "insert into notice VALUES (" + notice.notice_id + "," + notice.sender_id + "," + notice.receiver_id + "," + notice.weike_id + ",'" + notice.type+ "',"+notice.isread +")";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -41,6 +51,23 @@ namespace WeiKe.Models
             reader.Close();
             conn.Close();
             return ndList;
+        }
+
+        static public List<NoticeData> FindUnReadNoticeByUserIdNType(int userId,string type)
+        {
+            List<NoticeData> ndList = NoticeDB.FindUnreadNoticeByUserId(userId);
+            List<NoticeData> resultNDList = new List<NoticeData>();
+
+            foreach (NoticeData nd in ndList)
+            {
+                string _type = nd.notice.type;
+                if (_type.Equals(type))
+                {
+                    resultNDList.Add(nd);
+                }
+        
+            }
+            return resultNDList;
         }
 
         static public void UpdateIsread(int notice_id, Boolean isread)

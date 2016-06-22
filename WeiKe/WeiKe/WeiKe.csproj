@@ -215,6 +215,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LikeActionController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\PersonalPageController.cs" />
     <Compile Include="Controllers\PublishController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
@@ -349,6 +350,7 @@
     <Folder Include="Views\Follow\" />
     <Folder Include="Views\LikeAction\" />
     <Folder Include="Views\Login\" />
+    <Folder Include="Views\Message\" />
     <Folder Include="Views\Search\" />
     <Folder Include="Views\User\" />
   </ItemGroup>

@@ -23,25 +23,33 @@ namespace WeiKe.Controllers
                 ViewBag.isCurrentUser = false;
                 ViewBag.hasFollow = false;
             }
-            else if (userId == user.id)
-            {
-                ViewBag.isCurrentUser = true;
-                ViewBag.hasFollow = false;
-            }
             else
             {
-                List<FollowData> fdList = FollowDB.FindAllFollowings(user.id);
-                ViewBag.hasFollow = false;
-                foreach(FollowData fd in fdList)
+                ViewBag.followNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "follow").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "unfollow").Count;
+                ViewBag.likeNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "like").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "dislike").Count;
+                ViewBag.commentNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "comment").Count;
+                ViewBag.replyNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "reply").Count;
+                if (userId == user.id)
                 {
-                    if (fd.follow.following_id == userId)
-                    {
-                        ViewBag.hasFollow = true;
-                        break;
-                    }
+                    ViewBag.isCurrentUser = true;
+                    ViewBag.hasFollow = false;
                 }
-                ViewBag.isCurrentUser = false;
+                else
+                {
+                    List<FollowData> fdList = FollowDB.FindAllFollowings(user.id);
+                    ViewBag.hasFollow = false;
+                    foreach (FollowData fd in fdList)
+                    {
+                        if (fd.follow.following_id == userId)
+                        {
+                            ViewBag.hasFollow = true;
+                            break;
+                        }
+                    }
+                    ViewBag.isCurrentUser = false;
+                }
             }
+            
             User infoUser = UserDB.FindById(userId);
             Dictionary<string, string> personalInfo = new Dictionary<string, string>()
             {

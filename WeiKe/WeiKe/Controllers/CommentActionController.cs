@@ -39,6 +39,14 @@ namespace WeiKe.Controllers
                     {
                         return Json(new { success = -1 });
                     }
+                    Notice notice = new Notice(0, user_id,parent_userId,weikeId,"reply",false);
+                    NoticeDB.Insert(notice);
+                }
+                else
+                {
+                    int userId = WeikeDB.FindByWeikeId(weikeId).weike.user_id;
+                    Notice notice = new Notice(0, user_id, userId, weikeId, "comment", false);
+                    NoticeDB.Insert(notice);
                 }
                 DateTime now = DateTime.Now;
                 Comment comment = new Comment(0,user_id, weikeId,now,content,commentTargetId);

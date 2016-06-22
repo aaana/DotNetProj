@@ -26,9 +26,16 @@ namespace WeiKe.Controllers
                 foreach(FavoriteData fd in fdList)
                 {
                     favoriteWeikeId.Add(fd.weike.weike_id);
+   
                 }
+
+                ViewBag.followNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "follow").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "unfollow").Count;
+                ViewBag.likeNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "like").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "dislike").Count;
+                ViewBag.commentNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "comment").Count;
+                ViewBag.replyNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "reply").Count;
             }
             ViewBag.favoriteWeikes = favoriteWeikeId;
+
             //List<WeikeModel> list = new List<WeikeModel>();
             //list.Add(new WeikeModel { title = "Senseless Suffering", subject = "English", author = "Jeremy Bentham", src = "../resource/img/8.jpg", size = "1280x853", description = "The question is not, 'Can they reason ?' nor, 'Can they talk ? ' but rather, 'Can they suffer ? '", star = 0 });
             //list.Add(new WeikeModel { title = "Rabbit Intelligence", subject = "English", author = "Robert Brault", src = "../resource/img/9.jpg", size = "865x1280", description = "If a rabbit defined intelligence the way man does, then the most intelligent animal would be a rabbit, followed by the animal most willing to obey the commands of a rabbit.", star = 44 });
@@ -85,6 +92,24 @@ namespace WeiKe.Controllers
             ViewBag.message = true;
             List<WeikeData> weikes = WeikeDB.GetAllWeikeOrderByDate();
             ViewBag.data = weikes;
+            List<int> favoriteWeikeId = new List<int>();
+            if (Session["user"] != null)
+            {
+                User user = (User)Session["user"];
+                ViewBag.user = user;
+                List<FavoriteData> fdList = FavoriteDB.FindFavoriteWeikeByUserId(user.id);
+                foreach (FavoriteData fd in fdList)
+                {
+                    favoriteWeikeId.Add(fd.weike.weike_id);
+         
+                }
+                ViewBag.followNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "follow").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "unfollow").Count;
+                ViewBag.likeNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "like").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "dislike").Count;
+                ViewBag.commentNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "comment").Count;
+                ViewBag.replyNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "reply").Count;
+            }
+            ViewBag.favoriteWeikes = favoriteWeikeId;
+
             //List<WeikeModel> list = new List<WeikeModel>();
             //list.Add(new WeikeModel { title = "Senseless Suffering", subject = "English", author = "Jeremy Bentham", src = "resource/img/8.jpg", size = "1280x853", description = "The question is not, 'Can they reason ?' nor, 'Can they talk ? ' but rather, 'Can they suffer ? '", star = 0 });
             //list.Add(new WeikeModel { title = "Rabbit Intelligence", subject = "English", author = "Robert Brault", src = "resource/img/9.jpg", size = "865x1280", description = "If a rabbit defined intelligence the way man does, then the most intelligent animal would be a rabbit, followed by the animal most willing to obey the commands of a rabbit.", star = 44 });
@@ -93,8 +118,8 @@ namespace WeiKe.Controllers
             //list.Add(new WeikeModel { title = "Highest Ethics", subject = "Math", author = "Thomas Edison", src = "resource/img/1.jpg", size = "1280x853", description = "Non-violence leads to the highest ethics, which is the goal of all evolution. Until we stop harming all other living beings, we are still savages ", star = 44 });
             //ViewBag.data = list;
 
-            User user = (User)Session["user"];
-          
+
+
             /*
             Dictionary<string, string> userInfo = new Dictionary<string, string>()
             {
@@ -103,7 +128,7 @@ namespace WeiKe.Controllers
                 { "likeCount", "12"},
                 { "weikeCount", "10"} 
             };*/
-            ViewBag.user = user;
+
             return View();
         }
 
