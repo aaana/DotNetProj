@@ -40,9 +40,9 @@
             </ul>
             <div class="tab-content">
                 <div class="personalPageContentItem messageList tab-pane fade @class21" id="favoriteMessageList">
-                        @if (ViewBag.followNotice.Count + ViewBag.unfollowNotice.Count == 0)
+                        @if (ViewBag.followNotice == null || ViewBag.followNotice.Count == 0)
                         {
-                            <p>没有未读的关注消息</p>
+                            <p>未收到关注消息</p>
                         }
                         @foreach (var item in ViewBag.followNotice)
                         {
@@ -53,8 +53,15 @@
                             <div class="media-body">
                                 <div>
                                     <div>
-                                        <p><b>@item.name</b> <small>2016-06-20</small></p>
-                                        <p>他关注了你</p>
+                                        <p><b>@item.name</b> <small>@item.notice.noticetime</small></p>
+                                        @if (item.notice.type == "follow")
+                                        {
+                                            <p>他关注了你</p>
+                                        }
+                                        else
+                                        {
+                                            <p>他取关了你</p>
+                                        }
                                     </div>
                                     <div></div>
                                     <div>
@@ -66,44 +73,16 @@
                                         {
                                             <button class="btn btn-primary" onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
                                         }
-                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
                         }
-                        @foreach (var item in ViewBag.unfollowNotice)
-                        {
-                            <div class="media" id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">
-                                <div class="media-left">
-                                    <img src="../resource/img/portrait.jpg" class="img-circle">
-                                </div>
-                                <div class="media-body">
-                                    <div>
-                                        <div>
-                                            <p><b>@item.name</b> <small>2016-06-20</small></p>
-                                            <p>他取注了你</p>
-                                        </div>
-                                        <div></div>
-                                        <div>
-                                            @if (item.notice.isread)
-                                            {
-                                                <button class="btn"  id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">消息已读</button>
-                                            }
-                                            else
-                                            {
-                                                <button class="btn btn-primary"  id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
                     </div>
                 <div class="personalPageContentItem messageList tab-pane fade @class22" id="commentMessageList">
-                @if (ViewBag.commentNotice.Count == 0)
+                @if (ViewBag.commentNotice == null || ViewBag.commentNotice.Count == 0)
                 {
-                    <p>没有未读的评论消息</p>
+                    <p>未收到评论消息</p>
                 }
                 @foreach (var item in ViewBag.commentNotice)
                 {
@@ -114,7 +93,7 @@
                         <div class="media-body">
                             <div onclick="showModal(this)">
                                 <div>
-                                    <span><b>@item.name</b> <small>2016-06-20</small></span>
+                                    <span><b>@item.name</b> <small>@item.notice.noticetime</small></span>
                                     <p>他评论了你的微课：<span>@item.title</span></p>
                                 </div>
                                 <div></div>
@@ -134,9 +113,9 @@
                 }
                 </div>
                 <div class="personalPageContentItem messageList tab-pane fade @class23" id="upMessageList">
-                @if (ViewBag.likeNotice.Count + ViewBag.unlikeNotice.Count == 0)
+                @if (ViewBag.likeNotice == null || ViewBag.likeNotice.Count == 0)
                 {
-                    <p>没有未读的点赞消息</p>
+                    <p>未收到点赞消息</p>
                 }
                 @foreach (var item in ViewBag.likeNotice)
                 {
@@ -147,8 +126,16 @@
                         <div class="media-body">
                             <div>
                                 <div>
-                                    <p><b>@item.name</b> <small>2016-06-20</small></p>
-                                    <p>他赞了你的微课：<span>@item.title</span></p>
+                                    <p><b>@item.name</b> <small>@item.notice.noticetime</small></p>
+                                    @if (item.notice.type == "like")
+                                    {
+                                        <p>他赞了你的微课：<span>@item.title</span></p>
+                                    }
+                                    else
+                                    {
+                                        <p>他取赞了你的微课：<span>@item.title</span></p>
+                                    }
+
                                 </div>
                                 <div></div>
                                 <div>
@@ -166,38 +153,11 @@
                         </div>
                     </div>
                     }
-                    @foreach (var item in ViewBag.unlikeNotice)
-                    {
-                        <div class="media" id=@item.notice.notice_id   onclick="gotoPersonalPage(@item.notice.sender_id)">
-                            <div class="media-left">
-                                <img src="http://img0.pconline.com.cn/pconline/1408/11/5254676_1407293-2_thumb.jpg" class=" img-circle">
-                            </div>
-                            <div class="media-body"  id=@item.notice.weike_id>
-                                <div>
-                                    <div>
-                                        <p><b>@item.name</b> <small>2016-06-20</small></p>
-                                        <p>他取赞了你的微课：<span>@item.title</span></p>
-                                    </div>
-                                    <div></div>
-                                    <div>
-                                        @if (item.notice.isread)
-                                        {
-                                            <button class="btn" id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">消息已读</button>
-                                        }
-                                        else
-                                        {
-                                            <button class="btn btn-primary" id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
                 </div>
                 <div class="personalPageContentItem messageList tab-pane fade @class24" id="replyMessageList">
-                @if (ViewBag.replyNotice.Count == 0)
+                @if (ViewBag.replyNotice == null || ViewBag.replyNotice.Count == 0)
                 {
-                    <p>没有未读的回复消息</p>
+                    <p>尚未收到回复消息</p>
                 }
                 @foreach (var item in ViewBag.replyNotice)
                 {
@@ -208,7 +168,7 @@
                         <div class="media-body">
                             <div>
                                 <div>
-                                    <span><b>@item.name</b> <small>2016-06-20</small></span>
+                                    <span><b>@item.name</b> <small>@item.notice.noticetime</small></span>
                                     <p>他评论了你的微课：<span>@item.title</span></p>
                                 </div>
                                 <div></div>

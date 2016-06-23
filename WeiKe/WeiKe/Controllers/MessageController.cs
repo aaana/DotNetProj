@@ -18,13 +18,11 @@ namespace WeiKe.Controllers
             {
                 User user = (User)Session["user"];
                 ViewBag.user = user;
-
-                ViewBag.followNotice = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "follow");
-                ViewBag.unfollowNotice = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "unfollow");
-                ViewBag.likeNotice = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "like");
-                ViewBag.unlikeNotice =  NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "dislike");
-                ViewBag.commentNotice = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "comment");
-                ViewBag.replyNotice = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "reply");
+                
+                ViewBag.followNotice = NoticeDB.FindAllNoticeByUserIdNType(user.id, "follow");
+                ViewBag.likeNotice = NoticeDB.FindAllNoticeByUserIdNType(user.id, "like");
+                ViewBag.commentNotice = NoticeDB.FindAllNoticeByUserIdNType(user.id, "comment");
+                ViewBag.replyNotice = NoticeDB.FindAllNoticeByUserIdNType(user.id, "reply");
             }
 
             return View();

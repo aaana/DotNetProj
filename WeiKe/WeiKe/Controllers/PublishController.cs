@@ -66,18 +66,28 @@ namespace WeiKe.Controllers
         public ActionResult PublishFileWithUpload(string title, string subject, string des, string redirectPage)
         {
             string str = title + " " + subject + " " + des + " " + redirectPage;
-
+            string filename;
+            DateTime newDate = DateTime.Now;
+            User user = (User)Session["user"];
             foreach (string upload in Request.Files)
             {
                 if (!Request.Files[upload].HasFile()) continue;
                 string mimetype = Request.Files[upload].ContentType;
                 string path = AppDomain.CurrentDomain.BaseDirectory + "uploads/";
-                string filename = Path.GetFileName(Request.Files[upload].FileName);
+                filename = Path.GetFileName(Request.Files[upload].FileName);
                 Request.Files[upload].SaveAs(Path.Combine(path, filename));
+
                 MyFileDB.Insert(new MyFile(0, filename, mimetype, path));
             }
 
             return RedirectToAction(redirectPage);
+        }
+
+
+        public FilePathResult GetFileFromDisk(string fileName, string mimeType)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "uploads/";
+            return File(path + fileName, mimeType, fileName);
         }
     }
 }
