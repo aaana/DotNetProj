@@ -17,7 +17,12 @@ namespace WeiKe.Controllers
         {
             ViewBag.message = true;
             List<WeikeData> weikes = WeikeDB.GetAllWeikeOrderByStar();
+            foreach (WeikeData wd in weikes)
+            {
+                wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+            }
             ViewBag.data = weikes;
+         
             List<int> favoriteWeikeId = new List<int>();
             if (Session["user"] != null)
             {

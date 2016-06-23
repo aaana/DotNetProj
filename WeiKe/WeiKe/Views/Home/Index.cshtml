@@ -13,6 +13,7 @@
     @Styles.Render("~/base/css")
     @Styles.Render("~/weike/css")
     @Scripts.Render("~/bundles/modernizr")
+    @using WeiKe.Models;
 
 
 </head>
@@ -32,6 +33,7 @@
                 <div class="grid">
                     @foreach (var item in ViewBag.data)
                     {
+                        item.attachment = MyFileDB.FindByWeikeId(item.weike.weike_id);
                         DateTime dt = item.weike.postdate;
                         string dtYear = dt.Year.ToString();
                         string dtMonth = dt.Month.ToString();

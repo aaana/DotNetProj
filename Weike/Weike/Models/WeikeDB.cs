@@ -22,13 +22,13 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"],(string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"],(DateTime)reader["postdate"], (int)reader["commentNum"]);
-                MyFile attachment = MyFileDB.FindByWeikeId(weike.weike_id);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment, reader.GetString("avatar"));
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"),reader.GetString("avatar"));
                 wdList.Add(wd);
 
             }
             reader.Close();
             conn.Close();
+
             return wdList;
 
         }
@@ -46,13 +46,13 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                MyFile attachment = MyFileDB.FindByWeikeId(weike.weike_id);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment, reader.GetString("avatar"));
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), reader.GetString("avatar"));
                 wdList.Add(wd);
 
             }
             reader.Close();
             conn.Close();
+       
             return wdList;
 
         }
@@ -70,13 +70,13 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                MyFile attachment = MyFileDB.FindByWeikeId(weike.weike_id);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment, reader.GetString("avatar"));
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"),reader.GetString("avatar"));
                 wdList.Add(wd);
 
             }
             reader.Close();
             conn.Close();
+         
             return wdList;
 
         }
@@ -94,13 +94,13 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                MyFile attachment = MyFileDB.FindByWeikeId(weike.weike_id);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"),attachment, reader.GetString("avatar"));
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), reader.GetString("avatar"));
                 wdList.Add(wd);
 
             }
             reader.Close();
             conn.Close();
+        
             return wdList;
 
         }
@@ -125,6 +125,7 @@ namespace WeiKe.Models
             {
                 result = (int)reader[0];
             }
+            reader.Close();
             conn.Close();
 
             return result;
@@ -150,13 +151,13 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"],(int)reader["commentNum"]);
-                MyFile attachment = MyFileDB.FindByWeikeId(weike.weike_id);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment, reader.GetString("avatar"));
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), reader.GetString("avatar"));
                 wdList.Add(wd);
 
             }
             reader.Close();
             conn.Close();
+          
             return wdList;
 
         }
@@ -182,13 +183,13 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                MyFile attachment = MyFileDB.FindByWeikeId(weike.weike_id);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment, reader.GetString("avatar"));
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), reader.GetString("avatar"));
                 wdList.Add(wd);
 
             }
             reader.Close();
             conn.Close();
+          
             return wdList;
 
         }
@@ -215,20 +216,20 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"],(string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                MyFile attachment = MyFileDB.FindByWeikeId(weike.weike_id);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment, reader.GetString("avatar"));
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), reader.GetString("avatar"));
                 wdList.Add(wd);
 
             }
             reader.Close();
             conn.Close();
+          
             return wdList;
 
         }
 
         public static WeikeData FindByWeikeId(int weike_id)
         {
-            WeikeData weikeData = null;
+            WeikeData wd = null;
             string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,user.avatar from weike natural join user where weike_id = @weike_id";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
@@ -240,13 +241,14 @@ namespace WeiKe.Models
             if (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                MyFile attachment = MyFileDB.FindByWeikeId(weike.weike_id);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment, reader.GetString("avatar"));
+                wd = new WeikeData(weike, reader.GetString("name"), reader.GetString("avatar"));
 
             }
             reader.Close();
             conn.Close();
-            return weikeData;
+
+           
+            return wd;
 
         }
 
@@ -264,12 +266,12 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                MyFile attachment = MyFileDB.FindByWeikeId(weike.weike_id);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment, reader.GetString("avatar"));
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), reader.GetString("avatar"));
                 wdList.Add(wd);
             }
             reader.Close();
             conn.Close();
+           
             return wdList;
 
         }
@@ -289,14 +291,13 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                MyFile attachment = MyFileDB.FindByWeikeId(weike.weike_id);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment, reader.GetString("avatar"));
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), reader.GetString("avatar"));
                 wdList.Add(wd);
             }
             reader.Close();
             conn.Close();
-            return wdList;
 
+            return wdList;
         }
         /*
         public static Weike FindWeikeByWeikeId(int weike_id)

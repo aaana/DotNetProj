@@ -53,6 +53,12 @@ namespace WeiKe.Models
             this.attachment = attachment;
             this.avatar = avatar;
         }
+        public WeikeData(Weike weike, string author,  string avatar)
+        {
+            this.weike = weike;
+            this.author = author;
+            this.avatar = avatar;
+        }
     }
 
     public class FollowData

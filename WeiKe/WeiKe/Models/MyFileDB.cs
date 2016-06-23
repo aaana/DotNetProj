@@ -32,8 +32,7 @@ namespace WeiKe.Models
             if (reader.Read()) {
                 result = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
             }
-
-            cmd.ExecuteNonQuery();
+            reader.Close();
             conn.Close();
             return result;
         }
