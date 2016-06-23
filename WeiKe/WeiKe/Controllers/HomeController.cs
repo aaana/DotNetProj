@@ -71,6 +71,10 @@ namespace WeiKe.Controllers
         {
             ViewBag.message = true;
             List<WeikeData> weikes = WeikeDB.GetAllWeikeOrderByDate();
+            foreach (WeikeData wd in weikes)
+            {
+                wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+            }
             ViewBag.data = weikes;
             if (Session["user"] != null)
             {

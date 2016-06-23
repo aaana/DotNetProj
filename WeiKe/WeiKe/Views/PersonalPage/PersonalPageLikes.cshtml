@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/WeikePersonalPageLayout.cshtml";
 }
 
+@using WeiKe.Models;
 <ol class="breadcrumb personalPageNav" data-spy="affix" data-offset-top="230" id=@ViewBag.personalInfo["id"]>
     @if (ViewBag.isCurrentUser)
     {
@@ -41,7 +42,8 @@
         </div>
     }
     @foreach (var item in ViewBag.weikeData)
-    {    
+    {
+        MyFile attachment = MyFileDB.FindByWeikeId(item.weike.weike_id);
         <div class="personalPageContentItem weikeId" id="@item.weike.weike_id">
             <div class="media">
                 <div class="media-left">
@@ -53,9 +55,9 @@
                     <h3>@item.weike.title</h3>
                     <p>@item.weike.description</p>
                     <p>
-                        @if (item.Key.attachment != null)
+                        @if (attachment != null)
                         {
-                            <a href="../MyFile/GetFileFromDisk?fileName=@item.Key.attachment.fileName&mimeType=@item.Key.attachment.mimeType">可下载附件: @item.Key.attachment.fileName</a>
+                            <a href="../MyFile/GetFileFromDisk?fileName=@attachment.fileName&mimeType=@attachment.mimeType">可下载附件: @attachment.fileName</a>
                         }
                     </p>
                     <div class="thumbnail">
