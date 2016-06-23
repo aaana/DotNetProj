@@ -52,7 +52,10 @@ namespace WeiKe.Models
             }
             reader.Close();
             conn.Close();
-       
+            foreach (WeikeData wd in wdList)
+            {
+                wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+            }
             return wdList;
 
         }
@@ -76,7 +79,10 @@ namespace WeiKe.Models
             }
             reader.Close();
             conn.Close();
-         
+            foreach (WeikeData wd in wdList)
+            {
+                wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+            }
             return wdList;
 
         }
@@ -100,7 +106,10 @@ namespace WeiKe.Models
             }
             reader.Close();
             conn.Close();
-        
+            foreach (WeikeData wd in wdList)
+            {
+                wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+            }
             return wdList;
 
         }
@@ -157,7 +166,10 @@ namespace WeiKe.Models
             }
             reader.Close();
             conn.Close();
-          
+            foreach (WeikeData wd in wdList)
+            {
+                wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+            }
             return wdList;
 
         }
@@ -189,7 +201,10 @@ namespace WeiKe.Models
             }
             reader.Close();
             conn.Close();
-          
+            foreach (WeikeData wd in wdList)
+            {
+                wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+            }
             return wdList;
 
         }
@@ -222,7 +237,10 @@ namespace WeiKe.Models
             }
             reader.Close();
             conn.Close();
-          
+            foreach (WeikeData wd in wdList)
+            {
+                wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+            }
             return wdList;
 
         }
@@ -247,7 +265,8 @@ namespace WeiKe.Models
             reader.Close();
             conn.Close();
 
-           
+            wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+          
             return wd;
 
         }
@@ -271,7 +290,10 @@ namespace WeiKe.Models
             }
             reader.Close();
             conn.Close();
-           
+            foreach (WeikeData wd in wdList)
+            {
+                wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+            }
             return wdList;
 
         }
@@ -296,7 +318,10 @@ namespace WeiKe.Models
             }
             reader.Close();
             conn.Close();
-
+            foreach (WeikeData wd in wdList)
+            {
+                wd.attachment = MyFileDB.FindByWeikeId(wd.weike.weike_id);
+            }
             return wdList;
         }
         /*
