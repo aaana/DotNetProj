@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using WeiKe.Models
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -71,18 +73,13 @@
                 }
                 <div class="personalPageHotWeike" @affixAttr>
                     <span>热门微课</span>
-                    <div>
-                        <p>英语写作小技巧3</p>
-                        <p>2016-06-16 英语</p>
-                    </div>
-                    <div>
-                        <p>英语写作小技巧2</p>
-                        <p>2016-06-16 英语</p>
-                    </div>
-                    <div>
-                        <p>英语写作小技巧1</p>
-                        <p>2016-06-16 英语</p>
-                    </div>
+                    @foreach (WeikeData weike in ViewBag.popularWeikeList)
+                    {
+                        <div onclick="windows.location.href='../@ViewBag.active'">
+                            <p>@weike.weike.title</p>
+                            <p>@weike.weike.postdate @weike.weike.subject</p>
+                        </div>
+                    }
                 </div>
                 @if ( !ViewBag.isCurrentUser && ViewBag.commonFollowList !=null)
                 {

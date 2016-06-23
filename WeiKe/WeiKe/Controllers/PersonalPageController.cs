@@ -41,6 +41,7 @@ namespace WeiKe.Controllers
                 {
                     fdList = FollowDB.FindAllFollowings(user.id);
                     ViewBag.hasFollow = false;
+                    ViewBag.isCurrentUser = false;
                     foreach (FollowData fd in fdList)
                     {
                         if (fd.follow.following_id == userId)
@@ -50,7 +51,6 @@ namespace WeiKe.Controllers
                         }
                     }
                 }
-                ViewBag.isCurrentUser = false;
 
                 foreach (FollowData fd in fdList)
                 {
@@ -63,7 +63,10 @@ namespace WeiKe.Controllers
                     }
                 }
             }
-            ViewBag.commonFollowList = commonFollowList;            
+            ViewBag.commonFollowList = commonFollowList;
+
+            ViewBag.popularWeikeList = WeikeDB.FindByUserId(userId, 3);
+               
             User infoUser = UserDB.FindById(userId);
             Dictionary<string, string> personalInfo = new Dictionary<string, string>()
             {
@@ -144,6 +147,7 @@ namespace WeiKe.Controllers
                 }
             }
             ViewBag.commonFollowList = commonFollowList;
+            ViewBag.popularWeikeList = WeikeDB.FindByUserId(userId, 3);
 
             User infoUser = UserDB.FindById(userId);
             Dictionary<string, string> personalInfo = new Dictionary<string, string>()
@@ -201,6 +205,11 @@ namespace WeiKe.Controllers
             {
                 ViewBag.isCurrentUser = true;
                 ViewBag.hasFollow = false;
+
+                foreach (FollowData cufd in cuFdList)
+                {
+                    followList.Add(cufd, true);
+                }
             }
             else
             {
@@ -229,10 +238,12 @@ namespace WeiKe.Controllers
                         }
                     }
                     followList.Add(cufd, hasFollow);
-                }
-             }
+                }   
+            }
             ViewBag.commonFollowList = commonFollowList;
             ViewBag.followList = followList;
+            ViewBag.popularWeikeList = WeikeDB.FindByUserId(userId, 3);
+
 
             User infoUser = UserDB.FindById(userId);
             Dictionary<string, string> personalInfo = new Dictionary<string, string>()
