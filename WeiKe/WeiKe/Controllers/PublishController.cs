@@ -36,7 +36,7 @@ namespace WeiKe.Controllers
 
             return RedirectToAction(redirectPage);
         }
-
+        /*
         // 使用上传图片
         [HttpPost]
         public ActionResult PublishPicWithUpload(string title, string uploadPicSize, string subject, string des, string redirectPage)
@@ -97,6 +97,7 @@ namespace WeiKe.Controllers
 
             return RedirectToAction(redirectPage);
         }
+        */
 
 
         public FilePathResult GetFileFromDisk(string fileName, string mimeType)

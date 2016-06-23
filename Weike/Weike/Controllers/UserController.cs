@@ -43,7 +43,7 @@ namespace WeiKe.Controllers
                     string filename = Path.GetFileName(Request.Files[upload].FileName);
                     filename = userId + filename;
                     Request.Files[upload].SaveAs(Path.Combine(path, filename));
-                    UserDB.UpdateAvatar(userId, Path.Combine(filename));
+                    UserDB.UpdateAvatar(userId, "../avatars/"+Path.Combine(filename));
                   
                 }
                 string redirect = Request.Form["active"];
