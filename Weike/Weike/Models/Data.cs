@@ -40,11 +40,12 @@ namespace WeiKe.Models
     {
         public Weike weike { get; set; }
         public string author { get; set; }
-
-        public WeikeData(Weike weike,string author)
+        public MyFile attachment { get; set; }
+        public WeikeData(Weike weike,string author,MyFile attachment)
         {
             this.weike = weike;
             this.author = author;
+            this.attachment = attachment;
         }
     }
 
