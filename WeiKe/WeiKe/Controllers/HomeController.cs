@@ -70,23 +70,83 @@ namespace WeiKe.Controllers
             ViewBag.message = true;
             List<WeikeData> weikes = WeikeDB.GetAllWeikeOrderByDate();
             ViewBag.data = weikes;
-            List<int> favoriteWeikeId = new List<int>();
             if (Session["user"] != null)
             {
                 User user = (User)Session["user"];
                 ViewBag.user = user;
                 List<FavoriteData> fdList = FavoriteDB.FindFavoriteWeikeByUserId(user.id);
-                foreach (FavoriteData fd in fdList)
+                Dictionary<WeikeData, bool> weikeDataWithFavorite = new Dictionary<WeikeData, bool>();
+                bool hasFavorite = false;
+                foreach (WeikeData wdata in weikes)
                 {
-                    favoriteWeikeId.Add(fd.weike.weike_id);
-         
+                    hasFavorite = false;
+                    foreach (FavoriteData fdata in fdList)
+                    {
+                        if (wdata.weike.weike_id == fdata.weike.weike_id)
+                        {
+                            hasFavorite = true;
+                            break;
+                        }
+                    }
+                    weikeDataWithFavorite.Add(wdata, hasFavorite);
                 }
+                ViewBag.weikeDataWithFavorite = weikeDataWithFavorite;
+
                 ViewBag.followNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "follow").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "unfollow").Count;
                 ViewBag.likeNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "like").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "dislike").Count;
                 ViewBag.commentNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "comment").Count;
                 ViewBag.replyNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "reply").Count;
             }
-            ViewBag.favoriteWeikes = favoriteWeikeId;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult playground(string type, string keyword)
+        {
+            List<WeikeData> weikes = new List<WeikeData>();
+            ViewBag.message = false;
+            ViewBag.type = type;
+            ViewBag.keyword = keyword;
+            if (type == "标题")
+            {
+                weikes = WeikeDB.FindByTitle(keyword);
+                ViewBag.message = true;
+            } else if (type== "作者") {
+                weikes = WeikeDB.FindByAuthor(keyword);
+                ViewBag.message = true;
+
+            } else if (type == "学科") {
+                weikes = WeikeDB.FindBySubject(keyword);
+                ViewBag.message = true;       
+            }
+            ViewBag.data = weikes;
+            if (Session["user"] != null)
+            {
+                User user = (User)Session["user"];
+                ViewBag.user = user;
+                List<FavoriteData> fdList = FavoriteDB.FindFavoriteWeikeByUserId(user.id);
+                Dictionary<WeikeData, bool> weikeDataWithFavorite = new Dictionary<WeikeData, bool>();
+                bool hasFavorite = false;
+                foreach(WeikeData wdata in weikes)
+                {
+                    hasFavorite = false;
+                    foreach(FavoriteData fdata in fdList)
+                    {
+                        if(wdata.weike.weike_id == fdata.weike.weike_id)
+                        {
+                            hasFavorite = true;
+                            break;
+                        }
+                    }
+                    weikeDataWithFavorite.Add(wdata, hasFavorite);
+                }
+                ViewBag.weikeDataWithFavorite = weikeDataWithFavorite;
+
+                ViewBag.followNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "follow").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "unfollow").Count;
+                ViewBag.likeNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "like").Count + NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "dislike").Count;
+                ViewBag.commentNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "comment").Count;
+                ViewBag.replyNoticeNum = NoticeDB.FindUnReadNoticeByUserIdNType(user.id, "reply").Count;
+            }
             return View();
         }
 

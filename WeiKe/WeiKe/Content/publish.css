@@ -21,9 +21,18 @@ form .form-control:focus {
     margin-top: 10px;
 }
 
+#publishFileByUpload,
 #publishPicByUpload {
     display: none;
 }
 .form-horizontal .radio {
     margin-bottom: 5px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#publishPicByUpload button {
+    display: block;
 }

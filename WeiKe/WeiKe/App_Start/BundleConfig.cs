@@ -56,7 +56,7 @@ namespace WeiKe
                 "~/Content/auth.css"));
 
             bundles.Add(new StyleBundle("~/playground/css").Include(
-                "~/Cotent/playground.css"));
+                "~/Content/playground.css"));
         }
     }
 }

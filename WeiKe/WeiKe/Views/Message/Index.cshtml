@@ -107,7 +107,7 @@
                 }
                 @foreach (var item in ViewBag.commentNotice)
                 {
-                    <div class="media"   id=@item.notice.weike_id  onclick="showModal(this)">
+                    <div class="media"   id=@item.notice.weike_id  notice-id=@item.notice.notice_id onclick="showModal(this)">
                         <div class="media-left" id=@item.notice.notice_id>
                             <img src="../resource/img/portrait.jpg" class="img-circle">
                         </div>
@@ -121,11 +121,11 @@
                                 <div>
                                     @if (item.notice.isread)
                                     {
-                                        <button class="btn" id=@item.notice.weike_id onclick="showModal(this)">消息已读</button>
+                                        <button class="btn" id=@item.notice.weike_id notice-id=@item.notice.notice_id onclick="showModal(this)">消息已读</button>
                                     }
                                     else
                                     {
-                                        <button class="btn btn-primary" id=@item.notice.weike_id onclick="showModal(this)">查看详情</button>
+                                        <button class="btn btn-primary" id=@item.notice.weike_id notice-id=@item.notice.notice_id onclick="showModal(this)">查看详情</button>
                                     }
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                 }
                 @foreach (var item in ViewBag.likeNotice)
                 {
-                    <div class="media"  id=@item.notice.weike_id  onclick="gotoPersonalPage(@item.notice.sender_id)">
+                    <div class="media"  id=@item.notice.weike_id   notice-id=@item.notice.notice_id  onclick="gotoPersonalPage(this)">
                         <div class="media-left"  id=@item.notice.notice_id>
                             <img src="../resource/img/portrait.jpg" class="img-circle">
                         </div>
@@ -154,11 +154,11 @@
                                 <div>
                                     @if (item.notice.isread)
                                     {
-                                        <button class="btn" id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">消息已读</button>
+                                        <button class="btn"  id=@item.notice.weike_id   notice-id=@item.notice.notice_id  onclick="gotoPersonalPage(this)">消息已读</button>
                                     }
                                     else
                                     {
-                                        <button class="btn btn-primary" id=@item.notice.notice_id onclick="gotoPersonalPage(@item.notice.sender_id)">前往他的主页</button>
+                                        <button class="btn btn-primary"  id=@item.notice.weike_id   notice-id=@item.notice.notice_id  onclick="gotoPersonalPage(this)">前往他的主页</button>
                                     }
                                     
                                 </div>

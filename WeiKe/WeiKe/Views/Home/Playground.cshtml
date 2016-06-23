@@ -1,4 +1,5 @@
-﻿@{
+﻿@using WeiKe.Models
+@{
     Layout = null;
 }
 
@@ -21,84 +22,130 @@
     @Html.Partial("WeikeNavPartial")
     <div class="container body-content">
         <div class="col-xs-9 hotWeike_c content">
-            <form class="playgroundSearchDiv" action="" method="POST">
+            <form class="playgroundSearchDiv" action="../Home/Playground" method="POST">
                 <h3>搜索</h3>
                 <div class="input-group">
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 标题 <span class="caret"></span></button>
+                        @{ 
+                            string type = ViewBag.type == null ? "标题" : ViewBag.type;
+                        }
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> @type <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href="#">标题</a></li>
-                            <li><a href="#">作者</a></li>
-                            <li><a href="#">内容</a></li>
+                            <li><a onclick="changeSearchType(this)">标题</a></li>
+                            <li><a onclick="changeSearchType(this)">作者</a></li>
+                            <li><a onclick="changeSearchType(this)">学科</a></li>
                         </ul>
                     </div>
-                    <input type="text" class="form-control" placeholder="搜索">
+                    <input type="hidden" name="type" value=@type />
+                    <input type="text" name="keyword" class="form-control" placeholder="搜索" value=@ViewBag.keyword />
                     <span class="input-group-btn">
                         <button class="btn" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                     </span>
                 </div>
 
             </form>
-            <h5>当前搜索：</h5>
+            @if (ViewBag.keyword != null)
+            {
+                <h5>当前搜索：”@ViewBag.keyword“  在 @ViewBag.type 中</h5>
+            }
+
             <div class="js">
                 <div class="grid">
-                    @foreach (var item in ViewBag.data)
+                    @if ((User)Session["user"] == null)
                     {
-                        DateTime dt = item.weike.postdate;
-                        string dtYear = dt.Year.ToString();
-                        string dtMonth = dt.Month.ToString();
-                        string dtDay = dt.Day.ToString();
-                        string dtstr = dtYear + '/' + dtMonth + '/' + dtDay;
-                        <div class="grid__item" data-size=@item.weike.size>
-                            <div class="thumbnail weikeCell"   id="@item.weike.weike_id">
-                                <a href="../@item.weike.src" class="img-wrap"><img src="../@item.weike.src"></a>
-                                <div class="weikeCellDes">
-                                    <h3>@item.weike.title</h3>
-                                    <div class="weikeCellVote">
-                                        <h5>@item.weike.subject  <small>@dtstr</small></h5>
-                                        <span></span>
-                                        <span><span class="glyphicon glyphicon-heart"></span>@item.weike.star</span>
+                        foreach (var item in ViewBag.data)
+                        {
+                            DateTime dt = item.weike.postdate;
+                            string dtYear = dt.Year.ToString();
+                            string dtMonth = dt.Month.ToString();
+                            string dtDay = dt.Day.ToString();
+                            string dtstr = dtYear + '/' + dtMonth + '/' + dtDay;
+                            <div class="grid__item" data-size=@item.weike.size>
+                                <div class="thumbnail weikeCell" id="@item.weike.weike_id">
+                                    <a href="../@item.weike.src" class="img-wrap"><img src="../@item.weike.src"></a>
+                                    <div class="weikeCellDes">
+                                        <h3>@item.weike.title</h3>
+                                        <div class="weikeCellVote">
+                                            <h5>@item.weike.subject  <small>@dtstr</small></h5>
+                                            <span></span>
+                                            <span><span class="glyphicon glyphicon-heart"></span>@item.weike.star</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="description description--grid">
-                                <div class="weikeCellDetail">
-                                    <div class="media" onclick="gotoPersonalPage(@item.weike.user_id)">
-                                        <div class="media-left">
-                                            <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.user_id)">
+                                <div class="description description--grid">
+                                    <div class="weikeCellDetail">
+                                        <div class="media" onclick="gotoPersonalPage(@item.weike.user_id)">
+                                            <div class="media-left">
+                                                <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.user_id)">
+                                            </div>
+                                            <div class="media-body">
+                                                <h4><em>@item.author</em></h4>
+                                            </div>
                                         </div>
-                                        <div class="media-body">
-                                            <h4><em>@item.author</em></h4>
-                                        </div>
-                                    </div>
-                                    <h3>@item.weike.title <small>@dtstr</small></h3>
-                                    <h4>@item.weike.description</h4>
+                                        <h3>@item.weike.title <small>@dtstr</small></h3>
+                                        <h4>@item.weike.description</h4>
 
-                                    <div class="weikeId" id="@item.weike.weike_id">
-                                        @if (ViewBag.favoriteWeikes.Count != 0)
-                                        {
-                                            int weike_id = item.weike.weike_id;
-                                            List<int> weikeFList = ViewBag.favoriteWeikes;
-                                            if (weikeFList.Contains(weike_id))
-                                            {
-                                                <a onclick="dislikeWeike(this)">已赞 <span>@item.weike.star</span></a>
-                                            }
-                                            else
-                                            {
-                                                <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
-                                        }
+                                        <div class="weikeId" id="@item.weike.weike_id">
+                                               <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
+                                        </div>
+                                    </div>
+                                    <div class="weikeCellShowComment" id="@item.weike.weike_id">
+                                        <a onclick="showComment(this)">查看评论</a>
                                     </div>
                                 </div>
-                                <div class="weikeCellShowComment"  id="@item.weike.weike_id">
-                                    <a onclick="showComment(this)">查看评论</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in ViewBag.weikeDataWithFavorite)
+                        {
+                            DateTime dt = item.Key.weike.postdate;
+                            string dtYear = dt.Year.ToString();
+                            string dtMonth = dt.Month.ToString();
+                            string dtDay = dt.Day.ToString();
+                            string dtstr = dtYear + '/' + dtMonth + '/' + dtDay;
+                            <div class="grid__item" data-size=@item.Key.weike.size>
+                                <div class="thumbnail weikeCell" id="@item.Key.weike.weike_id">
+                                    <a href="../@item.Key.weike.src" class="img-wrap"><img src="../@item.Key.weike.src"></a>
+                                    <div class="weikeCellDes">
+                                        <h3>@item.Key.weike.title</h3>
+                                        <div class="weikeCellVote">
+                                            <h5>@item.Key.weike.subject  <small>@dtstr</small></h5>
+                                            <span></span>
+                                            <span><span class="glyphicon glyphicon-heart"></span>@item.Key.weike.star</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="description description--grid">
+                                    <div class="weikeCellDetail">
+                                        <div class="media" onclick="gotoPersonalPage(@item.Key.weike.user_id)">
+                                            <div class="media-left">
+                                                <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.Key.weike.user_id)">
+                                            </div>
+                                            <div class="media-body">
+                                                <h4><em>@item.Key.author</em></h4>
+                                            </div>
+                                        </div>
+                                        <h3>@item.Key.weike.title <small>@dtstr</small></h3>
+                                        <h4>@item.Key.weike.description</h4>
+
+                                        <div class="weikeId" id="@item.Key.weike.weike_id">
+
+                                            if( item.Value) {
+                                            <a onclick="dislikeWeike(this)">已赞 <span>@item.Key.weike.star</span></a>
+                                            } else {
+                                            <a onclick="likeWeike(this)">点赞 <span>@item.Key.weike.star</span></a>
+                                            }
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="weikeCellShowComment" id="@item.Key.weike.weike_id">
+                                        <a onclick="showComment(this)">查看评论</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
 
                 </div>
@@ -152,5 +199,11 @@
     var showComment = function (t) {
         $(t).parent().hide();
         showCommentDiv(t, $(t).parent());
+    }
+
+    var changeSearchType = function(t) {
+        var newType = $(t).text().slice(0, 2);
+        $(t).parent().parent().prev().html(newType + " <span class=\"caret\"></span>");
+        $(t).parent().parent().parent().next().val(newType);
     }
 </script>

@@ -1,9 +1,26 @@
-﻿var gotoPersonalPage = function (userId) {
-    var notice_id = $(this).attr('id');
-    // setRead(this, notice_id);
+﻿var gotoPersonalPage = function (t) {
+    var notice_id = $(t).attr('notice-id');
+    var weike_id = $(t).attr('id');
 
-    var url = "../PersonalPage/PersonalPageWeike?userId=" + userId;
-    window.location.href = url;
+    $.ajax({
+        type: "post",
+        url: "../MessageAction/ReadNotice",
+        data: {
+            "notice_id": notice_id
+        },
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+
+            if (data.success == 1) {
+                var url = "../PersonalPage/PersonalPageWeike?userId=" + userId;
+                window.location.href = url;
+            }
+        },
+        error: function () {
+        }
+    });
+
 }
 
 var showModal = function (t)
