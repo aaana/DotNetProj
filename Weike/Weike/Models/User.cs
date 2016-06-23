@@ -17,7 +17,7 @@ namespace WeiKe.Models
         public int postNum { get; set; }
         public string des { get; set; }
         public string tag { get; set; }
-        private string _avatar = "../resource/img/portrait.jpg";
+        private string _avatar = "portrait.jpg";
         public string avatar { get { return _avatar; } set { _avatar = value; } }
 
         public User(int id, string email, string name, string password,int followNum,int favoriteNum,int postNum,string des,string tag)

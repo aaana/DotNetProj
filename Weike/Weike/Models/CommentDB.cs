@@ -74,7 +74,7 @@ namespace WeiKe.Models
         static public List<CommentData> FindCommentDataByUserId(int user_id)
         {
             List<CommentData> cdList = new List<CommentData>();
-            string sql = "select weike.weike_id ,weike.title,weike.subject,weike.user_id as author_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum, comment.comment_id,comment.user_id as commenter_id,comment.date,comment.content,comment.parent,user1.name as author, user2.name as commenter from weike inner join comment inner join user as user1 inner join user as user2 where comment.weike_id = weike.weike_id and user1.user_id = weike.user_id and user2.user_id = comment.user_id and comment.user_id = @userid order by comment.date desc;";
+            string sql = "select weike.weike_id ,weike.title,weike.subject,weike.user_id as author_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum, comment.comment_id,comment.user_id as commenter_id,comment.date,comment.content,comment.parent,user1.name as author, user2.name,user2.avatar as commenter from weike inner join comment inner join user as user1 inner join user as user2 where comment.weike_id = weike.weike_id and user1.user_id = weike.user_id and user2.user_id = comment.user_id and comment.user_id = @userid order by comment.date desc;";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -86,7 +86,7 @@ namespace WeiKe.Models
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], reader.GetString("subject"), (int)reader["author_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"],(int)reader["star"],(DateTime)reader["postdate"],(int)reader["commentNum"]);
                 Comment comment = new Comment((int)reader["comment_id"], (int)reader["commenter_id"], (int)reader["weike_id"], (DateTime)reader["date"], (string)reader["content"],(int)reader["parent"]);
-                CommentData cd = new CommentData(weike, comment, (string)reader["author"], (string)reader["commenter"]);
+                CommentData cd = new CommentData(weike, comment, (string)reader["author"], (string)reader["commenter"], (string)reader["avatar"]);
                 cdList.Add(cd);
 
             }
@@ -98,7 +98,7 @@ namespace WeiKe.Models
         static public List<CommentData> FindCommentDataByWeikeId(int weike_id)
         {
             List<CommentData> cdList = new List<CommentData>();
-            string sql = "select weike.weike_id ,weike.title,weike.subject,weike.user_id as author_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum, comment.comment_id,comment.user_id as commenter_id,comment.date,comment.content,comment.parent,user1.name as author, user2.name as commenter from weike inner join comment inner join user as user1 inner join user as user2 where comment.weike_id = weike.weike_id and user1.user_id = weike.user_id and user2.user_id = comment.user_id and comment.weike_id = @weikeid order by date;";
+            string sql = "select weike.weike_id ,weike.title,weike.subject,weike.user_id as author_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum, comment.comment_id,comment.user_id as commenter_id,comment.date,comment.content,comment.parent,user1.name as author, user2.name as commenter,user2.avatar from weike inner join comment inner join user as user1 inner join user as user2 where comment.weike_id = weike.weike_id and user1.user_id = weike.user_id and user2.user_id = comment.user_id and comment.weike_id = @weikeid order by date;";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -110,7 +110,7 @@ namespace WeiKe.Models
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], reader.GetString("subject"), (int)reader["author_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
                 Comment comment = new Comment((int)reader["comment_id"], (int)reader["commenter_id"], (int)reader["weike_id"], (DateTime)reader["date"], (string)reader["content"],(int)reader["parent"]);
-                CommentData cd = new CommentData(weike, comment, (string)reader["author"], (string)reader["commenter"]);
+                CommentData cd = new CommentData(weike, comment, (string)reader["author"], (string)reader["commenter"], (string)reader["avatar"]);
                 cdList.Add(cd);
 
             }
@@ -124,7 +124,7 @@ namespace WeiKe.Models
         {
             List<CommentData> cdList = new List<CommentData>();
             DateTime high = new DateTime(time.Year,time.Month,time.Day+1);
-            string sql = "select weike.weike_id ,weike.title,weike.subject,weike.user_id as author_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum, comment.comment_id,comment.user_id as commenter_id,comment.date,comment.content,comment.parent,user1.name as author, user2.name as commenter from weike inner join comment inner join user as user1 inner join user as user2 where comment.weike_id = weike.weike_id and user1.user_id = weike.user_id and user2.user_id = comment.user_id and comment.user_id = @userid and comment.date >= @low and comment.date<@high order by comment.date desc;";
+            string sql = "select weike.weike_id ,weike.title,weike.subject,weike.user_id as author_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum, comment.comment_id,comment.user_id as commenter_id,comment.date,comment.content,comment.parent,user1.name as author, user2.name as commenter,user2.avatar from weike inner join comment inner join user as user1 inner join user as user2 where comment.weike_id = weike.weike_id and user1.user_id = weike.user_id and user2.user_id = comment.user_id and comment.user_id = @userid and comment.date >= @low and comment.date<@high order by comment.date desc;";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -138,7 +138,7 @@ namespace WeiKe.Models
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], reader.GetString("subject"), (int)reader["author_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
                 Comment comment = new Comment((int)reader["comment_id"], (int)reader["commenter_id"], (int)reader["weike_id"], (DateTime)reader["date"], (string)reader["content"], (int)reader["parent"]);
-                CommentData cd = new CommentData(weike, comment, (string)reader["author"], (string)reader["commenter"]);
+                CommentData cd = new CommentData(weike, comment, (string)reader["author"], (string)reader["commenter"], (string)reader["avatar"]);
                 cdList.Add(cd);
 
             }

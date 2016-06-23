@@ -47,7 +47,7 @@ namespace WeiKe.Models
         static public List<FollowData> FindAllFollowings(int user_id)
         {
             List<FollowData> fdList = new List<FollowData>();
-            string sql = "SELECT follow.user_id,follow.following_id,follow.followDate,user.name,user.email FROM user inner join follow where user.user_id = follow.following_id and follow.user_id = @userid;";
+            string sql = "SELECT follow.user_id,follow.following_id,follow.followDate,user.name,user.email,user.avatar FROM user inner join follow where user.user_id = follow.following_id and follow.user_id = @userid;";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -58,7 +58,7 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Follow follow = new Follow((int)reader["user_id"], (int)reader["following_id"], (DateTime)reader["followDate"]);
-                FollowData fd = new FollowData(follow, (string)reader["name"],"following",reader.GetString("email"));
+                FollowData fd = new FollowData(follow, (string)reader["name"],"following",reader.GetString("email"), reader.GetString("avatar"));
                 fdList.Add(fd);
 
             }
@@ -71,7 +71,7 @@ namespace WeiKe.Models
         static public List<FollowData> FindAllFollowers(int user_id)
         {
             List<FollowData> fdList = new List<FollowData>();
-            string sql = "SELECT follow.user_id,follow.following_id,follow.followDate,user.name,user.email FROM user inner join follow where user.user_id = follow.user_id and follow.following_id = @userid;";
+            string sql = "SELECT follow.user_id,follow.following_id,follow.followDate,user.name,user.email,user.avatar FROM user inner join follow where user.user_id = follow.user_id and follow.following_id = @userid;";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -82,7 +82,7 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Follow follow = new Follow((int)reader["user_id"], (int)reader["following_id"], (DateTime)reader["followDate"]);
-                FollowData fd = new FollowData(follow, (string)reader["name"],"follower",reader.GetString("email"));
+                FollowData fd = new FollowData(follow, (string)reader["name"],"follower",reader.GetString("email"), reader.GetString("avatar"));
                 fdList.Add(fd);
 
             }

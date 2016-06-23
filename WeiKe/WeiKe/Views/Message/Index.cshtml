@@ -48,7 +48,7 @@
                         {
                         <div class="media"  id=@item.notice.notice_id  onclick="gotoPersonalPage(@item.notice.sender_id)">
                             <div class="media-left">
-                                <img src="../resource/img/portrait.jpg" class="img-circle">
+                                <img src="@item.avatar" class="img-circle">
                             </div> 
                             <div class="media-body">
                                 <div>
@@ -88,7 +88,7 @@
                 {
                     <div class="media"   id=@item.notice.weike_id  notice-id=@item.notice.notice_id onclick="showModal(this)">
                         <div class="media-left" id=@item.notice.notice_id>
-                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                            <img src="@item.avatar" class="img-circle">
                         </div>
                         <div class="media-body">
                             <div onclick="showModal(this)">
@@ -121,7 +121,7 @@
                 {
                     <div class="media"  id=@item.notice.weike_id   notice-id=@item.notice.notice_id  onclick="gotoPersonalPage(this)">
                         <div class="media-left"  id=@item.notice.notice_id>
-                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                            <img src="@item.avatar" class="img-circle">
                         </div>
                         <div class="media-body">
                             <div>
@@ -163,7 +163,7 @@
                 {
                     <div class="media" id=@item.notice.weike_id  onclick="showModal(this)">
                         <div class="media-left"  id=@item.notice.weike_id>
-                            <img src="../resource/img/portrait.jpg" class="img-circle">
+                            <img src="@item.avatar" class="img-circle">
                         </div>
                         <div class="media-body">
                             <div>

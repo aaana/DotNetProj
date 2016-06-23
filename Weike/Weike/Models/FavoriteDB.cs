@@ -52,7 +52,7 @@ namespace WeiKe.Models
         static public List<FavoriteData> FindFavoriteWeikeByUserId(int user_id)
         {
             List<FavoriteData> fdList = new List<FavoriteData>();
-            string sql = "SELECT weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,favorite.date FROM weike.weike inner join user inner join favorite where weike.weike_id = favorite.weike_id and user.user_id = weike.user_id and favorite.user_id = @userid;";
+            string sql = "SELECT weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,user.avatar,favorite.date FROM weike.weike inner join user inner join favorite where weike.weike_id = favorite.weike_id and user.user_id = weike.user_id and favorite.user_id = @userid;";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -63,7 +63,7 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"],(DateTime)reader["postdate"], (int)reader["commentNum"]);
-                FavoriteData fd = new FavoriteData( weike, (string)reader["name"],(DateTime)reader["date"]);
+                FavoriteData fd = new FavoriteData( weike, (string)reader["name"],(DateTime)reader["date"], (string)reader["avatar"]);
                 fdList.Add(fd);
 
             }

@@ -66,7 +66,7 @@ var initCommentTemplate = function (ncomment) {
     return '<li class="media" id="' + ncomment.commentData.comment.comment_id + '">' +
                 '<div class="media-left">' +
                 '<a href="#">' +
-                    '<img class="media-object" src="' + '../resource/img/portrait.jpg' + '">' +
+                    '<img class="media-object" src="' + ncomment.commentData.avatar + '">' +
                 '</a>' +
                 '</div>' +
                 '<div class="media-body">' +

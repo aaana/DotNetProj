@@ -76,7 +76,7 @@
                                     <div class="weikeCellDetail">
                                         <div class="media" onclick="gotoPersonalPage(@item.weike.user_id)">
                                             <div class="media-left">
-                                                <img src="../resource/img/portrait.jpg" class="img-circle" onclick="gotoPersonalPage(@item.weike.user_id)">
+                                                <img src="@item.avatar" class="img-circle" onclick="gotoPersonalPage(@item.weike.user_id)">
                                             </div>
                                             <div class="media-body">
                                                 <h4><em>@item.author</em></h4>
@@ -167,7 +167,7 @@
                 {
                     <div class="sidebarUserInfo">
                         <div>
-                            <a href="../PersonalPage/PersonalPageWeike"><img src="../resource/img/portrait.jpg" class="img-responsive img-circle"></a>
+                            <a href="../PersonalPage/PersonalPageWeike"><img src="@ViewBag.user.avatar" class="img-responsive img-circle"></a>
                         </div>
                         <a href="../PersonalPage/PersonalPageWeike/@ViewBag.user.id"><span>@ViewBag.user.name</span></a>
                         <div>
