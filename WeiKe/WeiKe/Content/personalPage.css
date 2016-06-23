@@ -36,7 +36,6 @@
     height: 100px;
     width: 100px;
     border: 3px solid rgba(238,238,238,0.50);
-    margin-right: 30px;
 }
 .personalPageHead span {
     font-size: 24px;
@@ -347,4 +346,14 @@
 
 .followList .media-body div:nth-child(2){
     flex: 1;
+}
+
+.changeAvatar{
+    background-color: #337AB7;
+    border: none;
+    color: white;
+    width: 124px;
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 15px;
 }

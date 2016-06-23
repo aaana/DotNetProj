@@ -69,7 +69,7 @@ namespace WeiKe.Controllers
             {
                 { "id", userId+""},
                 { "name", infoUser.name},
-                { "portraitSrc", "../resource/img/portrait.jpg"},
+                { "portraitSrc", "../avatars/"+infoUser.avatar},
                 { "email",infoUser.email},
                 { "des", infoUser.des},
                 { "tag", infoUser.tag},
@@ -149,7 +149,7 @@ namespace WeiKe.Controllers
             {
                 { "id", userId+""},
                 { "name", infoUser.name},
-                { "portraitSrc", "../resource/img/portrait.jpg"},
+                { "portraitSrc",  "../avatars/"+infoUser.avatar},
                 { "email",infoUser.email},
                 { "des", infoUser.des},
                 { "tag", infoUser.tag},
@@ -237,7 +237,7 @@ namespace WeiKe.Controllers
             {
                 { "id", userId+""},
                 { "name", infoUser.name},
-                { "portraitSrc", "../resource/img/portrait.jpg"},
+                { "portraitSrc", "../avatars/"+infoUser.avatar},
                 { "email",infoUser.email},
                 { "des", infoUser.des},
                 { "tag", infoUser.tag},
@@ -248,6 +248,7 @@ namespace WeiKe.Controllers
             ViewBag.personalInfo = personalInfo;
 
             ViewBag.active = "PersonalPage/PersonalPageFollows?userId=" + userId;
+            ViewBag.fromAction = "PersonalPageFollows";
             return View();
         }
     }
