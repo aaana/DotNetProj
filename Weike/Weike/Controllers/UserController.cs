@@ -30,7 +30,7 @@ namespace WeiKe.Controllers
         public ActionResult UploadAvatar() {
             if (Session["user"] != null)
             {
-                int user_id = ((User)Session["user"]).id;
+                int userId = ((User)Session["user"]).id;
                 foreach (string upload in Request.Files)
                 {
                     if (!Request.Files[upload].HasFile()) continue;
@@ -41,13 +41,17 @@ namespace WeiKe.Controllers
                         Directory.CreateDirectory(path);
                     }
                     string filename = Path.GetFileName(Request.Files[upload].FileName);
-                    filename = user_id+filename;
+                    filename = userId + filename;
                     Request.Files[upload].SaveAs(Path.Combine(path, filename));
-                    UserDB.UpdateAvatar(user_id, Path.Combine(filename));
+                    UserDB.UpdateAvatar(userId, Path.Combine(filename));
                   
                 }
+                string redirect = Request.Form["active"];
+                return RedirectToAction(redirect,"PersonalPage", new { userId= userId });
             }
-            return Json(true);
+
+            return Json(false);
+            
 
         }
 

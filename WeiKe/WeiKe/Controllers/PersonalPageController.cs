@@ -248,6 +248,7 @@ namespace WeiKe.Controllers
             ViewBag.personalInfo = personalInfo;
 
             ViewBag.active = "PersonalPage/PersonalPageFollows?userId=" + userId;
+            ViewBag.fromAction = "PersonalPageFollows";
             return View();
         }
     }

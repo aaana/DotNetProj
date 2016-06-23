@@ -33,7 +33,7 @@ namespace WeiKe.Models
         static public List<NoticeData> FindUnreadNoticeByUserId(int user_id)
         {
             List<NoticeData> ndList = new List<NoticeData>();
-            string sql = "select notice.*,weike.title,user.name from weike inner join user inner join notice where user.user_id = notice.sender_id and notice.weike_id = weike.weike_id and receiver_id = @userid and notice.isread = false";
+            string sql = "select notice.*,weike.title,user.name from weike inner join user inner join notice on user.user_id = notice.sender_id and notice.weike_id = weike.weike_id where receiver_id = @userid and notice.isread = false";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -56,7 +56,7 @@ namespace WeiKe.Models
         static public List<NoticeData> FindAllNoticeByUserId(int user_id)
         {
             List<NoticeData> ndList = new List<NoticeData>();
-            string sql = "select notice.*,weike.title,user.name from weike inner join user inner join notice where user.user_id = notice.sender_id and notice.weike_id = weike.weike_id and receiver_id = @userid";
+            string sql = "select notice.*,weike.title,user.name from weike inner join user inner join notice on user.user_id = notice.sender_id and notice.weike_id = weike.weike_id where receiver_id = @userid";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -76,21 +76,52 @@ namespace WeiKe.Models
             return ndList;
         }
 
+        static public List<NoticeData> FindAllNoticeByUserIdNType(int userId, string type)
+        {
+            List<NoticeData> ndList = new List<NoticeData>();
+            string sql = "select notice.*,weike.title,user.name from weike inner join user inner join notice on user.user_id = notice.sender_id and notice.weike_id = weike.weike_id where receiver_id = @userid and type like @type";
+            MySqlConnection conn = Connection.getMySqlCon();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@userid", userId);
+            cmd.Parameters.AddWithValue("@type", "%"+type+"%");
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Notice notice = new Notice((int)reader["notice_id"], (int)reader["sender_id"], (int)reader["receiver_id"], (int)reader["weike_id"], reader.GetString("type"), (Boolean)reader["isread"], (DateTime)reader["noticetime"]);
+                NoticeData nd = new NoticeData(notice, reader.GetString("name"), reader.GetString("title"));
+                ndList.Add(nd);
+
+            }
+            reader.Close();
+            conn.Close();
+            return ndList;
+        }
+
         static public List<NoticeData> FindUnReadNoticeByUserIdNType(int userId,string type)
         {
-            List<NoticeData> ndList = NoticeDB.FindUnreadNoticeByUserId(userId);
-            List<NoticeData> resultNDList = new List<NoticeData>();
+            List<NoticeData> ndList = new List<NoticeData>();
+            string sql = "select notice.*,weike.title,user.name from weike inner join user inner join notice on user.user_id = notice.sender_id and notice.weike_id = weike.weike_id where isread = false and receiver_id = @userid and type like @type";
+            MySqlConnection conn = Connection.getMySqlCon();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@userid", userId);
+            cmd.Parameters.AddWithValue("@type", "%" + type + "%");
+            MySqlDataReader reader = cmd.ExecuteReader();
 
-            foreach (NoticeData nd in ndList)
+            while (reader.Read())
             {
-                string _type = nd.notice.type;
-                if (_type.Equals(type))
-                {
-                    resultNDList.Add(nd);
-                }
-        
+                Notice notice = new Notice((int)reader["notice_id"], (int)reader["sender_id"], (int)reader["receiver_id"], (int)reader["weike_id"], reader.GetString("type"), (Boolean)reader["isread"], (DateTime)reader["noticetime"]);
+                NoticeData nd = new NoticeData(notice, reader.GetString("name"), reader.GetString("title"));
+                ndList.Add(nd);
+
             }
-            return resultNDList;
+            reader.Close();
+            conn.Close();
+            return ndList;
         }
 
         static public void UpdateIsread(int notice_id, Boolean isread)

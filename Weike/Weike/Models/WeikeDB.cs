@@ -250,6 +250,30 @@ namespace WeiKe.Models
             return wdList;
 
         }
+
+        public static List<WeikeData> FindByUserId(int user_id,int top)
+        {
+            List<WeikeData> wdList = new List<WeikeData>();
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike inner join user on user.user_id = weike.user_id where user.user_id = 2 ORDER BY weike.star  DESC limit 0,@top";
+            MySqlConnection conn = Connection.getMySqlCon();
+            conn.Open();
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@id", user_id);
+            cmd.Parameters.AddWithValue("@top", top);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                wdList.Add(wd);
+            }
+            reader.Close();
+            conn.Close();
+            return wdList;
+
+        }
         /*
         public static Weike FindWeikeByWeikeId(int weike_id)
         {

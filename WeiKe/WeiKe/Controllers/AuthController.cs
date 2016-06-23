@@ -70,5 +70,14 @@ namespace WeiKe.Controllers
             }
             
         }
+
+
+       
+        public ActionResult Logout()
+        {
+            // sign up
+            Session["user"] = null;
+            return RedirectToAction("Index","Home");
+        }
     }
 }
