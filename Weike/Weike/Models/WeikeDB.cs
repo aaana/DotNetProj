@@ -12,7 +12,7 @@ namespace WeiKe.Models
         public static List<WeikeData> GetAllWeike()
         {
             List<WeikeData> wdList = new List<WeikeData>();
-            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike natural join user";
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,file.id,file.fileName,file.mimeType,file.fileUrl from weike natural join user natural join file";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -22,7 +22,8 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"],(string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"],(DateTime)reader["postdate"], (int)reader["commentNum"]);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                MyFile attachment = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment);
                 wdList.Add(wd);
 
             }
@@ -35,7 +36,7 @@ namespace WeiKe.Models
         public static List<WeikeData> GetAllWeikeOrderByDate()
         {
             List<WeikeData> wdList = new List<WeikeData>();
-            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike natural join user order by postdate desc";
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,file.id,file.fileName,file.mimeType,file.fileUrl from weike natural join user natural join file order by postdate desc";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -45,7 +46,8 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                MyFile attachment = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment);
                 wdList.Add(wd);
 
             }
@@ -58,7 +60,7 @@ namespace WeiKe.Models
         public static List<WeikeData> GetAllWeikeOrderByStar()
         {
             List<WeikeData> wdList = new List<WeikeData>();
-            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike natural join user order by star desc";
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,file.id,file.fileName,file.mimeType,file.fileUrl from weike natural join user natural join file order by star desc";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -68,7 +70,8 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                MyFile attachment = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment);
                 wdList.Add(wd);
 
             }
@@ -81,7 +84,7 @@ namespace WeiKe.Models
         public static List<WeikeData> GetAllWeikeOrderByComment()
         {
             List<WeikeData> wdList = new List<WeikeData>();
-            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike natural join user order by commentNum desc";
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,file.id,file.fileName,file.mimeType,file.fileUrl from weike natural join user natural join file order by commentNum desc";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -91,7 +94,8 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                MyFile attachment = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"),attachment);
                 wdList.Add(wd);
 
             }
@@ -109,13 +113,17 @@ namespace WeiKe.Models
             MySqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
+            sql = "update user set postNum = postNum+1 where user_id = @user_id";
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@user_id", weike.user_id);
+            cmd.ExecuteNonQuery();
             conn.Close();
         }
 
         public static List<WeikeData> FindByTitle(string title)
         {
             List<WeikeData> wdList = new List<WeikeData>();
-            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike natural join user where title like @title";
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,file.id,file.fileName,file.mimeType,file.fileUrl from weike natural join user natural join file where title like @title";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -132,7 +140,8 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"],(int)reader["commentNum"]);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                MyFile attachment = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment);
                 wdList.Add(wd);
 
             }
@@ -145,7 +154,7 @@ namespace WeiKe.Models
         public static List<WeikeData> FindBySubject(string subject)
         {
             List<WeikeData> wdList = new List<WeikeData>();
-            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike natural join user where subject like @subject";
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,file.id,file.fileName,file.mimeType,file.fileUrl from weike natural join user natural join file where subject like @subject";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -163,7 +172,8 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                MyFile attachment = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment);
                 wdList.Add(wd);
 
             }
@@ -177,7 +187,7 @@ namespace WeiKe.Models
         {
             
             List<WeikeData> wdList = new List<WeikeData>();
-            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike natural join user where name like @author";
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,file.id,file.fileName,file.mimeType,file.fileUrl from weike natural join user natural join file where name like @author";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -195,7 +205,8 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"],(string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                WeikeData wd= new WeikeData(weike, reader.GetString("name"));
+                MyFile attachment = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment);
                 wdList.Add(wd);
 
             }
@@ -208,7 +219,7 @@ namespace WeiKe.Models
         public static WeikeData FindByWeikeId(int weike_id)
         {
             WeikeData weikeData = null;
-            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike natural join user where weike_id = @weike_id";
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,file.id,file.fileName,file.mimeType,file.fileUrl from weike natural join user natural join file where weike_id = @weike_id";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -219,7 +230,8 @@ namespace WeiKe.Models
             if (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                weikeData = new WeikeData(weike, reader.GetString("name"));
+                MyFile attachment = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment);
 
             }
             reader.Close();
@@ -231,7 +243,7 @@ namespace WeiKe.Models
         public static List<WeikeData> FindByUserId(int user_id)
         {
             List<WeikeData> wdList = new List<WeikeData>();
-            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike natural join user where user_id = @id";
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,file.id,file.fileName,file.mimeType,file.fileUrl from weike natural join user natural join file where user_id = @id";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -242,7 +254,8 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                MyFile attachment = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment);
                 wdList.Add(wd);
             }
             reader.Close();
@@ -254,7 +267,7 @@ namespace WeiKe.Models
         public static List<WeikeData> FindByUserId(int user_id,int top)
         {
             List<WeikeData> wdList = new List<WeikeData>();
-            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name from weike inner join user on user.user_id = weike.user_id where user.user_id = 2 ORDER BY weike.star  DESC limit 0,@top";
+            string sql = "select weike.weike_id,weike.title,weike.subject,weike.user_id,weike.src,weike.size,weike.description,weike.star,weike.postdate,weike.commentNum,user.name,file.id,file.fileName,file.mimeType,file.fileUrl from weike inner join user inner join file on user.user_id = weike.user_id and file.weike_id = weike.weike_id where user.user_id = 2 ORDER BY weike.star  DESC limit 0,@top";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -266,7 +279,8 @@ namespace WeiKe.Models
             while (reader.Read())
             {
                 Weike weike = new Weike((int)reader["weike_id"], (string)reader["title"], (string)reader["subject"], (int)reader["user_id"], (string)reader["src"], (string)reader["size"], (string)reader["description"], (int)reader["star"], (DateTime)reader["postdate"], (int)reader["commentNum"]);
-                WeikeData wd = new WeikeData(weike, reader.GetString("name"));
+                MyFile attachment = new MyFile((int)reader["id"], reader.GetString("fileName"), reader.GetString("mimeType"), reader.GetString("fileUrl"), (int)reader["weike_id"]);
+                WeikeData wd = new WeikeData(weike, reader.GetString("name"), attachment);
                 wdList.Add(wd);
             }
             reader.Close();
@@ -309,7 +323,7 @@ namespace WeiKe.Models
             cmd.ExecuteNonQuery();
             conn.Close();
         }
-
+        /*
         static public List<WeikeData> FindWeikeByTime(DateTime time)
         {
             List<WeikeData> wdList = new List<WeikeData>();
@@ -366,7 +380,7 @@ namespace WeiKe.Models
             reader.Close();
             conn.Close();
             return wdList;
-        }
+        }*/
 
     }
   

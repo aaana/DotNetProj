@@ -340,3 +340,37 @@ var gotoPersonalPage = function (userId) {
     var url = "../PersonalPage/PersonalPageWeike?userId=" + userId;
     window.location.href = url;
 }
+
+var pressUploadFileInput = function () {
+    $('#changeAvatarInput').click();
+}
+
+$(function () {
+    $("#changeAvatarInput").change(function () {
+        if (typeof (FileReader) != "undefined") {
+            var dvPreview = $("#img-preview");
+            var regex = /(.jpg|.jpeg|.gif|.png|.bmp)$/;
+            dvPreview.html('<img class="upload-img"  src="@ViewBag.personalInfo["portraitSrc"]" />');
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                if (regex.test(file[0].name.toLowerCase())) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var img = $("<img />");
+                        img.attr("src", e.target.result);
+                        img.attr("class", "img-responsive img-circle")
+                        dvPreview.html("");
+                        dvPreview.append(img);
+                    };
+                    var src = reader.readAsDataURL(file[0]);
+                } else {
+                    alert(file[0].name + " is not a valid image file.");
+                    dvPreview.html("");
+                    return false;
+                }
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+}); 

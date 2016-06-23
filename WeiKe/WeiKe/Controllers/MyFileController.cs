@@ -22,7 +22,7 @@ namespace WeiKe.Controllers
         {
             return View();
         }
-
+        
         public ActionResult Upload()
         {
             foreach (string upload in Request.Files)
@@ -36,7 +36,7 @@ namespace WeiKe.Controllers
                 }
                 string filename = Path.GetFileName(Request.Files[upload].FileName);
                 Request.Files[upload].SaveAs(Path.Combine(path, filename));
-                MyFileDB.Insert(new MyFile(0, filename, mimetype,filename));
+                MyFileDB.Insert(new MyFile(0, filename, mimetype,filename,1));
             }
             return View();
         }
