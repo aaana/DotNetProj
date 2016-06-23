@@ -97,7 +97,7 @@ namespace WeiKe.Controllers
             }
             ViewBag.weikeData = weikeData;
             ViewBag.active = "PersonalPage/PersonalPageWeike?userId=" + userId;
-            ViewBag.fromAction = "PersonalPageFollows";
+            ViewBag.fromAction = "PersonalPageWeike";
 
             return View();
         }
@@ -180,7 +180,7 @@ namespace WeiKe.Controllers
             };
 
             ViewBag.active = "PersonalPage/PersonalPageLikes?userId=" + userId;
-            ViewBag.fromAction = "PersonalPageFollows";
+            ViewBag.fromAction = "PersonalPageLikes";
 
             return View();
         }

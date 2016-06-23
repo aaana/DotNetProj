@@ -25,9 +25,8 @@
                         <div id="img-preview" onclick="pressUploadFileInput()">
                             <img src="@ViewBag.personalInfo["portraitSrc"]" class="img-responsive img-circle">
                         </div>
-                        <input type="file" style="display:none" id="changeAvatarInput" value="更换头像"/><br />
+                        <input type="file" style="display:none" name="FileUpload1" id="changeAvatarInput" value="更换头像"/><br />
                         <input type="hidden" name="active" value="@ViewBag.fromAction" />
-                        <input class="changeAvatar" type="submit" value="更换头像"/>
                     </form>
                     
                 }
