@@ -105,9 +105,10 @@ namespace WeiKe.Models
 
         }
 
-        public static void Insert(Weike weike)
+        public static int Insert(Weike weike)
         {
-            string sql = "insert into weike VALUES ("+weike.weike_id + ",'" + weike.title + "','" +weike.subject + "','" +weike.user_id+ "','" +weike.src+ "','"+weike.size+ "','"+weike.description+"',"+weike.star + ","+weike.postdate + "," +weike.commentNum+ ")";
+            int result = 0;
+            string sql = "insert into weike VALUES ("+weike.weike_id + ",'" + weike.title + "','" +weike.subject + "','" +weike.user_id+ "','" +weike.src+ "','"+weike.size+ "','"+weike.description+"',"+weike.star + ",'"+weike.postdate + "'," +weike.commentNum+","+ 1 +")";
             MySqlConnection conn = Connection.getMySqlCon();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
@@ -117,7 +118,16 @@ namespace WeiKe.Models
             cmd.CommandText = sql;
             cmd.Parameters.AddWithValue("@user_id", weike.user_id);
             cmd.ExecuteNonQuery();
+            sql = "select weike_id from weike order by weike_id desc limit 0,1";
+            cmd.CommandText = sql;
+            MySqlDataReader reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                result = (int)reader[0];
+            }
             conn.Close();
+
+            return result;
         }
 
         public static List<WeikeData> FindByTitle(string title)

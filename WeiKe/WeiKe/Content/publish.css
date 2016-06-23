@@ -21,10 +21,10 @@ form .form-control:focus {
     margin-top: 10px;
 }
 
-#publishFileByUpload,
 #publishPicByUpload {
     display: none;
 }
+
 .form-horizontal .radio {
     margin-bottom: 5px;
 }

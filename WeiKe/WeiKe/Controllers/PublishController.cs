@@ -44,20 +44,35 @@ namespace WeiKe.Controllers
             string filename;
             DateTime newDate = DateTime.Now;
             User user = (User)Session["user"];
-            foreach (string upload in Request.Files)
+
+            int weike_id = -1;
+            if (Request.Files["picUpload"].HasFile())
             {
-                if (!Request.Files[upload].HasFile()) continue;
-                string mimetype = Request.Files[upload].ContentType;
+                string mimetype = Request.Files["picUpload"].ContentType;
                 string path = AppDomain.CurrentDomain.BaseDirectory + "uploads/";
-                filename = Path.GetFileName(Request.Files[upload].FileName);
-                Request.Files[upload].SaveAs(Path.Combine(path, filename));
-                MyFileDB.Insert(new MyFile(0, filename, mimetype, path));
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                filename = Path.GetFileName(Request.Files["picUpload"].FileName);
+                Request.Files["picUpload"].SaveAs(Path.Combine(path, filename));
 
+                filename = "../uploads/" + filename;
                 Weike newWeike = new Weike(title, subject, user.id, filename, uploadPicSize, des, 0, newDate, 0);
-                WeikeDB.Insert(newWeike);
-
+                weike_id = WeikeDB.Insert(newWeike);
             }
-            
+
+            if (Request.Files["fileUpload"].HasFile() && weike_id != -1)
+            {
+                string mimetype = Request.Files["fileUpload"].ContentType;
+                string path = AppDomain.CurrentDomain.BaseDirectory + "uploads/";
+                filename = Path.GetFileName(Request.Files["fileUpload"].FileName);
+                Request.Files["fileUpload"].SaveAs(Path.Combine(path, filename));
+
+                path = "../uploads/" + filename;
+                MyFileDB.Insert(new MyFile(0, filename, mimetype, path, weike_id));
+            }
+
             return RedirectToAction(redirectPage);
         }
 
@@ -77,7 +92,7 @@ namespace WeiKe.Controllers
                 filename = Path.GetFileName(Request.Files[upload].FileName);
                 Request.Files[upload].SaveAs(Path.Combine(path, filename));
 
-                MyFileDB.Insert(new MyFile(0, filename, mimetype, path));
+                //MyFileDB.Insert(new MyFile(0, filename, mimetype, path));
             }
 
             return RedirectToAction(redirectPage);

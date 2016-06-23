@@ -41,7 +41,12 @@
                             <div class="thumbnail weikeCell"  id="@item.weike.weike_id">
                                 <a href="../@item.weike.src" class="img-wrap"><img src="../@item.weike.src"></a>
                                 <div class="weikeCellDes">
-                                    <h3>@item.weike.title</h3>
+                                    <h3>@item.weike.title
+                                        @if (item.attachment != null)
+                                        {
+                                            <small>下载附件</small>
+                                        }
+                                    </h3>
                                     <div class="weikeCellVote">
                                         <h5>@item.weike.subject  <small>@dtstr</small></h5>
                                         <span></span>
@@ -80,7 +85,10 @@
                                         {
                                             <a onclick="likeWeike(this)">点赞 <span>@item.weike.star</span></a>
                                         }
-
+                                        @if(item.attachment != null)
+                                        {
+                                            <a href="/MyFile/GetFileFromDisk?fileName=@item.attachment.fileName&mimeType=@item.attachment.mimeType">下载附件</a>
+                                        }
                                     </div>
                                 </div>
                                 <div class="weikeCellShowComment"  id="@item.weike.weike_id">

@@ -41,11 +41,17 @@ namespace WeiKe.Controllers
             return View();
         }
 
-        public FilePathResult GetFileFromDisk()
+        //public FilePathResult GetFileFromDisk()
+        //{
+           // string path = AppDomain.CurrentDomain.BaseDirectory + "uploads/";
+           // string fileName = "捕获1.PNG";
+           // return File(path + fileName, "text/plain", "捕获1.PNG");
+       // }
+
+        public FilePathResult GetFileFromDisk(string fileName,string mimetype)
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + "uploads/";
-            string fileName = "捕获1.PNG";
-            return File(path + fileName, "text/plain", "捕获1.PNG");
+            return File(path + fileName, mimetype, fileName);
         }
     }
 
