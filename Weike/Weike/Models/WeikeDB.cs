@@ -113,6 +113,10 @@ namespace WeiKe.Models
             MySqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
+            sql = "update user set postNum = postNum+1 where user_id = @user_id";
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@user_id", weike.user_id);
+            cmd.ExecuteNonQuery();
             conn.Close();
         }
 
