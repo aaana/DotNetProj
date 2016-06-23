@@ -52,6 +52,12 @@
                     <p>@item.weike.postdate @item.weike.subject</p>
                     <h3>@item.weike.title</h3>
                     <p>@item.weike.description</p>
+                    <p>
+                        @if (item.Key.attachment != null)
+                        {
+                            <a href="../MyFile/GetFileFromDisk?fileName=@item.Key.attachment.fileName&mimeType=@item.Key.attachment.mimeType">可下载附件: @item.Key.attachment.fileName</a>
+                        }
+                    </p>
                     <div class="thumbnail">
                         <img src="../@item.weike.src">
                     </div>

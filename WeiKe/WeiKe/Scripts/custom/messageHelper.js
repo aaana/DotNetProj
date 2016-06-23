@@ -21,6 +21,9 @@
         }
     });
 
+    var url = "../PersonalPage/PersonalPageWeike?userId=" + userId;
+    window.location.href = url;
+
 }
 
 var showModal = function (t)
@@ -61,18 +64,23 @@ var setRead = function (t, notice_id) {
         success: function (data) {
             console.log(data);
 
-            if ($(t).hasClass('btn-primary')) {
-                $(t).text('已读');
-                $(t).removeClass('btn-primary');
+            if (data.success == 1) {
+
             }
-            if ($(t).children().children('button').hasClass('btn-primary')) {
-                $(t).children().children('button').text('已读');
-                $(t).children().children('button').removeClass('btn-primary');
-            }
+
         },
         error: function () {
         }
     });
+
+    if ($(t).hasClass('btn-primary')) {
+        $(t).text('已读');
+        $(t).removeClass('btn-primary');
+    }
+    if ($(t).children().children('button').hasClass('btn-primary')) {
+        $(t).children().children('button').text('已读');
+        $(t).children().children('button').removeClass('btn-primary');
+    }
 }
 
 var setWeikeDetail = function (weikeDetail, hasFavorited) {
